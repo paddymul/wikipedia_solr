@@ -1,0 +1,16 @@
+# ignore compiled python files
+*.pyc
+
+# ignore .ropeproject dirs
+.ropeproject/
+
+
+# ignore emacs temp files
+*~
+*\#*
+
+*nohup.out
+.DS_Store
+rand
+project_map.tmproj
+
