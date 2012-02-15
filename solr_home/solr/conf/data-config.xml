@@ -1,0 +1,12 @@
+<dataConfig>
+  <dataSource type="JdbcDataSource" 
+              driver="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://localhost/dbname" 
+              user="user-name" 
+              password="password"/>
+  <document>
+    <entity name="id" 
+            query="select id,name,desc from mytable">
+    </entity>
+  </document>
+</dataConfig>

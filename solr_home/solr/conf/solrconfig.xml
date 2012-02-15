@@ -1337,7 +1337,7 @@
 
   <requestHandler name="/dataimport" class="org.apache.solr.handler.dataimport.DataImportHandler">
     <lst name="defaults">
-      <str name="config">/home/username/data-config.xml</str>
+      <str name="config">./data-config.xml</str>
     </lst>
   </requestHandler>
   <!-- Query Elevation Component
