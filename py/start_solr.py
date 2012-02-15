@@ -1,4 +1,5 @@
 import os
 
-os.system("cd ../lib/solr/solr/example/; java -jar start.jar ");
+os.system("cd ../lib/solr/solr/example/; java -Dsolr.solr.home=../../../../solr_home/solr -jar start.jar")
+
 
