@@ -1,0 +1,10 @@
+The jars in this package are NOT directly runnable.
+In order to run the jars, you have to add the jars in the dependency folder to your classpath and define the main class.
+These jars are mainly intended for integration in your projects if you are not able to use maven.
+
+Runnable fatjars with built-in dependencies ("jar-with-depenencies.jar") can be found on Maven Central under:
+
+http://search.maven.org/#search|ga|1|tudarmstadt.ukp
+
+For more information about JWPL, please visit http://jwpl.googlecode.com
+

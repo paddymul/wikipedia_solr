@@ -1,0 +1,12 @@
+MAJOR CHANGES IN JWPL 0.9.1
+	* FIXED Issue 80: [API] getInlinkIDs not working
+
+
+The complete CHANGELOG for all component can be found under 
+	http://code.google.com/p/jwpl/issues/list?can=1&q=status%3AFixed
+
+The issues fixed in this release can be found under
+	http://code.google.com/p/jwpl/issues/list?can=1&q=Milestone%3DRelease-0.9.1
+
+
+
