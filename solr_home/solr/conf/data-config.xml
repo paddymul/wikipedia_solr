@@ -5,9 +5,14 @@
                 processor="XPathEntityProcessor"
                 stream="true"
                 forEach="/mediawiki/page/"
-                url="/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/solr_home/solr/first_172.xml"
+               url="/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/solr_home/solr/first_172.xml" 
+
                 transformer="RegexTransformer,DateFormatTransformer, wikipedia_solr.WikimediaToTextTransformer"
                 >
+<!--  
+                url="/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/solr_home/solr/short_one.xml"
+
+-->
             <field column="id"        xpath="/mediawiki/page/id" />
             <field column="title"     xpath="/mediawiki/page/title" />
             <field column="revision"  xpath="/mediawiki/page/revision/id" />

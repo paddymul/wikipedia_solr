@@ -28,6 +28,9 @@ public class Wikipedia_solr {
         String documentText = de.tudarmstadt.ukp.wikipedia.parser.tutorial.TestFile.getFileText();
 
         //get a ParsedPage object
+            SimpleParser sp = new SimpleParser(documentText);
+            System.out.println(sp.getParagraphText());
+        /*
 		MediaWikiParserFactory pf = new MediaWikiParserFactory();
 		MediaWikiParser parser = pf.createParser();
 		ParsedPage pp = parser.parse(documentText);
@@ -44,5 +47,6 @@ public class Wikipedia_solr {
 			System.out.println(" nr of nested lists    : " + section.nrOfNestedLists());
 			System.out.println(" nr of definition lists: " + section.nrOfDefinitionLists());
 		}
+                */
     }
 }

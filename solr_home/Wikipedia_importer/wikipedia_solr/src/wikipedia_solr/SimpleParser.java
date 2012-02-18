@@ -11,6 +11,9 @@ import de.tudarmstadt.ukp.wikipedia.parser.Paragraph;
 import de.tudarmstadt.ukp.wikipedia.parser.Section;
 import de.tudarmstadt.ukp.wikipedia.parser.mediawiki.MediaWikiParser;
 import de.tudarmstadt.ukp.wikipedia.parser.mediawiki.MediaWikiParserFactory;
+import de.tudarmstadt.ukp.wikipedia.parser.mediawiki.ModularParser;
+import de.tudarmstadt.ukp.wikipedia.parser.mediawiki.FlushTemplates;
+
 
 /**
  *
@@ -20,11 +23,20 @@ public class SimpleParser {
 
     private MediaWikiParserFactory mwpf;
     private MediaWikiParser parser;
+    //private ModularParser parser;
+
     private ParsedPage pp;
 
     SimpleParser(String documentText) {
+        
         this.mwpf = new MediaWikiParserFactory();
+        this.mwpf.setTemplateParserClass(FlushTemplates.class);
+
         this.parser = mwpf.createParser();
+        //parser = new ModularParser();
+        //FlushTemplates ft = new FlushTemplates();
+        //parser.setTemplateParser(ft);
+                
         this.pp = parser.parse(documentText);
 
     }
@@ -33,7 +45,7 @@ public class SimpleParser {
         StringBuilder sf = new StringBuilder();
         for (Paragraph p : pp.getParagraphs()) {
             sf.append(p.getText());
-            System.out.println(p.getText());
+            //System.out.println(p.getText());
         }
         return sf.toString();
     }
