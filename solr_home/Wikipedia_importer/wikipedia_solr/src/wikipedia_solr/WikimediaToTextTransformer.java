@@ -13,7 +13,8 @@ import org.apache.solr.handler.dataimport.Context;
  *
  * @author patrickmullen
  */
-public class WikimediaToTextTransformer {
+public class WikimediaToTextTransformer extends Transformer
+{
 
     public Map<String, Object> transformRow(Map<String, Object> row, Context context) {
 

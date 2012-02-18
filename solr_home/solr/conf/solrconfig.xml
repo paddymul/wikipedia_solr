@@ -74,6 +74,9 @@
     -->
 
   <lib dir="jarlib/solr-dataimporthandler" />
+  <lib dir="/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/solr_home/Wikipedia_importer/wikipedia_solr/dist"  />
+  <lib dir="/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/solr_home/Wikipedia_importer/wikipedia_solr/dist/lib" />
+
 
   <!-- When a regex is specified in addition to a directory, only the
        files in that directory which completely match the regex
