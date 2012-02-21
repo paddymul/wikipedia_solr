@@ -217,7 +217,7 @@
 	 removes stop words from case-insensitive "stopwords.txt"
 	 (empty by default), and down cases.  At query time only, it
 	 also applies synonyms. -->
-    <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100">
+    <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100" >
       <analyzer type="index">
         <tokenizer class="solr.StandardTokenizerFactory"/>
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" enablePositionIncrements="true" />
@@ -497,16 +497,19 @@
    -->
 <field name="id"        type="int" indexed="true" stored="true" required="true"/>
 <field name="title"     type="string"  indexed="true" stored="true"/>
-<field name="revision"  type="sint"    indexed="false" stored="false"/>
-<field name="user"      type="string"  indexed="false" stored="false"/>
-<field name="userId"    type="int" indexed="true" stored="true"/>
-<field name="wikimediaMarkup"   type="text_general"    indexed="false" stored="false"/>
-<field name="articlePlainText"  type="text_general"    indexed="true" stored="true"/>
+ <field name="articlePlainText"  type="text_general" compressed="true"    indexed="true" stored="true"  /> 
+<!-- 
+
+<field name="wikimediaMarkup"   type="text_general"    indexed="true" stored="true"/>
+<field name="articlePlainText"  type="text_general"    indexed="false" stored="false"/>
+
+
+
+
 <field name="timestamp" type="date"    indexed="true" stored="true"/>
-<field name="titleText" type="text_general"    indexed="true" stored="true"/>
+-->
 
 <uniqueKey>id</uniqueKey>
-<copyField source="title" dest="titleText"/>
  </fields>
 
  <!-- Field to use to determine and enforce document uniqueness. 
@@ -514,8 +517,10 @@
    -->
  <uniqueKey>id</uniqueKey>
 
- <!-- field for the QueryParser to use when an explicit fieldname is absent -->
+ <!-- field for the QueryParser to use when an explicit fieldname is absent
  <defaultSearchField>articlePlainText</defaultSearchField>
+ -->
+ <defaultSearchField>title</defaultSearchField>
 
  <!-- SolrQueryParser configuration: defaultOperator="AND|OR" -->
 
