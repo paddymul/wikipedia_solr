@@ -5,7 +5,7 @@
                 processor="XPathEntityProcessor"
                 stream="true"
                 forEach="/mediawiki/page/"
-               url="/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/solr_home/solr/first_172.xml" 
+		url="${dataimporter.request.solrHome}/first_172.xml" 
 
                 transformer="RegexTransformer, wikipedia_solr.WikimediaToTextTransformer"
                 >

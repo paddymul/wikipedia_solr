@@ -74,8 +74,13 @@
     -->
 
   <lib dir="jarlib/solr-dataimporthandler" />
+
+  <lib dir="../Wikipedia_importer/wikipedia_solr/dist" />
+  <lib dir="../Wikipedia_importer/wikipedia_solr/dist/lib" />
+<!--
   <lib dir="/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/solr_home/Wikipedia_importer/wikipedia_solr/dist"  />
   <lib dir="/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/solr_home/Wikipedia_importer/wikipedia_solr/dist/lib" />
+-->
 
 
   <!-- When a regex is specified in addition to a directory, only the
@@ -1341,6 +1346,9 @@
   <requestHandler name="/dataimport" class="org.apache.solr.handler.dataimport.DataImportHandler">
     <lst name="defaults">
       <str name="config">./data-config.xml</str>
+    </lst>
+    <lst name="invariants">
+      <str name="solrHome">${solr.absolutePath}</str>
     </lst>
   </requestHandler>
   <!-- Query Elevation Component
