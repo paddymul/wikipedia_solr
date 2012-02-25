@@ -7,16 +7,16 @@ cd $GC_WIKIPEDIA_REPO_ROOT
 cd apps/start_solr
 
 rm -rf start_solr_wrap.app
-$GC_WIKIPEDIA_REPO_ROOT/apps/appify appify start_solr_wrap
+$GC_WIKIPEDIA_REPO_ROOT/apps/appify  start_solr_wrap
 
 cd $GC_WIKIPEDIA_REPO_ROOT
 cd apps/update
 
 rm -rf update_all_wrap.app
-$GC_WIKIPEDIA_REPO_ROOT/apps/appify appify update_all_wrap
+$GC_WIKIPEDIA_REPO_ROOT/apps/appify  update_all_wrap
 
 rm -rf trigger_reimport_wrap.app
-$GC_WIKIPEDIA_REPO_ROOT/apps/appify appify trigger_reimport_wrap
+$GC_WIKIPEDIA_REPO_ROOT/apps/appify  trigger_reimport_wrap
 
 
 
