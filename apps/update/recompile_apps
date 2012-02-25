@@ -33,6 +33,9 @@ $GC_WIKIPEDIA_REPO_ROOT/apps/appify  clear_index_wrap
 
 
 rm -rf index_1000_wrap.app
-$GC_WIKIPEDIA_REPO_ROOT/apps/appify  index_1000_wrap.app
+$GC_WIKIPEDIA_REPO_ROOT/apps/appify  index_1000_wrap
+
+rm -rf index_all_wrap.app
+$GC_WIKIPEDIA_REPO_ROOT/apps/appify  index_all_wrap
 
 
