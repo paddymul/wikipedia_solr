@@ -1,5 +1,0 @@
-#!/bin/bash
-
-
-/usr/local/Cellar/curl/7.23.1/bin/curl "http://localhost:8983/solr/dataimport?command=full-import" 
-sleep 50

@@ -1,0 +1,7 @@
+#!/bin/bash
+. ~/.profile
+
+
+cd $GC_WIKIPEDIA_REPO_ROOT/apps/reindex
+open ./trigger_reimport
+

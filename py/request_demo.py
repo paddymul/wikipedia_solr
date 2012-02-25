@@ -67,8 +67,16 @@ def section_paragraphs(section):
         print "*"*10
 
 
+
 def american_investigation():
+    """ this function demonstrates playing with a search query for the term "american",
+    
+    it demonstrates how the object model of the response is traversed
+    
+    """
     american_response_obj = parse_response(make_request("american"))
+   
+
     #first_doc = grab_first_doc(american_response_obj)
     doc = american_response_obj['docs'][4]
 
@@ -79,6 +87,10 @@ def american_investigation():
     print "-"*30, "section headings", "-"*30
     sections = doc_sections(doc)
     doc_section_titles(sections)
+
+
+    print "-"*30, "section parsed json", "-"*30
+    print doc['sectionParsed']
 
     print "-"*25, "section 2 paragraphs", "-"*25
     section_paragraphs(sections[2])
