@@ -14,6 +14,9 @@ import de.tudarmstadt.ukp.wikipedia.parser.Section;
 import de.tudarmstadt.ukp.wikipedia.parser.mediawiki.MediaWikiParser;
 import de.tudarmstadt.ukp.wikipedia.parser.mediawiki.MediaWikiParserFactory;
 import wikipedia_solr.SimpleParser;
+
+import com.google.gson.Gson;
+
 /**
  *
  * @author patrickmullen
@@ -27,9 +30,12 @@ public class Wikipedia_solr {
         // TODO code application logic here
         String documentText = de.tudarmstadt.ukp.wikipedia.parser.tutorial.TestFile.getFileText();
 
+        Gson gson = new Gson();
+
         //get a ParsedPage object
             SimpleParser sp = new SimpleParser(documentText);
             System.out.println(sp.getParagraphText());
+            System.out.println(gson.toJson(sp.getSections()));
         /*
 		MediaWikiParserFactory pf = new MediaWikiParserFactory();
 		MediaWikiParser parser = pf.createParser();

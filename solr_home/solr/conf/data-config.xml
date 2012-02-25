@@ -1,5 +1,9 @@
 <dataConfig>
-        <dataSource type="FileDataSource" encoding="UTF-8" />
+        <dataSource type="FileDataSource" encoding="UTF-8" allowNonFile="true"/>
+
+<!-- 
+        <dataSource type="FileDataSource" encoding="UTF-8"/>
+-->
         <document>
         <entity name="page"
                 processor="XPathEntityProcessor"

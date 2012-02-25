@@ -21,8 +21,10 @@ public class WikimediaToTextTransformer extends Transformer
         String wikiMediaText = (String) row.get("wikimediaMarkup");
         if(wikiMediaText != null){
             SimpleParser sp = new SimpleParser(wikiMediaText);
+            sp.getSections();
             row.put("articlePlainText", sp.getParagraphText());
-                    }
+            row.put("sectionParsed",    sp.jsonSections());
+                    }   
         return row;
     }
 }
