@@ -1,0 +1,5 @@
+. ~/.profile
+
+
+cd $GC_WIKIPEDIA_REPO_ROOT/apps/update
+open ./trigger_reimport

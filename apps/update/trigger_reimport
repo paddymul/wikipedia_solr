@@ -1,0 +1,5 @@
+#!/bin/bash
+
+/usr/bin/ruby -e "$(curl -fsSL http://localhost:8983/solr/dataimport?command=full-import" )"
+#/usr/bin/curl "http://localhost:8983/solr/dataimport?command=full-import" 
+sleep 50

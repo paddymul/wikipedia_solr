@@ -23,5 +23,8 @@ cd apps/update
 rm -rf update_all_wrap.app
 appify update_all_wrap
 
+rm -rf trigger_reimport_wrap.app
+appify trigger_reimport_wrap
+
 
 

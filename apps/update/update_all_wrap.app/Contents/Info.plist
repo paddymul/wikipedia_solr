@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"><plist version="1.0"><dict><key>CFBundlePackageType</key><string>APPL</string><key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
+
+<key>CFBundleName</key> <string>update_all_wrap</string>
+<key>CFBundleExecutable</key> <string>update_all_wrap</string>
+<key>CFBundleIdentifier</key> <string>appified.patrickmullen.update_all_wrap</string>
+
+<key>CFBundleVersion</key> <string>0.1</string>
+<key>CFBundleGetInfoString</key> <string>0.1 appified by patrickmullen at Sat Feb 25 10:40:12 EST 2012</string>
+<key>CFBundleShortVersionString</key> <string>0.1</string>
+
+</dict></plist>
