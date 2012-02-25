@@ -1,0 +1,10 @@
+#!/bin/bash
+
+. ~/.profile
+
+
+cd $GC_WIKIPEDIA_REPO_ROOT/apps/update
+./git_update
+./recompile_all
+
+

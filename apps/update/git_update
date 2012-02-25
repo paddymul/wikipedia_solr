@@ -1,0 +1,11 @@
+#!/bin/bash
+
+. ~/.profile
+
+
+cd $GC_WIKIPEDIA_REPO_ROOT
+git pull
+git submodule sync
+git submodule init
+git submodule update
+
