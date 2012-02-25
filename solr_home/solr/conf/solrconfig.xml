@@ -1349,6 +1349,7 @@
     </lst>
     <lst name="invariants">
       <str name="solrHome">${solr.absolutePath}</str>
+      <str name="dataFile">${solr.xmlInputFile}</str>
     </lst>
   </requestHandler>
   <!-- Query Elevation Component

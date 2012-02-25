@@ -9,11 +9,12 @@
                 processor="XPathEntityProcessor"
                 stream="true"
                 forEach="/mediawiki/page/"
-		url="${dataimporter.request.solrHome}/first_172.xml" 
+		url="${dataimporter.request.dataFile}"
 
                 transformer="RegexTransformer, wikipedia_solr.WikimediaToTextTransformer"
                 >
 <!--  
+		url="${dataimporter.request.solrHome}/first_172.xml" 
           transformer="RegexTransformer,DateFormatTransformer, wikipedia_solr.WikimediaToTextTransformer"
                 url="/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/solr_home/solr/short_one.xml"
 
