@@ -77,6 +77,8 @@
 
   <lib dir="../Wikipedia_importer/wikipedia_solr/dist" />
   <lib dir="../Wikipedia_importer/wikipedia_solr/dist/lib" />
+  <lib dir="../../lib/jwpl2" />
+  <lib dir="../../lib/jwpl2/dependencies/" />
 <!--
   <lib dir="/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/solr_home/Wikipedia_importer/wikipedia_solr/dist"  />
   <lib dir="/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/solr_home/Wikipedia_importer/wikipedia_solr/dist/lib" />
