@@ -3,7 +3,10 @@
 
 rm $GC_WIKIPEDIA_DL_DIR/import.xml
 mkfifo $GC_WIKIPEDIA_DL_DIR/import.xml
-nohup bunzip2 -c  $GC_WIKIPEDIA_DL_DIR/enwiki-latest-pages-articles.xml.bz2 | head -n 107296 >  $GC_WIKIPEDIA_DL_DIR/import.xml &
+# 500
+#nohup bunzip2 -c  $GC_WIKIPEDIA_DL_DIR/enwiki-latest-pages-articles.xml.bz2 | head -n  107296 >  $GC_WIKIPEDIA_DL_DIR/import.xml &
+#100k
+nohup bunzip2 -c  $GC_WIKIPEDIA_DL_DIR/enwiki-latest-pages-articles.xml.bz2 | head -n  5577937 >  $GC_WIKIPEDIA_DL_DIR/import.xml &
 
 
 
