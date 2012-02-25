@@ -12,19 +12,5 @@ cd solr_home/Wikipedia_importer/wikipedia_solr
 ant clean compile jar
 
 cd $GC_WIKIPEDIA_REPO_ROOT
-cd apps/start_solr
-
-rm -rf start_solr_wrap.app
-appify start_solr_wrap
-
-cd $GC_WIKIPEDIA_REPO_ROOT
 cd apps/update
-
-rm -rf update_all_wrap.app
-appify update_all_wrap
-
-rm -rf trigger_reimport_wrap.app
-appify trigger_reimport_wrap
-
-
-
+./recompile_apps
