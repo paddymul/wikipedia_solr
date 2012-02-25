@@ -6,6 +6,8 @@
 cd $GC_WIKIPEDIA_REPO_ROOT
 SOLR_HOME=$GC_WIKIPEDIA_REPO_ROOT/solr_home/solr
 
+echo "-Dsolr.xmlInputFile=$GC_WIKIPEDIA_DL_DIR/import.xml"
+
 cd lib/solr/solr/example
 echo "here" >> $SOLR_HOME/log.txt
 java   -Xms512M -Xmx1024M  -Dsolr.solr.home=$SOLR_HOME -Dsolr.xmlInputFile=$GC_WIKIPEDIA_DL_DIR/import.xml   -Dsolr.absolutePath=$SOLR_HOME  -jar start.jar >> $SOLR_HOME/log.txt
