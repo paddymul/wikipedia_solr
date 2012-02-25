@@ -1,0 +1,7 @@
+#!/bin/bash
+
+. ~/.profile
+
+
+cd $GC_WIKIPEDIA_REPO_ROOT/apps/start_solr
+open ./start_solr_bash
