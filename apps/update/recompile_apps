@@ -15,8 +15,24 @@ cd apps/update
 rm -rf update_all_wrap.app
 $GC_WIKIPEDIA_REPO_ROOT/apps/appify  update_all_wrap
 
+rm -rf git_update_wrap.app
+$GC_WIKIPEDIA_REPO_ROOT/apps/appify  git_update_wrap
+
+rm -rf recompile_apps_wrap.app
+$GC_WIKIPEDIA_REPO_ROOT/apps/appify  recompile_apps_wrap
+
+
+cd $GC_WIKIPEDIA_REPO_ROOT
+cd apps/reindex
+
 rm -rf trigger_reimport_wrap.app
 $GC_WIKIPEDIA_REPO_ROOT/apps/appify  trigger_reimport_wrap
 
+rm -rf clear_index_wrap.app
+$GC_WIKIPEDIA_REPO_ROOT/apps/appify  clear_index_wrap
+
+
+rm -rf index_1000_wrap.app
+$GC_WIKIPEDIA_REPO_ROOT/apps/appify  index_1000_wrap.app
 
 
