@@ -1,0 +1,11 @@
+#!/bin/bash
+. ~/.profile
+
+rm $GC_WIKIPEDIA_DL_DIR/import.xml
+ln -s $GC_WIKIPEDIA_DL_DIR/first_1000.xml  $GC_WIKIPEDIA_DL_DIR/import.xml
+
+cd $GC_WIKIPEDIA_REPO_ROOT/apps/reindex
+./trigger_reimport
+
+
+
