@@ -1,4 +1,0 @@
-#!/bin/bash
-
-#rm -rf $GC_WIKIPEDIA_SOLR_DATA_DIR/*
-

@@ -1,8 +1,0 @@
-#!/bin/bash
-. ~/.profile
-
-
-cd $GC_WIKIPEDIA_REPO_ROOT/apps/reindex
-open ./clear_index
-
-
