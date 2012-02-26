@@ -1,0 +1,139 @@
+* scale testing
+** compress text parse
+
+
+** only parse wikimedia, no store
+3:00 min
+
+** don't parse, don't store text
+INFO: Time taken = 0:0:8.898
+
+** store, don't parse wikimedia
+*** 10k
+INFO: Time taken = 0:1:18.607
+**** index size
+263M /Users/patrickmullen/code/general_cybernetics/wikipedia_solr/solr_home/solr/data/
+
+*** 100k
+
+note took much longer to optimize then to index initially
+Feb 18, 2012 7:13:57 PM org.apache.solr.core.SolrDeletionPolicy updateCommits
+INFO: Import completed successfully
+Feb 18, 2012 7:19:44 PM org.apache.solr.update.DirectUpdateHandler2 commit
+INFO: {deleteByQuery=*:*,add=[12, 25, 39, 263, 271, 279, 290, 303, ... (84638 adds)],optimize=} 0 19
+INFO: Time taken = 0:16:42.374
+1600Mb  note space usage fluctuated, often going up to 3000 Mb,  this
+is important, probably has something to do with index compaction
+
+
+** mergefactor =2 
+*** 10k
+     Current Time: Sat Feb 18 17:46:15 EST 2012
+Server Start Time: Sat Feb 18 17:42:45 EST 2012
+INFO: Time taken = 0:3:38.501
+**** index size
+150m
+
+*** 20k
+     Current Time: Sat Feb 18 17:55:04 EST 2012
+Server Start Time: Sat Feb 18 17:48:04 EST 2012
+INFO: Time taken = 0:7:22.568
+
+**** index size
+298M
+
+** bigger rambuffer still
+rambuffer 256Mb
+*** 10k
+     Current Time: Sat Feb 18 17:40:52 EST 2012
+Server Start Time: Sat Feb 18 17:37:22 EST 2012
+
+** 20k
+     Current Time: Sat Feb 18 18:05:11 EST 2012
+Server Start Time: Sat Feb 18 17:58:09 EST 2012
+INFO: Time taken = 0:7:20.530
+**** index size
+298M
+
+
+** java memory settings
+ -Xms512M -Xmx1024M , instead of defaults
+     Current Time: Sat Feb 18 17:35:25 EST 2012
+Server Start Time: Sat Feb 18 17:31:53 EST 2012
+INFO: Time taken = 0:3:39.453
+
+
+** with working skipDoc
+skipped 1500 documents
+upped rambuffer size from 32mb to 128mb
+
+     Current Time: Sat Feb 18 17:26:50 EST 2012
+Server Start Time: Sat Feb 18 17:23:00 EST 2012
+
+INFO: Time taken = 0:4:7.237
+
+** scale testing index settings
+upped rambuffer size from 32mb to 128mb
+
+
+*** 10k documents
+     Current Time: Sat Feb 18 17:16:05 EST 2012
+Server Start Time: Sat Feb 18 17:12:13 EST 2012
+INFO: Time taken = 0:4:2.860
+
+**** index size 151m
+
+
+** scale testing schema2
+
+no longer storing wikimedia markup, only plaintext
+
+*** 10k documents
+     Current Time: Sat Feb 18 16:48:13 EST 2012
+Server Start Time: Sat Feb 18 16:43:40 EST 2012
+INFO: Time taken = 0:4:42.258
+
+**** index file size 
+151m
+*** 20k documents
+**** at 9500 documents
+     Current Time: Sat Feb 18 17:01:21 EST 2012
+Server Start Time: Sat Feb 18 16:57:46 EST 2012
+
+
+**** at 20k documents
+     Current Time: Sat Feb 18 17:05:08 EST 2012
+Server Start Time: Sat Feb 18 16:57:46 EST 2012
+
+after optimize step
+INFO: Time taken = 0:8:14.250
+** scale testing
+
+*** 1k documents
+**** xml file size
+20m
+**** index size 
+40meg
+**** max observed java memory usage
+105m
+
+**** import time
+43 seconds
+**** docs per second
+23.25581395348837
+
+
+
+*** 10k documents
+
+
+**** best time estimate
+     Current Time: Sat Feb 18 16:34:02 EST 2012
+Server Start Time: Sat Feb 18 16:29:07 EST 2012
+
+**** index file size
+780m
+
+
+
+
