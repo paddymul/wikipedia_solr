@@ -1,4 +1,4 @@
-#!/bin/bash
+
 #git clone  git@github.com:General-Cybernetics/wikipedia_solr.git
 #cd wikipedia_solr
 echo "######## lines after this added by wikipedia_solr ######"  >> ~/.profile
