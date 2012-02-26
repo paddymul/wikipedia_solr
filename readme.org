@@ -26,6 +26,7 @@ You can store all three components on separate drives
 ** installation instructions
 in a terminal run these commands
 
+https://raw.github.com/General-Cybernetics/wikipedia_solr/master/py/request_demo.py?login=paddymul&token=99dfbaf22772961187beb2e575e1a36f
 #+BEGIN_SRC shell
 git clone  git@github.com:General-Cybernetics/wikipedia_solr.git
 cd wikipedia_solr
@@ -89,6 +90,20 @@ cd $GC_WIKIPEDIA_REPO_ROOT/apps
 ./reindex/index_all
 
 #+END_SRC
+
+
+** system setup
+*** how do I control the location where solr stores the index files
+edit your ~/.profile
+change the location specified in
+export GC_WIKIPEDIA_SOLR_DATA_DIR="/Volumes/LaCie_1/data/index_wikipedia"
+
+*** how do I control where the wikipedia dump file is downloaded?
+edit your ~/.profile
+change the location specified in
+export GC_WIKIPEDIA_DL_DIR="/Volumes/LaCie_1/data/data_wikipedia"
+
+
 
 
 
