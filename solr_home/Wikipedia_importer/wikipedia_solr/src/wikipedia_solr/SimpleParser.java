@@ -29,7 +29,7 @@ public class SimpleParser {
     private MediaWikiParser parser;
     //private ModularParser parser;
     private ParsedPage pp;
-
+    private StringBuilder cacheString;
     SimpleParser(String documentText) {
 
         this.mwpf = new MediaWikiParserFactory();
@@ -39,12 +39,11 @@ public class SimpleParser {
         //parser = new ModularParser();
         //FlushTemplates ft = new FlushTemplates();
         //parser.setTemplateParser(ft);
-
         this.pp = parser.parse(documentText);
-
+        this.cacheString = new StringBuilder();
     }
 
-    public String getParagraphText() {
+    public String getParagraphText2() {
         StringBuilder sf = new StringBuilder();
         try {
             for (Paragraph p : pp.getParagraphs()) {
@@ -58,6 +57,10 @@ public class SimpleParser {
         return sf.toString();
     }
     
+    public String getParagraphText() {
+        
+        return this.cacheString.toString();
+    }
     
     public ArrayList <HashMap<String, ArrayList<String>>>getSections() {
         ArrayList <HashMap<String, ArrayList<String>>> sections = 
@@ -66,13 +69,19 @@ public class SimpleParser {
         for (Section s : pp.getSections()) {
             HashMap <String, ArrayList<String>> section = 
                     new HashMap<String, ArrayList<String>>();
+            String t = s.getTitle();
+            this.cacheString.append(t);
             
             ArrayList <String> paragraphTexts =  new ArrayList<String>();
             for (Paragraph p: s.getParagraphs()){
-                paragraphTexts.add(p.getText());
+                String pt = p.getText();
+                paragraphTexts.add(pt);
+                this.cacheString.append(pt);
             }
 //            System.out.println(s.getTitle());
-            section.put(s.getTitle(), paragraphTexts);
+            
+            section.put(t, paragraphTexts);
+            
             sections.add(section);
         }
         return sections;
