@@ -1,11 +1,94 @@
 
-* requirements
-java installed
-ant installed
+* Installation
+** prerequisites
 
-* installation
-cd lib/solr/; ant compile
-cd solr; ant compile; ant dist; ant example
+*** java 6 
+*** ant installed
+*** git command line tools installed
+*** space requirements
+the source code and compiled files take about 700 Mb.
+a minimum index of only the first 1000 articles will take about
+50-60megs
+
+the complete index takes 16 Gb when finished, and up to 34 Gb while the
+indexing process is running
+
+the complete wikipedia data dump file is 8 Gb
+
+The greatest amount of space that this system could take on your
+system is
+
+43 Gb = 8 + 34 + 1
+
+You can store all three components on separate drives
+
+
+** installation instructions
+in a terminal run these commands
+
+#+BEGIN_SRC shell
+git clone  git@github.com:General-Cybernetics/wikipedia_solr.git
+cd wikipedia_solr
+echo "######## lines after this added by wikipedia_solr ######"  >> ~/.profile
+echo "export GC_WIKIPEDIA_REPO_ROOT=\"`pwd`\" " >> ~/.profile
+echo "export GC_WIKIPEDIA_DL_DIR=\"`pwd`/dl_dir\" " >> ~/.profile
+echo "export GC_WIKIPEDIA_SOLR_DATA_DIR=\"`pwd`/solr_data_dir\" " >> ~/.profile
+./apps/update/update_all
+open ./apps
+#+END_SRC
+
+when these steps have finished a finder window pointing to the apps
+directory will open up.  In here you will find maintence applications
+
+* running wikipedia_solr
+
+** apps
+there are a set of apps which allow you to perform most regular
+maintence tasks.
+
+*** start_solr/start_solr_wrap.app
+this app starts the solr server and leaves a terminal window showing
+the current server log
+
+*** update/update_all_wrap.app
+this app pulls all the latest code and recompiles every module
+necessary for the system.  
+
+*** update/pull_latest_dump_wrap.app
+this app downloads the latest wikipedia dump into your
+$GC_WIKIPEDIA_DL_DIR , it is necessary to have a wikipedia dump to
+index articles
+
+
+*** reindex/index_1000_wrap.app
+this app pulls in the first 1000 articles, it is useful as a sanity
+check when modifying the indexing scheme
+
+*** reindex/index_all_wrap.app
+this app indexes the entire wikipedia into solr.  It takes a long
+time, about 12 hours on a macbook pro
+
+** common workflows
+*** I want to reindex the entire wikipedia with newer parsing code
+First close the existing start_solr window, solr will have to be
+restarted to source the new code
+
+run the following scripts or apps the apps are the same as the
+scripts, except they are followed by "_wrap.app" for instance
+"update_all" -> "update_all_wrap.app"
+
+#+BEGIN_SRC shell
+cd $GC_WIKIPEDIA_REPO_ROOT/apps
+
+# we need to pull the most recent code and compile it
+./update/update_all
+# we need to start the server so that it is reading the most recent
+# codebase
+./start_solr/start_solr
+# now kickoff the reindex
+./reindex/index_all
+
+#+END_SRC
 
 
 
