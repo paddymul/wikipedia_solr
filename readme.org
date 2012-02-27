@@ -55,7 +55,7 @@ the current server log
 this app pulls all the latest code and recompiles every module
 necessary for the system.  
 
-*** update/pull_latest_dump_wrap.app
+*** update/download_dump_wrap.app
 this app downloads the latest wikipedia dump into your
 $GC_WIKIPEDIA_DL_DIR , it is necessary to have a wikipedia dump to
 index articles
