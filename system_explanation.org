@@ -1,0 +1,86 @@
+
+* overview
+this wikipedia search system uses solr http://wiki.apache.org/solr/
+and the jwpl wikimedia markup parsing library
+http://code.google.com/p/jwpl/ .
+
+I used the DataImportHandler framework to import the XML wikipedia
+dump.  I wrote a custom transformer that integrates into the
+DataImportHandlerFramework, this handler calls the jwpl parsing
+library to extract the article text from the wikimedia markup
+
+I modified solr in two places.  First I changed the file reader so
+that it will read from a named pipe.  This allows us to keep the
+article dump compressed on disk, allowing for faster I/O and less disk
+usage
+
+I also modified the xml reader so that it doesn't kill an entire
+import if there is a missing xml tag.  This extra fault tolerance
+ensures that hours of work aren't lost
+
+** custom code
+the custom code I wrote for this project can be found in 
+
+*** transformer
+ solr_home/Wikipedia_importer/wikipedia_solr/src/wikipedia_solr/
+*** named pipe file reader
+lib/solr/solr/contrib/dataimporthandler/src/java/org/apache/solr/handler/dataimport/FileDataSource.java
+
+*** tolerant xml reader
+lib/solr/solr/contrib/dataimporthandler/src/java/org/apache/solr/handler/dataimport/XPathEntityProcessor.java
+
+* solr configuration
+** schema configuration
+
+the solr schema.xml ( http://wiki.apache.org/solr/SchemaXml )
+for this project can be found  
+solr_home/solr/conf/schema.xml
+
+*** field explanation
+http://wiki.apache.org/solr/SchemaXml#Fields
+
+each field can have one of multiple flags applied to it
+**** stored
+a stored field has its original version saved by lucene
+**** indexed
+an indexed field can be searched against
+
+
+*** our schema
+
+this controls which fields are stored and indexed.  We have a very
+simple schema, only three relevant fields, title, articlePlainText and
+sectionParsed.
+
+**** articlePlainText
+articlePlainText is the field that is searched on, it is an indexed
+version of the plaintext of each wikipedia article.  It isn't stored
+since the plaintext on its own isn't that useful
+
+**** sectionParsed
+this field is stored, but not indexed.  it is a json-string
+( http://www.json.org/ ) of article
+sections, in the form of 
+
+[{"section_name":["paragraph1", "paragraph2"]}, {"another section
+title": ["paragph1", "p2"]}]
+
+
+
+** solr-config.xml
+
+http://wiki.apache.org/solr/SolrConfigXml
+the solr-config for this project can be found here
+solr_home/solr/conf/solrconfig.xml
+
+It stays pretty close to the example config, except for additional
+java properties that it reads, which allow the system to be more
+easily configured
+
+** maintence scripts
+
+there are a variety of maintence scripts that can be found in apps/* ,
+they are explained in the readme.org
+
+
+
