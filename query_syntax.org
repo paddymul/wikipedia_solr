@@ -11,7 +11,7 @@
 
 
 ## search for american with quotes surounding
->>> a =qp('''articlePlainText:"american"''')
+>>> american = qp('''articlePlainText:"american"''')
 #### a =qp('''articlePlainText:"american"''')
 #### url      http://localhost:8983/solr/select/?q=articlePlainText%3A%22american%22&start=0&rows=10&indent=on&wt=json
 #### QTime    1
@@ -20,15 +20,17 @@
 
 ## search for american without surrounding quotes get the same number
 ## of documents back, quotes surrrounding a single term don't matter
->>> a =qp('''articlePlainText:american''')
+>>> american_no_quote = qp('''articlePlainText:american''')
 #### a =qp('''articlePlainText:american''')
 #### url      http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican&start=0&rows=10&indent=on&wt=json
 #### QTime    0
 #### params   {u'q': u'articlePlainText:american', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}
 #### numFound 619399
 
+>>> assert american == american_no_quote
+
 ## search for 'samoa' get 4755 docs
->>> a =qp('''articlePlainText:samoa''')
+>>> samoa =qp('''articlePlainText:samoa''')
 #### a =qp('''articlePlainText:samoa''')
 #### url      http://localhost:8983/solr/select/?q=articlePlainText%3Asamoa&start=0&rows=10&indent=on&wt=json
 #### QTime    186
@@ -37,7 +39,8 @@
 
 
 ## search for 'american' or 'samoa'  get 621,927 docs
->>> a =qp('''articlePlainText:american OR _query_:"articlePlainText:samoa"''')
+>>> american_or_samoa = qp(
+......'''articlePlainText:american OR _query_:"articlePlainText:samoa"''')
 #### a =qp('''articlePlainText:american OR _query_:"articlePlainText:samoa"''')
 #### url      http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican+OR+_query_%3A%22articlePlainText%3Asamoa%22&start=0&rows=10&indent=on&wt=json
 #### QTime    191
@@ -45,7 +48,8 @@
 #### numFound 621,927
 
 ## search for documents containing 'american' and 'samoa' -> 2227
->>> a =qp('''articlePlainText:american AND _query_:"articlePlainText:samoa"''')
+>>> american_and_samoa = qp(
+......'''articlePlainText:american AND _query_:"articlePlainText:samoa"''')
 #### a =qp('''articlePlainText:american AND _query_:"articlePlainText:samoa"''')
 #### url      http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican+AND+_query_%3A%22articlePlainText%3Asamoa%22&start=0&rows=10&indent=on&wt=json
 #### QTime    183
@@ -54,7 +58,8 @@
 
 
 ## search for docs containg 'samoa' but not containing 'american' ->2528
->>> a =qp('''articlePlainText:samoa NOT _query_:"articlePlainText:american"''')
+>>>  samoa_not_american = qp(
+......'''articlePlainText:samoa NOT _query_:"articlePlainText:american"''')
 #### a =qp('''articlePlainText:samoa NOT _query_:"articlePlainText:american"''')
 #### url      http://localhost:8983/solr/select/?q=articlePlainText%3Asamoa+NOT+_query_%3A%22articlePlainText%3Aamerican%22&start=0&rows=10&indent=on&wt=json
 #### QTime    46
@@ -62,7 +67,7 @@
 #### numFound 2528
 
 ## search for the phrase "american samoa"
->>> a =qp('''articlePlainText:"american samoa"''')
+>>> american_samoa_phrase = qp('''articlePlainText:"american samoa"''')
 #### a =qp('''articlePlainText:"american samoa"''')
 #### url      http://localhost:8983/solr/select/?q=articlePlainText%3A%22american+samoa%22&start=0&rows=10&indent=on&wt=json
 #### QTime    1
@@ -72,19 +77,19 @@
 
 ## ok with this,  I can prove the system is self consistent
 
-or_docs = american_docs + samoa_only_docs
+assert american_or_samoa == (american + samoa_not_american)
 621927 = 619399        + 2528
 
-and_docs >= american_samoa_phrase_docs
+assert american_and_samoa >= american_samoa_phrase
 2227 >=     1397
 
 ## let's try a double phrase AND query
 >>> a =qp('''articlePlainText:"american samoa" AND _query_:"articlePlainText:'manifest destiny'"''')
 <merican samoa" AND _query_:"articlePlainText:'manifest destiny'"''')
-url      http://localhost:8983/solr/select/?q=articlePlainText%3A%22american+samoa%22+AND+_query_%3A%22articlePlainText%3A%27manifest+destiny%27%22&start=0&rows=10&indent=on&wt=json
-QTime    199
-params   {u'q': u'articlePlainText:"american samoa" AND _query_:"articlePlainText:\'manifest destiny\'"', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}
-numFound 4
+#### url      http://localhost:8983/solr/select/?q=articlePlainText%3A%22american+samoa%22+AND+_query_%3A%22articlePlainText%3A%27manifest+destiny%27%22&start=0&rows=10&indent=on&wt=json
+#### QTime    199
+#### params   {u'q': u'articlePlainText:"american samoa" AND _query_:"articlePlainText:\'manifest destiny\'"', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}
+#### numFound 4
 
 
 ## note the following syntax query is unclear and I can't decipher the
