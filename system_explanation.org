@@ -16,7 +16,13 @@ usage
 
 I also modified the xml reader so that it doesn't kill an entire
 import if there is a missing xml tag.  This extra fault tolerance
-ensures that hours of work aren't lost
+ensures that hours of work aren't lost.  Wikipedia article dumps are
+of the format described in http://www.mediawiki.org/xml/export-0.5.xsd
+.  The downloaded dumps seem to be missing the final closing
+</mediawiki> tag.  We could compare md5sums if we are worried about
+integrity.
+
+
 
 ** custom code
 the custom code I wrote for this project can be found in 
