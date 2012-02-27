@@ -1,0 +1,40 @@
+#!/bin/bash
+
+. ~/.profile
+FULL_BZ2=$GC_WIKIPEDIA_DL_DIR/enwiki-latest-pages-articles.xml.bz2
+
+
+UNCOMP1=$GC_WIKIPEDIA_DL_DIR/uncomp1.xml
+UNCOMP2=$GC_WIKIPEDIA_DL_DIR/uncomp2.xml
+UNCOMP3=$GC_WIKIPEDIA_DL_DIR/uncomp3.xml
+rm $UNCOMP1 $UNCOMP2 $UNCOMP3
+mkfifo $UNCOMP1 $UNCOMP2 $UNCOMP3
+
+ENDINGS=$GC_WIKIPEDIA_DL_DIR/page_endings.txt
+STARTS=$GC_WIKIPEDIA_DL_DIR/page_starts.txt
+TITLES=$GC_WIKIPEDIA_DL_DIR/page_titles.txt
+
+# here we create the page endings file
+nohup bunzip2 -c $FULL_BZ2 | tee $UNCOMP1 | tee $UNCOMP2 > $UNCOMP3 &
+#nohup bunzip2 -c $FULL_BZ2 | tee $UNCOMP1 > $UNCOMP2
+
+
+# we need to pick off the fifos in reverse order so that we don't get
+# a pipe stall
+grep -n "<title>" $UNCOMP3 > $TITLES &
+grep -n "</page>" $UNCOMP2 > $ENDINGS &
+grep -n "<page>"  $UNCOMP1 > $STARTS 
+
+
+# we don't background this one, all of these processes should run at
+# about the same pace, we don't want one named pipe blowing up with a
+# buffer or the other tees to block, this should keep things moving smoothly
+
+
+#grab the line number of the 1000'd page ending
+page_1000=`cat $ENDINGS | head -n 1000 | cut  -d":" -f1 | tail -n 1`
+
+bunzip2 -c $FULL_BZ2 | head -n  $page_1000 >  $GC_WIKIPEDIA_DL_DIR/first_1000.xml
+
+# lets clean up after ourselves
+rm $UNCOMP1 $UNCOMP2 $UNCOMP3
