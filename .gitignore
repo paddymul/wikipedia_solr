@@ -21,3 +21,12 @@ project_map.tmproj
 /solr_home/Wikipedia_importer/wikipedia_solr/dist/
 /solr_home/Wikipedia_importer/solr/nbproject/private/
 apps/update/update_all_wrap.app/Contents/Info.plist
+
+apps/reindex/clear_index_wrap.app/
+apps/reindex/index_1000_wrap.app/
+apps/reindex/index_all_wrap.app/
+apps/reindex/trigger_reimport_wrap.app/
+apps/start_solr/start_solr_wrap.app/
+apps/start_solr_bash.app/
+apps/update/git_update_wrap.app/
+apps/update/recompile_apps_wrap.app/
