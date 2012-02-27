@@ -1,0 +1,160 @@
+
+
+
+* interactive tour of query formation with solr
+** complex queries - phrases ANDs ORs NOTs
+# take a look at py/query_demo.py to see this as a running program
+
+
+# note qp constructs a query and gives us some simple stats about it,
+# including the complete formed url
+
+
+## search for american with quotes surounding
+>>> a =qp('''articlePlainText:"american"''')
+#### a =qp('''articlePlainText:"american"''')
+#### url      http://localhost:8983/solr/select/?q=articlePlainText%3A%22american%22&start=0&rows=10&indent=on&wt=json
+#### QTime    1
+#### params   {u'q': u'articlePlainText:"american"', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}
+#### numFound 619399
+
+## search for american without surrounding quotes get the same number
+## of documents back, quotes surrrounding a single term don't matter
+>>> a =qp('''articlePlainText:american''')
+#### a =qp('''articlePlainText:american''')
+#### url      http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican&start=0&rows=10&indent=on&wt=json
+#### QTime    0
+#### params   {u'q': u'articlePlainText:american', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}
+#### numFound 619399
+
+## search for 'samoa' get 4755 docs
+>>> a =qp('''articlePlainText:samoa''')
+#### a =qp('''articlePlainText:samoa''')
+#### url      http://localhost:8983/solr/select/?q=articlePlainText%3Asamoa&start=0&rows=10&indent=on&wt=json
+#### QTime    186
+#### params   {u'q': u'articlePlainText:samoa', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}
+#### numFound 4755
+
+
+## search for 'american' or 'samoa'  get 621,927 docs
+>>> a =qp('''articlePlainText:american OR _query_:"articlePlainText:samoa"''')
+#### a =qp('''articlePlainText:american OR _query_:"articlePlainText:samoa"''')
+#### url      http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican+OR+_query_%3A%22articlePlainText%3Asamoa%22&start=0&rows=10&indent=on&wt=json
+#### QTime    191
+#### params   {u'q': u'articlePlainText:american OR _query_:"articlePlainText:samoa"', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}
+#### numFound 621,927
+
+## search for documents containing 'american' and 'samoa' -> 2227
+>>> a =qp('''articlePlainText:american AND _query_:"articlePlainText:samoa"''')
+#### a =qp('''articlePlainText:american AND _query_:"articlePlainText:samoa"''')
+#### url      http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican+AND+_query_%3A%22articlePlainText%3Asamoa%22&start=0&rows=10&indent=on&wt=json
+#### QTime    183
+#### params   {u'q': u'articlePlainText:american AND _query_:"articlePlainText:samoa"', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}
+#### numFound 2227
+
+
+## search for docs containg 'samoa' but not containing 'american' ->2528
+>>> a =qp('''articlePlainText:samoa NOT _query_:"articlePlainText:american"''')
+#### a =qp('''articlePlainText:samoa NOT _query_:"articlePlainText:american"''')
+#### url      http://localhost:8983/solr/select/?q=articlePlainText%3Asamoa+NOT+_query_%3A%22articlePlainText%3Aamerican%22&start=0&rows=10&indent=on&wt=json
+#### QTime    46
+#### params   {u'q': u'articlePlainText:samoa NOT _query_:"articlePlainText:american"', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}
+#### numFound 2528
+
+## search for the phrase "american samoa"
+>>> a =qp('''articlePlainText:"american samoa"''')
+#### a =qp('''articlePlainText:"american samoa"''')
+#### url      http://localhost:8983/solr/select/?q=articlePlainText%3A%22american+samoa%22&start=0&rows=10&indent=on&wt=json
+#### QTime    1
+#### params   {u'q': u'articlePlainText:"american samoa"', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}
+#### numFound 1397
+
+
+## ok with this,  I can prove the system is self consistent
+
+or_docs = american_docs + samoa_only_docs
+621927 = 619399        + 2528
+
+and_docs >= american_samoa_phrase_docs
+2227 >=     1397
+
+## let's try a double phrase AND query
+>>> a =qp('''articlePlainText:"american samoa" AND _query_:"articlePlainText:'manifest destiny'"''')
+<merican samoa" AND _query_:"articlePlainText:'manifest destiny'"''')
+url      http://localhost:8983/solr/select/?q=articlePlainText%3A%22american+samoa%22+AND+_query_%3A%22articlePlainText%3A%27manifest+destiny%27%22&start=0&rows=10&indent=on&wt=json
+QTime    199
+params   {u'q': u'articlePlainText:"american samoa" AND _query_:"articlePlainText:\'manifest destiny\'"', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}
+numFound 4
+
+
+## note the following syntax query is unclear and I can't decipher the
+## results, don't issue queries like this, the results are undecided
+## and unsupported by me
+
+>>> a =qp('''articlePlainText:american samoa''')
+#### a =qp('''articlePlainText:american samoa''')
+#### url      http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican+samoa&start=0&rows=10&indent=on&wt=json
+#### QTime    73
+#### params   {u'q': u'articlePlainText:american samoa', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}
+#### numFound 619 399
+
+** wikipedia_url to solr query
+converting a wikipedia url to a solr query
+
+the wikipedia url of
+http://en.wikipedia.org/wiki/Politics_of_American_Samoa>http://en.wikipedia.org/wiki/Politics_of_American_Samoa
+
+is transformed to this url - to search the solr index
+http://localhost:8983/solr/select/?q=title%3A%22Politics+of+American+Samoa%22&version=2.2&start=0&rows=10&indent=on&wt=json
+
+
+
+note that the query specifies the 'title' field
+
+hence we rely on a 1:1 tally using this unique URL wherever we find it. ie. in the body of some wikipedia text there might be a link, that link URL will be as expected by your solr server and your serve will be able to deliver that content as if we'd scraped in in realtime from wikipedia?
+
+the url is transformed into the desired title by taking the part of
+the wikipedia url following the last "/" and replacing underscores
+with spaces
+
+* explanation of http query params
+
+querying for american, to query the solr index for american here is a
+sample url.
+
+** example query
+#+BEGIN_SRC py
+http://localhost:8983/solr/select/?q=articlePlainText%3A%22american%22&version=2.2&start=0&rows=1000&indent=on&wt=json
+
+#+END_SRC
+
+
+*** 'q' parameter
+ is the actual query, unurlescaped this query looks like
+articlePlainText:"american"
+
+this tells solr to search the 'articlePlainText' field in the entire database for the term
+american.
+
+***  'version' parmeter
+ of unknown consequence, use a value of 2.2 for continuity
+
+*** 'start' and 'rows' parameters
+the 'start' parameter and 'rows' parameters control what range of the
+result set to return.
+
+*** 'indent'
+indent=on causes solr to pretty print the result
+
+*** 'wt'
+wt=json causes solr to return the result in json format.
+
+
+
+* additional query formation resources
+the solr-wiki page, not actually that helpful
+http://wiki.apache.org/solr/SolrQuerySyntax
+
+nested queries in solr
+http://www.lucidimagination.com/blog/2009/03/31/nested-queries-in-solr/
+
