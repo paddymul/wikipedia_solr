@@ -21,6 +21,9 @@ $GC_WIKIPEDIA_REPO_ROOT/apps/appify  git_update_wrap
 rm -rf recompile_apps_wrap.app
 $GC_WIKIPEDIA_REPO_ROOT/apps/appify  recompile_apps_wrap
 
+rm -rf download_dump_wrap.app
+$GC_WIKIPEDIA_REPO_ROOT/apps/appify  download_dump_wrap
+
 
 cd $GC_WIKIPEDIA_REPO_ROOT
 cd apps/reindex

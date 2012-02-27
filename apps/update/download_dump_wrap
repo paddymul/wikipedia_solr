@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd $GC_WIKIPEDIA_REPO_ROOT/apps/update
+open ./download_dump
+
+
