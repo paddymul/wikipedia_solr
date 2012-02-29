@@ -1,0 +1,20 @@
+#!/bin/bash
+. ~/.profile
+
+rm $GC_WIKIPEDIA_DL_DIR/import.xml
+
+ALL=$GC_WIKIPEDIA_DL_DIR/enwiki-latest-pages-articles.xml.bz2
+TenK=$GC_WIKIPEDIA_DL_DIR/first_10_000.xml
+
+echo bunzip2 -c $ALL | head -n 1981836 >  $TenK
+bunzip2 -c $ALL | head -n 1981836 >  $TenK
+
+echo cp /$TenK  $GC_WIKIPEDIA_DL_DIR/import.xml
+ cp $TenK  $GC_WIKIPEDIA_DL_DIR/import.xml
+
+
+cd $GC_WIKIPEDIA_REPO_ROOT/apps/reindex
+./trigger_reimport
+
+
+

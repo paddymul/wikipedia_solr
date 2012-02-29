@@ -32,11 +32,16 @@ rm -rf trigger_reimport_wrap.app
 $GC_WIKIPEDIA_REPO_ROOT/apps/appify  trigger_reimport_wrap
 
 rm -rf clear_index_wrap.app
-$GC_WIKIPEDIA_REPO_ROOT/apps/appify  clear_index_wrap
 
 
 rm -rf index_1000_wrap.app
 $GC_WIKIPEDIA_REPO_ROOT/apps/appify  index_1000_wrap
+
+rm -rf index_10_000_wrap.app
+$GC_WIKIPEDIA_REPO_ROOT/apps/appify  index_10_000_wrap
+
+rm -rf index_100_000_wrap.app
+$GC_WIKIPEDIA_REPO_ROOT/apps/appify  index_100_000_wrap
 
 rm -rf index_all_wrap.app
 $GC_WIKIPEDIA_REPO_ROOT/apps/appify  index_all_wrap
