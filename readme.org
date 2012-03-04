@@ -404,9 +404,8 @@ title": ["paragph1", "p2"]}]
 *** solr-config.xml
 
 
-the [[[[http://wiki.apache.org/solr/SolrConfigXml]]][solr-config]] for this project can be found here
-[[https://github.com/General-Cybernetics/wikipedia_solr/blob/master/solr_home/solr/conf/solrconfig.xml][
-solr_home/solr/conf/solrconfig.xml]]
+the [[http://wiki.apache.org/solr/SolrConfigXml][solr-config]] for this project can be found here
+[[https://github.com/General-Cybernetics/wikipedia_solr/blob/master/solr_home/solr/conf/solrconfig.xml][solr_home/solr/conf/solrconfig.xml]]
 
 It stays pretty close to the example config, except for additional
 java properties that it reads, which allow the system to be more
