@@ -29,10 +29,33 @@
             <field column="userId"    xpath="/mediawiki/page/revision/contributor/id" />
             <field column="timestamp" xpath="/mediawiki/page/revision/timestamp" dateTimeFormat="yyyy-MM-dd'T'hh:mm:ss'Z'" />
             <field column="wikimediaMarkup"      xpath="/mediawiki/page/revision/text" />
+
+
 -->
+            <field column="$skipDoc"  regex="^#REDIRECT .*"
+                   replaceWith="true"
+                   sourceColName="wikimediaMarkup"/>
 
+            <field column="$skipDoc"  regex="^Category:.*"
+                   replaceWith="true"
+                   sourceColName="title"/>
 
-            <field column="$skipDoc"  regex="^#REDIRECT .*" replaceWith="true" sourceColName="wikimediaMarkup"/>
+            <field column="$skipDoc"  regex="^Wikipedia:.*"
+                   replaceWith="true"
+                   sourceColName="title"/>
+
+            <field column="$skipDoc"  regex="^Template.*"
+                   replaceWith="true"
+                   sourceColName="title"/>
+
+            <field column="$skipDoc"  regex="^Portal.*"
+                   replaceWith="true"
+                   sourceColName="title"/>
+
+            <field column="$skipDoc"  regex=".*disambiguation.*"
+                   replaceWith="true"
+                   sourceColName="title"/>
+
        </entity>
         </document>
 </dataConfig>
