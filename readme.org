@@ -267,7 +267,7 @@ samoa_not_american = qp(''' articlePlainText:samoa NOT _query_:"articlePlainText
 
 **** search for the phrase "american samoa" -> 1397
 #+BEGIN_SRC py
-american_samoa_phrase = qp('''articlePlainText:"american samoa"''')
+american_samoa_phrase = qp(''' articlePlainText:"american samoa" ''')
 #+END_SRC
 
 |solr url|[[http://localhost:8983/solr/select/?q=articlePlainText%3A%22american+samoa%22&start=0&rows=10&indent=on&wt=json]]|
