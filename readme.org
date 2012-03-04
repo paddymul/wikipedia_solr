@@ -190,9 +190,6 @@ american = qp(''' articlePlainText:"american" ''')
 |params|{u'q': u'articlePlainText:"american"', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}|
 |numFound|619399|
 
-***** QTime    1
-***** params   {u'q': u'articlePlainText:"american"', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}
-***** numFound 619399
 
 ****  search for american without surrounding quotes
 #+BEGIN_SRC py
@@ -201,12 +198,11 @@ american_no_quote = qp(''' articlePlainText:american ''')
 note - for single terms, we got the same number of documents back when we
 quoted "american" as we got back when we didn't quote "american"
 
-[[http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican&start=0&rows=10&indent=on&wt=json]]
 
-
-***** QTime    0
-***** params   {u'q': u'articlePlainText:american', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}
-***** numFound 619399
+|solr url|[[http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican&start=0&rows=10&indent=on&wt=json]]|
+|QTime|0|
+|params|{u'q': u'articlePlainText:american', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}|
+|numFound|619399|
 
 
 
