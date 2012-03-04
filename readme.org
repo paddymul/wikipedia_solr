@@ -13,7 +13,7 @@ the git command line tools must be installed on your machine, along
 with ssh key access to the github repo.  You can read more information
 about setting ssh keys here
 
-help.github.com/set-up-git-redirect/
+[[http://help.github.com/set-up-git-redirect/]]
 
 
 
