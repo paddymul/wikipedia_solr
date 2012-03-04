@@ -349,8 +349,7 @@ integrity.
 the custom code I wrote for this project can be found in 
 
 **** transformer
-[[https://github.com/General-Cybernetics/wikipedia_solr/blob/master/solr_home/Wikipedia_importer/wikipedia_solr/src/wikipedia_solr/WikimediaToTextTransformer.java]
-[solr_home/Wikipedia_importer/wikipedia_solr/src/wikipedia_solr/]]
+[[https://github.com/General-Cybernetics/wikipedia_solr/blob/master/solr_home/Wikipedia_importer/wikipedia_solr/src/wikipedia_solr/WikimediaToTextTransformer.java][solr_home/Wikipedia_importer/wikipedia_solr/src/wikipedia_solr/]]
 
 **** named pipe file reader
 [[https://github.com/paddymul/lucene-solr/blob/06a176316bba15bf6967c87d3799ef743067e972/solr/contrib/dataimporthandler/src/java/org/apache/solr/handler/dataimport/FileDataSource.java][
