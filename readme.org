@@ -400,7 +400,7 @@ title": ["paragph1", "p2"]}]
 
 *** solr-config.xml
 
-http://wiki.apache.org/solr/SolrConfigXml
+[[http://wiki.apache.org/solr/SolrConfigXml]]
 the solr-config for this project can be found here
 solr_home/solr/conf/solrconfig.xml
 
