@@ -184,7 +184,9 @@ false value, none of these asserts throw an error
 american = qp(''' articlePlainText:"american" ''')
 #+END_SRC
 
-***** url      http://localhost:8983/solr/select/?q=articlePlainText%3A%22american%22&start=0&rows=10&indent=on&wt=json
+[[http://localhost:8983/solr/select/?q=articlePlainText%3A%22american%22&start=0&rows=10&indent=on&wt=json]]
+
+
 ***** QTime    1
 ***** params   {u'q': u'articlePlainText:"american"', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}
 ***** numFound 619399
@@ -195,7 +197,10 @@ american_no_quote = qp(''' articlePlainText:american ''')
 #+END_SRC
 note - for single terms, we got the same number of documents back when we
 quoted "american" as we got back when we didn't quote "american"
-***** url      http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican&start=0&rows=10&indent=on&wt=json
+
+[[http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican&start=0&rows=10&indent=on&wt=json]]
+
+
 ***** QTime    0
 ***** params   {u'q': u'articlePlainText:american', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}
 ***** numFound 619399
@@ -211,9 +216,7 @@ american_no_trail = qp('''articlePlainText:american''')
 #+END_SRC
 
 
-[[http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican&start=0&rows=10&indent=on&wt=json][run
-this solr query]
-
+[[http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican&start=0&rows=10&indent=on&wt=json]]
 
 QTime    0
 
@@ -233,7 +236,7 @@ assert american_no_trail == american_no_quote
 #+BEGIN_SRC py
 samoa =qp(''' articlePlainText:samoa ''')
 #+END_SRC
-***** url      http://localhost:8983/solr/select/?q=articlePlainText%3Asamoa&start=0&rows=10&indent=on&wt=json
+[[http://localhost:8983/solr/select/?q=articlePlainText%3Asamoa&start=0&rows=10&indent=on&wt=json]]
 ***** QTime    186
 ***** params   {u'q': u'articlePlainText:samoa', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}
 ***** numFound 4755
@@ -243,8 +246,7 @@ samoa =qp(''' articlePlainText:samoa ''')
 #+BEGIN_SRC py
 american_or_samoa = qp(''' articlePlainText:american OR _query_:"articlePlainText:samoa" ''')
 #+END_SRC
-***** a =qp('''articlePlainText:american OR _query_:"articlePlainText:samoa"''')
-***** url      http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican+OR+_query_%3A%22articlePlainText%3Asamoa%22&start=0&rows=10&indent=on&wt=json
+[[http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican+OR+_query_%3A%22articlePlainText%3Asamoa%22&start=0&rows=10&indent=on&wt=json]]
 ***** QTime    191
 ***** params   {u'q': u'articlePlainText:american OR _query_:"articlePlainText:samoa"', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}
 ***** numFound 621,927
@@ -253,7 +255,7 @@ american_or_samoa = qp(''' articlePlainText:american OR _query_:"articlePlainTex
 #+BEGIN_SRC py
 american_and_samoa = qp(''' articlePlainText:american AND  _query_:"articlePlainText:samoa" ''')
 #+END_SRC
-***** url      http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican+AND+_query_%3A%22articlePlainText%3Asamoa%22&start=0&rows=10&indent=on&wt=json
+[[http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican+AND+_query_%3A%22articlePlainText%3Asamoa%22&start=0&rows=10&indent=on&wt=json]]
 ***** QTime    183
 ***** params   {u'q': u'articlePlainText:american AND _query_:"articlePlainText:samoa"', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}
 ***** numFound 2227
@@ -263,7 +265,7 @@ american_and_samoa = qp(''' articlePlainText:american AND  _query_:"articlePlain
 #+BEGIN_SRC py
 samoa_not_american = qp(''' articlePlainText:samoa NOT _query_:"articlePlainText:american" ''')
 #+END_SRC
-***** url      http://localhost:8983/solr/select/?q=articlePlainText%3Asamoa+NOT+_query_%3A%22articlePlainText%3Aamerican%22&start=0&rows=10&indent=on&wt=json
+[[http://localhost:8983/solr/select/?q=articlePlainText%3Asamoa+NOT+_query_%3A%22articlePlainText%3Aamerican%22&start=0&rows=10&indent=on&wt=json]]
 ***** QTime    46
 ***** params   {u'q': u'articlePlainText:samoa NOT _query_:"articlePlainText:american"', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}
 ***** numFound 2528
@@ -273,7 +275,7 @@ samoa_not_american = qp(''' articlePlainText:samoa NOT _query_:"articlePlainText
 american_samoa_phrase = qp('''articlePlainText:"american samoa"''')
 #+END_SRC
 
-***** url      http://localhost:8983/solr/select/?q=articlePlainText%3A%22american+samoa%22&start=0&rows=10&indent=on&wt=json
+[[http://localhost:8983/solr/select/?q=articlePlainText%3A%22american+samoa%22&start=0&rows=10&indent=on&wt=json]]
 ***** QTime    1
 ***** params   {u'q': u'articlePlainText:"american samoa"', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}
 ***** numFound 1397
@@ -292,7 +294,9 @@ assert 2227               >=     1397
 #+BEGIN_SRC py
  a =qp(''' articlePlainText:"american samoa" AND  _query_:"articlePlainText:'manifest destiny'" ''')
 #+END_SRC
-***** url      http://localhost:8983/solr/select/?q=articlePlainText%3A%22american+samoa%22+AND+_query_%3A%22articlePlainText%3A%27manifest+destiny%27%22&start=0&rows=10&indent=on&wt=json
+
+[[http://localhost:8983/solr/select/?q=articlePlainText%3A%22american+samoa%22+AND+_query_%3A%22articlePlainText%3A%27manifest+destiny%27%22&start=0&rows=10&indent=on&wt=json]]
+
 ***** QTime    199
 ***** params   {u'q': u'articlePlainText:"american samoa" AND _query_:"articlePlainText:\'manifest destiny\'"', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}
 ***** numFound 4
@@ -305,7 +309,7 @@ unsupported by me
 #+BEGIN_SRC py
 a =qp('''articlePlainText:american samoa''')
 #+END_SRC
-***** url      http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican+samoa&start=0&rows=10&indent=on&wt=json
+[[http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican+samoa&start=0&rows=10&indent=on&wt=json]]
 ***** QTime    73
 ***** params   {u'q': u'articlePlainText:american samoa', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}
 ***** numFound 619,399
