@@ -211,7 +211,9 @@ american_no_trail = qp('''articlePlainText:american''')
 #+END_SRC
 
 
-url [[http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican&start=0&rows=10&indent=on&wt=json]]
+[[http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican&start=0&rows=10&indent=on&wt=json][run
+this solr query]
+
 
 QTime    0
 
