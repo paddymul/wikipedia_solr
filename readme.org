@@ -114,8 +114,10 @@ export GC_WIKIPEDIA_SOLR_DATA_DIR="/Volumes/LaCie_1/data/index_wikipedia"
 
 *** how do I control where the wikipedia dump file is downloaded?
 edit your ~/.profile
-change the location specified in
-export GC_WIKIPEDIA_DL_DIR="/Volumes/LaCie_1/data/data_wikipedia"
+change the location specified in the line
+#+BEGIN_SRC
+export shellGC_WIKIPEDIA_DL_DIR="/Volumes/LaCie_1/data/data_wikipedia"
+#+END_SRC
 
 
 
