@@ -184,7 +184,7 @@ false value, none of these asserts throw an error
 american = qp(''' articlePlainText:"american" ''')
 #+END_SRC
 
-[[|solr url|http://localhost:8983/solr/select/?q=articlePlainText%3A%22american%22&start=0&rows=10&indent=on&wt=json]]|
+|solr url|[[http://localhost:8983/solr/select/?q=articlePlainText%3A%22american%22&start=0&rows=10&indent=on&wt=json]]|
 |QTime|1|
 |params|{u'q': u'articlePlainText:"american"', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}|
 |numFound|619399|
