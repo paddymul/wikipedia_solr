@@ -365,9 +365,10 @@ lib/solr/solr/contrib/dataimporthandler/src/java/org/apache/solr/handler/dataimp
 ** solr configuration
 *** schema configuration
 
-the solr schema.xml [[ http://wiki.apache.org/solr/SchemaXml ]]
+the solr [[ http://wiki.apache.org/solr/SchemaXml ][ schema.xml]]
 for this project can be found  
-solr_home/solr/conf/schema.xml
+[[https://github.com/General-Cybernetics/wikipedia_solr/blob/master/solr_home/solr/conf/schema.xml][
+solr_home/solr/conf/schema.xml]]
 
 **** field explanation
 [[http://wiki.apache.org/solr/SchemaXml#Fields]]
@@ -402,9 +403,10 @@ title": ["paragph1", "p2"]}]
 
 *** solr-config.xml
 
-[[http://wiki.apache.org/solr/SolrConfigXml]]
-the solr-config for this project can be found here
-solr_home/solr/conf/solrconfig.xml
+
+the [[[[http://wiki.apache.org/solr/SolrConfigXml]]][solr-config]] for this project can be found here
+[[https://github.com/General-Cybernetics/wikipedia_solr/blob/master/solr_home/solr/conf/solrconfig.xml][
+solr_home/solr/conf/solrconfig.xml]]
 
 It stays pretty close to the example config, except for additional
 java properties that it reads, which allow the system to be more
