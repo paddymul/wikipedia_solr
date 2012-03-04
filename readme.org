@@ -208,7 +208,7 @@ american_no_trail = qp('''articlePlainText:american''')
 #+END_SRC
 
 
-[[|solr url|http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican&start=0&rows=10&indent=on&wt=json]]|
+|solr url|[[http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican&start=0&rows=10&indent=on&wt=json]]|
 |QTime|0|
 |params|{u'q': u'articlePlainText:american', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}|
 |numFound|619399|
@@ -244,7 +244,7 @@ american_or_samoa = qp(''' articlePlainText:american OR _query_:"articlePlainTex
 #+BEGIN_SRC py
 american_and_samoa = qp(''' articlePlainText:american AND  _query_:"articlePlainText:samoa" ''')
 #+END_SRC
-[[|solr url|http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican+AND+_query_%3A%22articlePlainText%3Asamoa%22&start=0&rows=10&indent=on&wt=json]]|
+|solr url|[[http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican+AND+_query_%3A%22articlePlainText%3Asamoa%22&start=0&rows=10&indent=on&wt=json]]|
 |QTime|183|
 |params|{u'q': u'articlePlainText:american AND _query_:"articlePlainText:samoa"', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}|
 |numFound|2227|
