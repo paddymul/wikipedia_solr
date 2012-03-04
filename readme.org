@@ -312,10 +312,10 @@ a =qp('''articlePlainText:american samoa''')
 If you want more information about solr query syntax, try thes resources
 
 nested queries in solr
-http://www.lucidimagination.com/blog/2009/03/31/nested-queries-in-solr/
+[[http://www.lucidimagination.com/blog/2009/03/31/nested-queries-in-solr/]]
 
 the solr-wiki page, not actually that helpful
-http://wiki.apache.org/solr/SolrQuerySyntax
+[[http://wiki.apache.org/solr/SolrQuerySyntax]]
 
 * Implementation notes
 
