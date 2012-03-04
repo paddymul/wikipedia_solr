@@ -368,7 +368,7 @@ for this project can be found
 solr_home/solr/conf/schema.xml
 
 **** field explanation
-http://wiki.apache.org/solr/SchemaXml#Fields
+[[http://wiki.apache.org/solr/SchemaXml#Fields]]
 
 each field can have one of multiple flags applied to it
 ***** stored
@@ -390,7 +390,7 @@ since the plaintext on its own isn't that useful
 
 ***** sectionParsed
 this field is stored, but not indexed.  it is a json-string
-( http://www.json.org/ ) of article
+[[http://www.json.org/]] of article
 sections, in the form of 
 
 [{"section_name":["paragraph1", "paragraph2"]}, {"another section
