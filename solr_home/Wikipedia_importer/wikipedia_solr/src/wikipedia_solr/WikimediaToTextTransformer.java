@@ -20,10 +20,14 @@ public class WikimediaToTextTransformer extends Transformer {
         try {
             String wikiMediaText = (String) row.get("wikimediaMarkup");
             if (wikiMediaText != null) {
+                //System.out.println("----input wikimediaMarkup -----");
+                //System.out.println(wikiMediaText);
                 SimpleParser sp = new SimpleParser(wikiMediaText);
-                row.put("sectionParsed", sp.jsonSections());
-          
+                String jsp = sp.jsonSections();
+                //System.out.println(jsp);
+                row.put("sectionParsed", jsp);
                 row.put("articlePlainText", sp.getParagraphText());
+                //System.out.println(sp.getParagraphText());
             }
         } catch (java.lang.Exception e) {
             System.out.println("error with  " + row.get("title"));
