@@ -78,7 +78,9 @@
   <lib dir="../Wikipedia_importer/wikipedia_solr/dist" />
   <lib dir="../Wikipedia_importer/wikipedia_solr/dist/lib" />
   <lib dir="../../lib/jwpl2" />
+
   <lib dir="../../lib/jwpl2/dependencies/" />
+  <lib dir="../../lib/commons-lang3-3.1/" />
   <lib dir="../Wikipedia_importer/google-gson-2.1/" />
 <!--
   <lib dir="/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/solr_home/Wikipedia_importer/wikipedia_solr/dist"  />
