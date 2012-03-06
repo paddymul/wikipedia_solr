@@ -118,14 +118,16 @@ double-click on the .app from finder.
 
 From the repo root, run the following scripts or apps
 
-    1.  Pull the most recent code and compile it.
-        #+BEGIN_SRC shell        ./update/update_all        #+END_SRC
-    2.  We need to start the server so that it is reading the most recent
+1  Pull the most recent code and compile it.
+#+BEGIN_SRC shell        
+./update/update_all        
+#+END_SRC
+2  We need to start the server so that it is reading the most recent
         codebase.
         #+BEGIN_SRC shell
         ./start_solr/start_solr
         #+END_SRC
-    3.  Next kickoff the reindex .
+3  Next kickoff the reindex.
         #+BEGIN_SRC shell
         ./reindex/index_all
         #+END_SRC
