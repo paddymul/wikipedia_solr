@@ -119,9 +119,7 @@ double-click on the .app from finder.
 From the repo root, run the following scripts or apps
 
     1.  Pull the most recent code and compile it.
-        #+BEGIN_SRC shell
-        ./update/update_all
-        #+END_SRC
+        #+BEGIN_SRC shell        ./update/update_all        #+END_SRC
     2.  We need to start the server so that it is reading the most recent
         codebase.
         #+BEGIN_SRC shell
