@@ -112,24 +112,26 @@ restart of the server to be recognized.
 First close the existing start_solr window, solr will have to be
 restarted to use the new code.
 
-run the following scripts or apps the apps are the same as the
-scripts, except they are followed by "_wrap.app" for instance
+Run the following scripts or apps.  The apps have the same name  as the
+scripts, except they are followed by "_wrap.app", to run them, you can
+double-click on the .app from finder.  
 
+From the repo root, run the following scripts or apps
 
-"update_all"->"update_all_wrap.app".  
-
+1.  need to pull the most recent code and compile it
 #+BEGIN_SRC shell
-cd $GC_WIKIPEDIA_REPO_ROOT/apps
-
-# we need to pull the most recent code and compile it
 ./update/update_all
-# we need to start the server so that it is reading the most recent
-# codebase
-./start_solr/start_solr
-# now kickoff the reindex
-./reindex/index_all
-
 #+END_SRC
+2. we need to start the server so that it is reading the most recent
+   codebase 
+#+BEGIN_SRC shell
+./start_solr/start_solr
+#+END_SRC
+3. now kickoff the reindex
+#+BEGIN_SRC shell
+./reindex/index_all
+#+END_SRC
+
 
 
 ** system setup
