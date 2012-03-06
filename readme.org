@@ -4,41 +4,44 @@ The wikipedia_solr system is a locally installed full text index of
 the wikipedia.  It allows fast searches through the entire wikipedia.
   
 * Installation
-** prerequisites
+** Prerequisites
 
-*** java 6 
-*** apache ant installed
+*** Java 6 
+Java 6 is installed by default on OS X 10.6 and above.
+*** Apache Ant installed
+[[http://ant.apache.org/manual/install.html][The Apache Ant officialinstallation guide]] 
+
 *** git command line tools installed
-the git command line tools must be installed on your machine, along
+The git command line tools must be installed on your machine, along
 with ssh key access to the github repo.  You can read more information
-about setting ssh keys here
+about setting ssh keys here:
 
 [[http://help.github.com/set-up-git-redirect/]]
 
 
 
 *** space requirements
-the source code and compiled files take about 700 Mb.
+The source code and compiled files take about 700 Mb.
 a minimum index of only the first 1000 articles will take about
-50-60megs
+50-60 megs.
 
-the complete index takes 16 Gb when finished, and up to 34 Gb while the
-indexing process is running
+The complete index takes 16 Gb when finished, and up to 34 Gb while the
+indexing process is running.
 
-the complete wikipedia data dump file is 8 Gb
+The complete wikipedia data dump file is 8 Gb.
 
 The greatest amount of space that this system could take on your
 system is
 
 43 Gb = 8 + 34 + 1
 
-You can store all three components on separate drives
+You can store all three components on separate drives.
 
 
-** installation instructions
-in a terminal run these commands, they will install the wikipedia_solr
+** Installation Instructions
+In a terminal run these commands, they will install the wikipedia_solr
 sub-directory in the current directory.  They will also add three
-lines to your ~/.profile
+lines to your ~/.profile .
 
 
 #+BEGIN_SRC shell
@@ -52,41 +55,62 @@ echo "export GC_WIKIPEDIA_SOLR_DATA_DIR=\"`pwd`/solr_data_dir\" " >> ~/.profile
 open ./apps
 #+END_SRC
 
-when these steps have finished a finder window pointing to the apps
-directory will open up.  In here you will find maintence applications
+When these steps have finished a finder window pointing to the apps
+directory will open up.  In here you will find maintence applications.
 
-* running wikipedia_solr
+* Running wikipedia_solr
 
-** apps
+** Apps
 there are a set of apps which allow you to perform most regular
 maintence tasks.
 
 *** start_solr/start_solr_wrap.app
-this app starts the solr server and leaves a terminal window showing
-the current server log
+This app starts the solr server and leaves a terminal window showing
+the current server log.  Any code changes, or file location changes
+(the variables specified in ~/.profile) require restarting the
+server before the server recognizes the new code.  
 
 *** update/update_all_wrap.app
-this app pulls all the latest code and recompiles every module
-necessary for the system.  
+This app pulls all the latest code and recompiles every module
+necessary for the system.
 
 *** update/download_dump_wrap.app
-this app downloads the latest wikipedia dump into your
+This app downloads the latest wikipedia dump into your
 $GC_WIKIPEDIA_DL_DIR , it is necessary to have a wikipedia dump to
-index articles
+index articles.
 
 
 *** reindex/index_1000_wrap.app
-this app pulls in the first 1000 articles, it is useful as a sanity
-check when modifying the indexing scheme
+This app pulls in the first 1000 articles, it is useful as a sanity
+check when modifying the indexing scheme, and a way of quickly trying
+new indexing/text processing techniques. Running this app blows away
+the current index, so you might want to change your
+GC_WIKIPEDIA_SOLR_DATA_DIR location to keep an existing large
+index as a backup.
 
 *** reindex/index_all_wrap.app
-this app indexes the entire wikipedia into solr.  It takes a long
-time, about 12 hours on a macbook pro
+This app indexes the entire wikipedia into solr.  It takes a long
+time, about 12 hours on a macbook pro. Running this app blows away
+the current index, so you might want to change your
+GC_WIKIPEDIA_SOLR_DATA_DIR location to keep an existing large
+index as a backup.
 
-** common workflows
+** Common Workflows
+
+*** I want to run a new index, but not lose an existing index.
+Solr stores indexes in the path controlled by the
+GC_WIKIPEDIA_SOLR_DATA_DIR environment variable.
+
+edit the line of your ~/.profile that looks like this
+#+BEGIN_SRC shell
+export GC_WIKIPEDIA_SOLR_DATA_DIR="/Volumes/LaCie_1/data/index_wikipedia"
+#+END_SRC
+to point to another location.  Changes to this location require a
+restart of the server to be recognized.
+
 *** I want to reindex the entire wikipedia with newer parsing code
 First close the existing start_solr window, solr will have to be
-restarted to source the new code
+restarted to use the new code.
 
 run the following scripts or apps the apps are the same as the
 scripts, except they are followed by "_wrap.app" for instance
@@ -109,12 +133,6 @@ cd $GC_WIKIPEDIA_REPO_ROOT/apps
 
 
 ** system setup
-*** how do I control the location where solr stores the index files
-edit your ~/.profile
-change the location specified in the line
-#+BEGIN_SRC shell
-export GC_WIKIPEDIA_SOLR_DATA_DIR="/Volumes/LaCie_1/data/index_wikipedia"
-#+END_SRC
 
 *** how do I control where the wikipedia dump file is downloaded?
 edit your ~/.profile
@@ -133,56 +151,60 @@ export GC_WIKIPEDIA_DL_DIR="/Volumes/LaCie_1/data/data_wikipedia"
 The solr system is queried over http, results can be returned in json
 format or xml format.  all examples are given using the json format.
 
+** Official documentation
 
-** breakdown of a query url
+[[http://wiki.apache.org/solr/CommonQueryParameters]]
+
+
+** Breakdown of a query url
 http://localhost:8983/solr/select/?q=articlePlainText%3A%22american%22&version=2.2&start=0&rows=1000&indent=on&wt=json
 
 *** q parameter
-the q parameter is the actual query, unurlescaped this query looks
-articlePlainText:"american"
+The q parameter is the actual query, unurlescaped this query looks
+articlePlainText:"american" . 
 
-this tells solr to search the 'articlePlainText' field in the entire database for the term
+This tells solr to search the 'articlePlainText' field in the entire database for the term
 american.
 
 *** version parameter
-the 'version' parmeter is of unknown consequence, use a value of 2.2 for
-continuity
+The 'version' parmeter is of unknown consequence, use a value of 2.2 for
+continuity.
 
 *** start parameter
-the start parameter controls the first row the result set to be
-returned
+The start parameter controls the first row the result set to be
+returned.
 
 *** rows parameter
-the rows parameter controls how many documents (at most) to return
+The rows parameter controls how many documents (at most) to return
 after the start document.
 
 *** indent parameter
-the indent=on causes solr to pretty print the result.
+The indent=on causes solr to pretty print the result.
 
 *** wt parameter
-the wt=json causes solr to return the result in json format.
+The wt=json causes solr to return the result in json format.
 
-** interactive tour of query formation with solr
+** Interactive tour of query formation with solr
 *** complex queries - phrases ANDs ORs NOTs
 
-take a look at py/query_demo.py to see this as a running program
+Take a look at [[https://github.com/General-Cybernetics/wikipedia_solr/blob/master/py/query_demo.py][py/query_demo.py]] to see this as a running program.
 
 
-note qp takes the un-urlencoded q parameter as input, it executes the
-query and prints some simple stats about it,
-including the complete formed url, it returns the total number of
-documents found for that query .
+Note qp takes the un-urlencoded q parameter as input, it executes the
+query and prints some simple stats about it, including the complete
+formed url, it returns the total number of documents found for that query.
 
-triple quotes are a python convention for encoding multiline strings
+Triple quotes are a python convention for encoding multiline strings
 or quote containing strings.  the value of a triple quoted string is
 between the first triple quote and last triple quote.
 
-a string preceded by a 'u' is a unicode string
+A string preceded by a 'u' is a unicode string, for ascii only
+sequences it can be thought of as a string.
 
-the leading and trailing  space 
+The leading and trailing space in the queries are there for readability.
 
 assert is a python statement that throws an error when it is give a
-false value, none of these asserts throw an error
+false value, none of the asserts in this tour throw an error.
 
 
 ****  search for american with quotes surounding
@@ -297,9 +319,9 @@ assert 2227               >=     1397
 
 
 **** ambiguous syntax
-note the following syntax query is unclear and I can't decipher the
+Note: the following syntax query is unclear and I can't decipher the
 results, don't issue queries like this, the results are undecided  and
-unsupported by me 
+unsupported by me .
 #+BEGIN_SRC py
 a =qp('''articlePlainText:american samoa''')
 #+END_SRC
@@ -308,7 +330,7 @@ a =qp('''articlePlainText:american samoa''')
 |params|{u'q': u'articlePlainText:american samoa', u'start': u'0', u'wt': u'json', u'indent': u'on', u'rows': u'10'}|
 |numFound|619,399|
 
-** additional query formation resources
+** Additional query formation resources
 If you want more information about solr query syntax, try thes resources
 
 nested queries in solr
@@ -318,22 +340,23 @@ the solr-wiki page, not actually that helpful
 [[http://wiki.apache.org/solr/SolrQuerySyntax]]
 
 * Implementation notes
-
-
-** overview
-this wikipedia search system uses solr [[http://wiki.apache.org/solr/]]
+These notes are meant as a guide for a future maintainer of the
+solr/java search system.  They assume a knowledge of solr, java, and
+common development practices.
+** Overview
+This wikipedia search system uses solr [[http://wiki.apache.org/solr/]]
 and the jwpl wikimedia markup parsing library
 [[http://code.google.com/p/jwpl/]].
 
 I used the DataImportHandler framework to import the XML wikipedia
 dump.  I wrote a custom transformer that integrates into the
 DataImportHandlerFramework, this handler calls the jwpl parsing
-library to extract the article text from the wikimedia markup
+library to extract the article text from the wikimedia markup.
 
 I modified solr in two places.  First I changed the file reader so
 that it will read from a named pipe.  This allows us to keep the
 article dump compressed on disk, allowing for faster I/O and less disk
-usage
+usage.
 
 I also modified the xml reader so that it doesn't kill an entire
 import if there is a missing xml tag.  This extra fault tolerance
@@ -345,7 +368,7 @@ integrity.
 
 
 
-*** custom code
+*** Custom code
 the custom code I wrote for this project can be found in 
 
 **** transformer
@@ -361,8 +384,8 @@ lib/solr/solr/contrib/dataimporthandler/src/java/org/apache/solr/handler/dataimp
 lib/solr/solr/contrib/dataimporthandler/src/java/org/apache/solr/handler/dataimport/XPathEntityProcessor.java]]
 
 
-** solr configuration
-*** schema configuration
+** Solr configuration
+*** Schema configuration
 
 the solr [[ http://wiki.apache.org/solr/SchemaXml ][ schema.xml]]
 for this project can be found  
@@ -372,31 +395,29 @@ solr_home/solr/conf/schema.xml]]
 **** field explanation
 [[http://wiki.apache.org/solr/SchemaXml#Fields]]
 
-each field can have one of multiple flags applied to it
+each field can have one of multiple flags applied to it:
 ***** stored
-a stored field has its original version saved by lucene
+An stored field has its original version saved by lucene.
 ***** indexed
-an indexed field can be searched against
+An indexed field can be searched against.
+**** wikipedia_solr schema
 
-
-**** our schema
-
-this controls which fields are stored and indexed.  We have a very
+This controls which fields are stored and indexed.  We have a very
 simple schema, only three relevant fields, title, articlePlainText and
 sectionParsed.
 
 ***** articlePlainText
 articlePlainText is the field that is searched on, it is an indexed
 version of the plaintext of each wikipedia article.  It isn't stored
-since the plaintext on its own isn't that useful
-
+since the plaintext on its own isn't that useful.
 ***** sectionParsed
-this field is stored, but not indexed.  it is a json-string
+This field is stored, but not indexed.  it is a json-string
 [[http://www.json.org/]] of article
 sections, in the form of 
 
 [{"section_name":["paragraph1", "paragraph2"]}, {"another section
 title": ["paragph1", "p2"]}]
+.
 
 
 
@@ -408,12 +429,12 @@ the [[http://wiki.apache.org/solr/SolrConfigXml][solr-config]] for this project 
 
 It stays pretty close to the example config, except for additional
 java properties that it reads, which allow the system to be more
-easily configured
+easily configured.
 
-*** maintence scripts
+*** Maintence scripts
 
-there are a variety of maintence scripts that can be found in apps/* ,
-they are explained in the readme.org
+There are a variety of maintence scripts that can be found in apps/* ,
+they are explained in the Running wikipedia_solr:Apps section of this document.
 
 
 
