@@ -66,7 +66,8 @@ maintence tasks.
 
 *** start_solr/start_solr_wrap.app
 This app starts the solr server and leaves a terminal window showing
-the current server log.  Any code changes, or file location changes
+the current server log.  Do not close this window because doing so
+will kill the solr server. Any code changes, or file location changes
 (the variables specified in ~/.profile) require restarting the
 server before the server recognizes the new code.  
 
@@ -132,6 +133,84 @@ From the repo root, run the following scripts or apps
 #+END_SRC
 
 
+*** I have succesfully downloaded the data dump. What next?
+1st, you need to start solr.  Run the app or script
+apps/start_solr/start_solr_wrap
+
+2nd, go to this url with a browser [[http://localhost:8983/solr/admin/]]
+
+3rd, kick off an indexing run.  run apps/reindex/index_1000
+
+4th, when the import has finished running run a query.  Go to this url
+[[http://localhost:8983/solr/select/?q=*%3A*&version=2.2&start=0&rows=10&indent=on&wt=json]]
+that url returns the first 10 documents of everything in your index,
+there should be some results.
+
+*** How do I track the progress of an import
+When a large import is running, your machine should be running at
+about 100% cpu for a java process, and 10-20% for a bunzip2 process.
+
+You can track the import progress at this url
+[[http://localhost:8983/solr/admin/stats.jsp]]
+
+Search in that page for "Rows Fetched" .  Reload as necessary to watch
+this number increase, it counts the total number of documents that the
+import process has seen.  It also counts "Documents Skipped",
+documents are skipped as part of the import process because they would
+pollute the index with poor results, this is perfectly normal.  The
+"Documents Processed" field lists the total number actually put into
+the index. 
+
+The full wikipedia dump has about 12 Million rows in it, at last run
+on 3/6/2012 5,785,453  documents were in the index after a full
+import. 
+
+Note: The "Rows Fetched" will get to 12 million, and then the system
+will take aproximately 1 more hour compacting and optimizing indexes
+before you can search against new data, this is normal.  
+
+
+
+*** I'm getting mkfifo errors when running the download_dump_wrap.app
+OS X doesn't support creating named pipes on network mapped
+drives. [[http://caml.inria.fr/pub/docs/manual-ocaml/libref/Unix.html]]
+
+Named pipes are key to the way the whole import system works.  They
+let the system read the compressed dump into solr, without ever
+expanding the whole thing on disk. 
+
+To get around this, you can symlink the existing dump file into a
+local directory.  Symlink just creates a pointer so that other
+applications think the file they are pointing to is in the local
+directory when in actuality it is in the foreign directory.
+
+This fix requires 500-3000Mb free on the local disk.
+
+execute the following in a terminal window.  They will create a new
+directory off of your home directory named "new_dl_dir", that
+directory will become the new GC_WIKIPEDIA_DL_DIR .
+#+BEGIN_SRC shell
+source ~/.profile
+export FULL_BZ2=$GC_WIKIPEDIA_DL_DIR/enwiki-latest-pages-articles.xml.bz2
+
+cd ~
+
+mkdir new_dl_dir
+cd new_dl_dir
+ln -s $FULL_BZ2 ./enwiki-latest-pages-articles.xml.bz2
+echo "export GC_WIKIPEDIA_DL_DIR=\"`pwd`\" " >> ~/.profile
+#+END_SRC
+
+*** I have already downloaded the wikipedia but I want to run makehelper files
+Sometimes you will want to rerun the makehelper scripts that create
+smaller sections of the initial dump, without rerunning the whole
+download script.
+
+In a terminal window, run these commands:
+#+BEGIN_SRC shell
+source ~/.profile
+$GC_WIKIPEDIA_REPO_ROOT/apps/update/make_helper_files
+#+END_SRC
 
 ** system setup
 
