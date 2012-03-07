@@ -165,7 +165,7 @@ The full wikipedia dump has about 12 Million rows in it, at last run
 on 3/6/2012 5,785,453  documents were in the index after a full
 import. 
 
-Note: The "Rows Fetched" will get to 12 million, and then the system
+Note: When running a full import the "Rows Fetched" will get to 12 million, and then the system
 will take aproximately 1 more hour compacting and optimizing indexes
 before you can search against new data, this is normal.  
 
@@ -180,7 +180,7 @@ let the system read the compressed dump into solr, without ever
 expanding the whole thing on disk. 
 
 To get around this, you can symlink the existing dump file into a
-local directory.  Symlink just creates a pointer so that other
+local directory.  A [[http://en.wikipedia.org/wiki/Symbolic_link][symlink]] just creates a pointer so that other
 applications think the file they are pointing to is in the local
 directory when in actuality it is in the foreign directory.
 
