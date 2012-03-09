@@ -3,15 +3,6 @@ set -e
 . ~/.profile
 
 
-cd $GC_WIKIPEDIA_REPO_ROOT
-cd apps/start_solr
-
-rm -rf start_solr_wrap.app
-$GC_WIKIPEDIA_REPO_ROOT/apps/appify  start_solr_wrap
-
-cd $GC_WIKIPEDIA_REPO_ROOT
-cd apps/update
-
 compile_app ()
 {
 touch  $1.app
@@ -24,6 +15,15 @@ mv $1.app $GC_WIKIPEDIA_REPO_ROOT/apps/
 }
 
 
+
+
+
+
+
+cd $GC_WIKIPEDIA_REPO_ROOT
+cd apps/update
+
+
 U=$GC_WIKIPEDIA_REPO_ROOT/apps/update
 rm -rf $U/recompile_apps_wrap.app
 
@@ -34,6 +34,8 @@ rm -rf index_1000_wrap.app
 
 
 cd $GC_WIKIPEDIA_REPO_ROOT/apps/wrappers
+
+compile_app start_solr
 
 compile_app update_all
 compile_app git_update
