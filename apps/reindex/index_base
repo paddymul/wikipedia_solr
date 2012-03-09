@@ -12,8 +12,9 @@ NAMED_PIPE_DIR=$GC_WIKIPEDIA_REPO_ROOT/named_pipes
 IMPORT_FILE=$NAMED_PIPE_DIR/import.xml
 
 #make sure the import file exists before we delete it
-touch $IMPORT_FILE
+echo " " >  $IMPORT_FILE
 rm $IMPORT_FILE 
+
 
 ln -s $1  $IMPORT_FILE
 
