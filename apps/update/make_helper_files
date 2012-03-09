@@ -1,12 +1,21 @@
 #!/bin/bash
-
+set -e
 . ~/.profile
 FULL_BZ2=$GC_WIKIPEDIA_DL_DIR/enwiki-latest-pages-articles.xml.bz2
+NAMED_PIPE_DIR=$GC_WIKIPEDIA_REPO_ROOT/named_pipes
+
+touch $NAMED_PIPE_DIR
+rm -rf  $NAMED_PIPE_DIR
+mkdir $NAMED_PIPE_DIR
 
 
-UNCOMP1=$GC_WIKIPEDIA_DL_DIR/uncomp1.xml
-UNCOMP2=$GC_WIKIPEDIA_DL_DIR/uncomp2.xml
-UNCOMP3=$GC_WIKIPEDIA_DL_DIR/uncomp3.xml
+
+
+UNCOMP1=$NAMED_PIPE_DIR/uncomp1.xml
+UNCOMP2=$NAMED_PIPE_DIR/uncomp2.xml
+UNCOMP3=$NAMED_PIPE_DIR/uncomp3.xml
+
+touch  $UNCOMP1 $UNCOMP2 $UNCOMP3
 rm $UNCOMP1 $UNCOMP2 $UNCOMP3
 mkfifo $UNCOMP1 $UNCOMP2 $UNCOMP3
 
@@ -16,7 +25,7 @@ TITLES=$GC_WIKIPEDIA_DL_DIR/page_titles.txt
 
 # here we create the page endings file
 nohup bunzip2 -c $FULL_BZ2 | tee $UNCOMP1 | tee $UNCOMP2 > $UNCOMP3 &
-#nohup bunzip2 -c $FULL_BZ2 | tee $UNCOMP1 > $UNCOMP2
+
 
 
 # we need to pick off the fifos in reverse order so that we don't get
@@ -32,9 +41,13 @@ grep -n "<page>"  $UNCOMP1 > $STARTS
 
 
 #grab the line number of the 1000'd page ending
-page_1000=`cat $ENDINGS | head -n 1000 | cut  -d":" -f1 | tail -n 1`
+page_1_000=`cat $ENDINGS   | head -n 1000 | cut  -d":" -f1 | tail -n 1`
+page_10_000=`cat $ENDINGS  | head -n 10000 | cut  -d":" -f1 | tail -n 1`
+page_100_000=`cat $ENDINGS | head -n 100000 | cut  -d":" -f1 | tail -n 1`
 
-bunzip2 -c $FULL_BZ2 | head -n  $page_1000 >  $GC_WIKIPEDIA_DL_DIR/first_1000.xml
+bunzip2 -c $FULL_BZ2 | head -n  $page_1_000 >    $GC_WIKIPEDIA_DL_DIR/first_1_000.xml
+bunzip2 -c $FULL_BZ2 | head -n  $page_10_000 >   $GC_WIKIPEDIA_DL_DIR/first_10_000.xml
+bunzip2 -c $FULL_BZ2 | head -n  $page_100_000 >  $GC_WIKIPEDIA_DL_DIR/first_100_000.xml
 
 # lets clean up after ourselves
 rm $UNCOMP1 $UNCOMP2 $UNCOMP3

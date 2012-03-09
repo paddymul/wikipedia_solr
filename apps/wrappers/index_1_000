@@ -1,8 +1,6 @@
 #!/bin/bash
 . ~/.profile
-
+set -e
 
 cd $GC_WIKIPEDIA_REPO_ROOT/apps/reindex
-open ./index_1000
-
-
+open ./index_1_000

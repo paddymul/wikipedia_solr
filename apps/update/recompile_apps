@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -e
 . ~/.profile
 
 
@@ -12,38 +12,35 @@ $GC_WIKIPEDIA_REPO_ROOT/apps/appify  start_solr_wrap
 cd $GC_WIKIPEDIA_REPO_ROOT
 cd apps/update
 
-rm -rf update_all_wrap.app
-$GC_WIKIPEDIA_REPO_ROOT/apps/appify  update_all_wrap
+compile_app ()
+{
+rm -rf $1.app
+$GC_WIKIPEDIA_REPO_ROOT/apps/appify  $1
 
-rm -rf git_update_wrap.app
-$GC_WIKIPEDIA_REPO_ROOT/apps/appify  git_update_wrap
-
-rm -rf recompile_apps_wrap.app
-$GC_WIKIPEDIA_REPO_ROOT/apps/appify  recompile_apps_wrap
-
-rm -rf download_dump_wrap.app
-$GC_WIKIPEDIA_REPO_ROOT/apps/appify  download_dump_wrap
+touch $GC_WIKIPEDIA_REPO_ROOT/apps/$1.app
+rm -rf $GC_WIKIPEDIA_REPO_ROOT/apps/$1.app
+mv $1 $GC_WIKIPEDIA_REPO_ROOT/apps/
+}
 
 
-cd $GC_WIKIPEDIA_REPO_ROOT
-cd apps/reindex
+U=$GC_WIKIPEDIA_REPO_ROOT/apps/update
+rm -rf $U/recompile_apps_wrap.app
 
-rm -rf trigger_reimport_wrap.app
-$GC_WIKIPEDIA_REPO_ROOT/apps/appify  trigger_reimport_wrap
-
-rm -rf clear_index_wrap.app
-
-
+cd $GC_WIKIPEDIA_REPO_ROOT/apps/reindex
+touch  index_1000_wrap.app
 rm -rf index_1000_wrap.app
-$GC_WIKIPEDIA_REPO_ROOT/apps/appify  index_1000_wrap
 
-rm -rf index_10_000_wrap.app
-$GC_WIKIPEDIA_REPO_ROOT/apps/appify  index_10_000_wrap
 
-rm -rf index_100_000_wrap.app
-$GC_WIKIPEDIA_REPO_ROOT/apps/appify  index_100_000_wrap
 
-rm -rf index_all_wrap.app
-$GC_WIKIPEDIA_REPO_ROOT/apps/appify  index_all_wrap
+cd $GC_WIKIPEDIA_REPO_ROOT/apps/wrappers
 
+compile_app update_all
+compile_app git_update
+compile_app download_dump
+compile_app make_helper_files
+
+compile_app index_1_000
+compile_app index_10_000_wrap
+compile_app index_100_000_wrap
+compile_app index_all_wrap
 

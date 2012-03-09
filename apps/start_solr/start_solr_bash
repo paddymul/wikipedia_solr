@@ -1,16 +1,18 @@
 #!/bin/bash
-
+set -e
 . ~/.profile
+NAMED_PIPE_DIR=$GC_WIKIPEDIA_REPO_ROOT/named_pipes
+IMPORT_FILE=$NAMED_PIPE_DIR/import.xml
 
 
 cd $GC_WIKIPEDIA_REPO_ROOT
 SOLR_HOME=$GC_WIKIPEDIA_REPO_ROOT/solr_home/solr
 
-echo "-Dsolr.xmlInputFile=$GC_WIKIPEDIA_DL_DIR/import.xml"
-echo "-Dsolr.data.dir=$GC_WIKIPEDIA_SOLR_DATA_DIR"
+
+
 
 cd lib/solr/solr/example
 echo "here" >> $SOLR_HOME/log.txt
-java   -Xms512M -Xmx1024M  -Dsolr.solr.home=$SOLR_HOME -Dsolr.data.dir=$GC_WIKIPEDIA_SOLR_DATA_DIR -Dsolr.xmlInputFile=$GC_WIKIPEDIA_DL_DIR/import.xml   -Dsolr.absolutePath=$SOLR_HOME  -jar start.jar >> $SOLR_HOME/log.txt
+java   -Xms512M -Xmx1024M  -Dsolr.solr.home=$SOLR_HOME -Dsolr.data.dir=$GC_WIKIPEDIA_SOLR_DATA_DIR -Dsolr.xmlInputFile=$IMPORT_FILE   -Dsolr.absolutePath=$SOLR_HOME  -jar start.jar >> $SOLR_HOME/log.txt
 
 #cd lib/solr/solr/example/; java   -Xms512M -Xmx1024M  -Dsolr.solr.home=../../../../solr_home/solr -Dsolr.absolutePath=`pwd`/../../../../solr_home/solr  -jar start.jar")

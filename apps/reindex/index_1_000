@@ -1,0 +1,15 @@
+#!/bin/bash
+set -e
+. ~/.profile
+
+NAMED_PIPE_DIR=$GC_WIKIPEDIA_REPO_ROOT/named_pipes
+IMPORT_FILE=$NAMED_PIPE_DIR/import.xml
+
+rm $IMPORT_FILE
+ln -s $GC_WIKIPEDIA_DL_DIR/first_1_000.xml  $IMPORT_FILE
+
+cd $GC_WIKIPEDIA_REPO_ROOT/apps/reindex
+./trigger_reimport
+
+
+

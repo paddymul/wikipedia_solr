@@ -1,0 +1,24 @@
+#!/bin/bash
+set -e
+. ~/.profile
+
+# this file is meant to abstract away the commonality between most of
+# the import scripts, it takes as its only argument the path of the
+# file to be imported
+
+
+
+NAMED_PIPE_DIR=$GC_WIKIPEDIA_REPO_ROOT/named_pipes
+IMPORT_FILE=$NAMED_PIPE_DIR/import.xml
+
+#make sure the import file exists before we delete it
+touch $IMPORT_FILE
+rm $IMPORT_FILE 
+
+ln -s $1  $IMPORT_FILE
+
+cd $GC_WIKIPEDIA_REPO_ROOT/apps/reindex
+./trigger_reimport
+
+
+
