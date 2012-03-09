@@ -14,12 +14,13 @@ cd apps/update
 
 compile_app ()
 {
+touch  $1.app
 rm -rf $1.app
 $GC_WIKIPEDIA_REPO_ROOT/apps/appify  $1
 
 touch $GC_WIKIPEDIA_REPO_ROOT/apps/$1.app
 rm -rf $GC_WIKIPEDIA_REPO_ROOT/apps/$1.app
-mv $1 $GC_WIKIPEDIA_REPO_ROOT/apps/
+mv $1.app $GC_WIKIPEDIA_REPO_ROOT/apps/
 }
 
 
@@ -40,7 +41,7 @@ compile_app download_dump
 compile_app make_helper_files
 
 compile_app index_1_000
-compile_app index_10_000_wrap
-compile_app index_100_000_wrap
-compile_app index_all_wrap
+compile_app index_10_000
+compile_app index_100_000
+compile_app index_all
 
