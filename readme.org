@@ -35,7 +35,9 @@ system is
 
 43 Gb = 8 + 34 + 1
 
-You can store all three components on separate drives.
+You can store all three components on separate drives.  The repository
+root must be on a locally mounted drive, the system will fail if it is
+on a network share.
 
 
 ** Installation Instructions
@@ -61,35 +63,66 @@ directory will open up.  In here you will find maintence applications.
 * Running wikipedia_solr
 
 ** Apps
-there are a set of apps which allow you to perform most regular
-maintence tasks.
+There are a set of apps which allow you to perform most regular
+maintence tasks.  These are the primitives upon which the common workflows
+section is based on.  All of them are found in
+$GC_WIKIPEDIA_REPO_ROOT/apps , after the initial install steps
 
-*** start_solr/start_solr_wrap.app
+*** start_solr.app
 This app starts the solr server and leaves a terminal window showing
 the current server log.  Do not close this window because doing so
 will kill the solr server. Any code changes, or file location changes
 (the variables specified in ~/.profile) require restarting the
 server before the server recognizes the new code.  
 
-*** update/update_all_wrap.app
+*** update_all.app
 This app pulls all the latest code and recompiles every module
 necessary for the system.
 
-*** update/download_dump_wrap.app
+*** download_dump.app
 This app downloads the latest wikipedia dump into your
 $GC_WIKIPEDIA_DL_DIR , it is necessary to have a wikipedia dump to
 index articles.
 
 
-*** reindex/index_1000_wrap.app
-This app pulls in the first 1000 articles, it is useful as a sanity
+*** make_helper_files.app
+This script makes the smaller sections of the initial dump that aid
+faster testing of indexing, it makes a 1,000 10,000 and 100,000
+article dump file.
+
+
+This script is run automatically by download_dump.app, but sometimes
+t is useful to run on its own.p
+*** index_1_000.app
+This app pulls in the first 1,000 articles, it is useful as a sanity
 check when modifying the indexing scheme, and a way of quickly trying
 new indexing/text processing techniques. Running this app blows away
 the current index, so you might want to change your
 GC_WIKIPEDIA_SOLR_DATA_DIR location to keep an existing large
 index as a backup.
 
-*** reindex/index_all_wrap.app
+*** index_10_000.app
+This app pulls in the first 10,000 articles, it is useful as a sanity
+check when modifying the indexing scheme, and a way of quickly trying
+new indexing/text processing techniques. Running this app blows away
+the current index, so you might want to change your
+GC_WIKIPEDIA_SOLR_DATA_DIR location to keep an existing large
+index as a backup.
+This app should take approximately 4 minutes to run.
+
+
+*** index_100_000.app
+This app pulls in the first 100,000 articles, it is useful as a sanity
+check when modifying the indexing scheme, and a way of quickly trying
+new indexing/text processing techniques. Running this app blows away
+the current index, so you might want to change your
+GC_WIKIPEDIA_SOLR_DATA_DIR location to keep an existing large
+index as a backup.
+This app should take approximately 40 minutes to run.
+
+
+
+*** index_all.app
 This app indexes the entire wikipedia into solr.  It takes a long
 time, about 12 hours on a macbook pro. Running this app blows away
 the current index, so you might want to change your
@@ -114,7 +147,8 @@ First close the existing start_solr window, solr will have to be
 restarted to use the new code.
 
 Run the following scripts or apps.  The apps have the same name  as the
-scripts, except they are followed by "_wrap.app", to run them, you can
+scripts, except they are followed by ".app" and the apps are not in
+the sub-directories, to run them, you can
 double-click on the .app from finder.  
 
 From the repo root, run the following scripts or apps
@@ -166,7 +200,7 @@ on 3/6/2012 5,785,453  documents were in the index after a full
 import. 
 
 Note: When running a full import the "Rows Fetched" will get to 12 million, and then the system
-will take aproximately 1 more hour compacting and optimizing indexes
+will take approximately 1 more hour compacting and optimizing indexes
 before you can search against new data, this is normal.  
 
 
@@ -179,30 +213,11 @@ Named pipes are key to the way the whole import system works.  They
 let the system read the compressed dump into solr, without ever
 expanding the whole thing on disk. 
 
-To get around this, you can symlink the existing dump file into a
-local directory.  A [[http://en.wikipedia.org/wiki/Symbolic_link][symlink]] just creates a pointer so that other
-applications think the file they are pointing to is in the local
-directory when in actuality it is in the foreign directory.
+It is necessary to have at least the $GC_WIKIPEDIA_REPO_ROOT on a
+locally mounted disk
 
-This fix requires 500-3000Mb free on the local disk.
-
-execute the following in a terminal window.  They will create a new
-directory off of your home directory named "new_dl_dir", that
-directory will become the new GC_WIKIPEDIA_DL_DIR .
-#+BEGIN_SRC shell
-source ~/.profile
-export FULL_BZ2=$GC_WIKIPEDIA_DL_DIR/enwiki-latest-pages-articles.xml.bz2
-
-cd ~
-
-mkdir new_dl_dir
-cd new_dl_dir
-ln -s $FULL_BZ2 ./enwiki-latest-pages-articles.xml.bz2
-echo "export GC_WIKIPEDIA_DL_DIR=\"`pwd`\" " >> ~/.profile
-#+END_SRC
-
-*** I have already downloaded the wikipedia but I want to run makehelper files
-Sometimes you will want to rerun the makehelper scripts that create
+*** I have already downloaded the wikipedia but I want to run make_helper files
+Sometimes you will want to rerun the make_helper_file scripts that create
 smaller sections of the initial dump, without rerunning the whole
 download script.
 
