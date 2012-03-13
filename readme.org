@@ -1,7 +1,22 @@
-
 * Introduction
 The wikipedia_solr system is a locally installed full text index of
 the wikipedia.  It allows fast searches through the entire wikipedia.
+
+This document has three main sections.  
+1. Installation details the steps for a basic install. 
+2. Running wikipedia-solr goes over the core commands to run the
+   system and instructions for common scenarios.  It also lists
+   configuration options.
+3. Interfacing details how other programs can query solr
+4. Implementation notes describes how the system was built.
+
+
+A running solr installation depends on a couple of things.  It needs a
+wikipedia dump of articles, this is then imported or indexed into solr
+and written to an index.  The index is the data structure that solr
+stores documents in for fast retrieval.  The solr server needs to be running to do
+the indexing and it needs to be running to query the index.
+
   
 * Installation
 ** Prerequisites
@@ -19,8 +34,17 @@ about setting ssh keys here:
 [[http://help.github.com/set-up-git-redirect/]]
 
 
+*** curl
+[[http://en.wikipedia.org/wiki/CURL]] needs to be installed and working
+properly on your system.  Mac OS X has a copy of curl by default. 
 
-*** space requirements
+You can test by running the following command in a shell. 
+#+BEGIN_SRC shell
+curl http://google.com 
+#+END_SRC
+you should see the html of google's landing page.
+
+*** Space requirements
 The source code and compiled files take about 700 Mb.
 a minimum index of only the first 1000 articles will take about
 50-60 megs.
@@ -58,7 +82,10 @@ open ./apps
 #+END_SRC
 
 When these steps have finished a finder window pointing to the apps
-directory will open up.  In here you will find maintence applications.
+directory will open up.  In here you will find maintence
+applications.  If you are happy with storing all the data (downloaded
+files and the index) on the same drive, proceed to download_dump,
+otherwise read the section "How do I control where various files are stored?"
 
 * Running wikipedia_solr
 
@@ -73,7 +100,11 @@ This app starts the solr server and leaves a terminal window showing
 the current server log.  Do not close this window because doing so
 will kill the solr server. Any code changes, or file location changes
 (the variables specified in ~/.profile) require restarting the
-server before the server recognizes the new code.  
+server before the server recognizes the new code.  The solr server
+needs to be running to index documents and to perform queries.
+
+To verify that the solr server is running properly go to this url with
+your browser [[http://localhost:8983/solr/admin]]. 
 
 *** update_all.app
 This app pulls all the latest code and recompiles every module
@@ -88,11 +119,16 @@ index articles.
 *** make_helper_files.app
 This script makes the smaller sections of the initial dump that aid
 faster testing of indexing, it makes a 1,000 10,000 and 100,000
-article dump file.
+article dump file.  While it is running bunzip2 will take around
+80-100% of a single core,  3 copies of tee and 3 copies of grep will
+also be running.
 
 
 This script is run automatically by download_dump.app, but sometimes
-t is useful to run on its own.p
+it is useful to run on its own if you downloaded the article dump
+separately.  
+
+This app takes about an hour to run.  
 *** index_1_000.app
 This app pulls in the first 1,000 articles, it is useful as a sanity
 check when modifying the indexing scheme, and a way of quickly trying
@@ -100,6 +136,8 @@ new indexing/text processing techniques. Running this app blows away
 the current index, so you might want to change your
 GC_WIKIPEDIA_SOLR_DATA_DIR location to keep an existing large
 index as a backup.
+
+This should run in about a minute.
 
 *** index_10_000.app
 This app pulls in the first 10,000 articles, it is useful as a sanity
@@ -109,6 +147,7 @@ the current index, so you might want to change your
 GC_WIKIPEDIA_SOLR_DATA_DIR location to keep an existing large
 index as a backup.
 This app should take approximately 4 minutes to run.
+
 
 
 *** index_100_000.app
@@ -169,7 +208,7 @@ From the repo root, run the following scripts or apps
 
 *** I have succesfully downloaded the data dump. What next?
 1st, you need to start solr.  Run the app or script
-apps/start_solr/start_solr_wrap
+apps/start_solr.app
 
 2nd, go to this url with a browser [[http://localhost:8983/solr/admin/]]
 
@@ -227,16 +266,42 @@ source ~/.profile
 $GC_WIKIPEDIA_REPO_ROOT/apps/update/make_helper_files
 #+END_SRC
 
+*** I'm getting LockObtainFailedException 500 errors.
+This error shouldn't occur anymore, it used to occur because solr had
+trouble creating lock files on network drives.  Now solr is configured
+to use the NoLockFactory , so this shouldn't be an issue.  You can
+read more about lock factories here [[http://wiki.apache.org/lucene-java/AvailableLockFactories]]
+
+
 ** system setup
 
-*** how do I control where the wikipedia dump file is downloaded?
-edit your ~/.profile
-change the location specified in the line
+*** how do I control where various files are stored
+The wikipedia_solr system reads your  ~/.profile for three locations.
+
+**** GC_WIKIPEDIA_DL_DIR
+This is the directory that the system expects to find the raw data
+dump files.  This directory grows to about 9Gb with a full download
+and helper files.
 #+BEGIN_SRC shell
 export GC_WIKIPEDIA_DL_DIR="/Volumes/LaCie_1/data/data_wikipedia"
 #+END_SRC
 
+**** GC_WIKIPEDIA_SOLR_DATA_DIR
+This is where solr looks for an index, if it is indexing, solr stores
+an index in this directory.  For a full index of the wikipedia, it
+should be about 16Gb, it can grow to 34Gb during indexing.
+#+BEGIN_SRC shell
+export GC_WIKIPEDIA_SOLR_DATA_DIR="/Volumes/LaCie_1/data/index_wikipedia/"
+#+END_SRC
 
+
+**** GC_WIKIPEDIA_REPO_ROOT
+This is the directory where source code and compiled files for the
+wikipedia_solr system are stored.  This directory should take less
+than a Gb of storage. 
+#+BEGIN_SRC shell
+export GC_WIKIPEDIA_REPO_ROOT="/Users/patrickmullen/code/general_cybernetics/wikipedia_solr"
+#+END_SRC
 
 
 
