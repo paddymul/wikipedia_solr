@@ -12,8 +12,9 @@ This document has three main sections.
 
 
 A running solr installation depends on a couple of things.  It needs a
-wikipedia dump of articles, this is then imported or indexed into solr
-and written to an index.  The index is the data structure that solr
+wikipedia dump of articles, this dump is then indexed into solr
+and written to an index.  Once solr has finished indexing, it is ready
+to respond to queries.  The index is the data structure that solr
 stores documents in for fast retrieval.  The solr server needs to be running to do
 the indexing and it needs to be running to query the index.
 
@@ -24,7 +25,7 @@ the indexing and it needs to be running to query the index.
 *** Java 6 
 Java 6 is installed by default on OS X 10.6 and above.
 *** Apache Ant installed
-[[http://ant.apache.org/manual/install.html][The Apache Ant officialinstallation guide]] 
+[[http://ant.apache.org/manual/install.html][The Apache Ant official installation guide]] 
 
 *** git command line tools installed
 The git command line tools must be installed on your machine, along
@@ -91,7 +92,7 @@ otherwise read the section "How do I control where various files are stored?"
 
 ** Apps
 There are a set of apps which allow you to perform most regular
-maintence tasks.  These are the primitives upon which the common workflows
+maintenance tasks.  These are the primitives upon which the common workflows
 section is based on.  All of them are found in
 $GC_WIKIPEDIA_REPO_ROOT/apps , after the initial install steps
 
@@ -206,7 +207,7 @@ From the repo root, run the following scripts or apps
 #+END_SRC
 
 
-*** I have succesfully downloaded the data dump. What next?
+*** I have successfully downloaded the data dump. What next?
 1st, you need to start solr.  Run the app or script
 apps/start_solr.app
 
@@ -219,7 +220,7 @@ apps/start_solr.app
 that url returns the first 10 documents of everything in your index,
 there should be some results.
 
-*** How do I track the progress of an import
+*** How do I track the progress of a indexing task?
 When a large import is running, your machine should be running at
 about 100% cpu for a java process, and 10-20% for a bunzip2 process.
 
@@ -591,9 +592,9 @@ It stays pretty close to the example config, except for additional
 java properties that it reads, which allow the system to be more
 easily configured.
 
-*** Maintence scripts
+*** Maintenance  scripts
 
-There are a variety of maintence scripts that can be found in apps/* ,
+There are a variety of maintenance scripts that can be found in apps/* ,
 they are explained in the Running wikipedia_solr:Apps section of this document.
 
 

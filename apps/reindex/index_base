@@ -12,10 +12,11 @@ NAMED_PIPE_DIR=$GC_WIKIPEDIA_REPO_ROOT/named_pipes
 IMPORT_FILE=$NAMED_PIPE_DIR/import.xml
 
 #make sure the import file exists before we delete it
-echo " " >  $IMPORT_FILE
+touch $IMPORT_FILE
 rm $IMPORT_FILE 
 
-
+echo " linking $1 to $IMPORT_FILE"
+echo $1
 ln -s $1  $IMPORT_FILE
 
 cd $GC_WIKIPEDIA_REPO_ROOT/apps/reindex
