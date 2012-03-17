@@ -23,6 +23,8 @@ public class WikimediaToTextTransformer extends Transformer {
         try {
             if (row.get("$skipDoc") == "true") {
                 System.out.println("fast skipping" + row.get("id"));
+                row.put("error", "true");
+                row.put("execption", "RegexTransformerSucces");
 
                 return row;
 
@@ -30,7 +32,8 @@ public class WikimediaToTextTransformer extends Transformer {
             String wikiMediaText = (String) row.get("wikimediaMarkup");
             if (wikiMediaText.startsWith("#REDIRECT")) {
                 System.out.println("regex transfromer failed on " + row.get("id"));
-
+                row.put("error", "true");
+                row.put("execption", "RegexTransformerFail");
                 return row;
             }
             if (wikiMediaText != null) {

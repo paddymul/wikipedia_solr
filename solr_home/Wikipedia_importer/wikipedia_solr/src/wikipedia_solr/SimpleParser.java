@@ -42,22 +42,31 @@ public class SimpleParser {
         //parser = new ModularParser();
         //FlushTemplates ft = new FlushTemplates();
         //parser.setTemplateParser(ft);
+
+
+        this.pp = parser.parse(stripRefs(documentText));
+        //this.pp = parser.parse(documentText);
+        this.cacheString = new StringBuilder();
+    }
+
+    public static String stripRefs(String withRefs){
+
         StringBuffer sb = new StringBuffer();
-        String beginningPart = StringUtils.substringBefore(documentText, "<ref");
-        String rest = StringUtils.substringAfter(documentText, "ref>");
+        String beginningPart = StringUtils.substringBefore(withRefs, "<ref");
+        String rest = StringUtils.substringAfter(withRefs, "ref>");
 
         if (beginningPart == null || beginningPart == "") {
-            sb.append(documentText);
-        } else {
-            while (beginningPart != null && rest.indexOf("<ref") != -1) {
-                sb.append(beginningPart);
-                beginningPart = StringUtils.substringBefore(rest, "<ref");
-                rest = StringUtils.substringAfter(rest, "ref>");
-            }
-            sb.append(rest);
+            return withRefs;
+        } 
+          
+        while (beginningPart != null && rest.indexOf("<ref") != -1) {
+            sb.append(beginningPart);
+            beginningPart = StringUtils.substringBefore(rest, "<ref");
+            rest = StringUtils.substringAfter(rest, "ref>");
         }
-        this.pp = parser.parse(sb.toString());
-        this.cacheString = new StringBuilder();
+        sb.append(rest);
+
+        return sb.toString();
     }
 
     public String getParagraphText2() {
