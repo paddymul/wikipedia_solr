@@ -66,5 +66,36 @@ public class SimpleParserTest {
         System.out.println(result);
         assertEquals(expResult, result);
     }
+    @Test
+    public void testStripRefsSelfClosing() {
+        System.out.println("stripRefsSelfClosing");
+        String withRefs = "words before <ref  blah /> starts with ref";
+        String expResult = "words before  starts with ref";
+        String result = SimpleParser.stripRefs(withRefs);
+        System.out.println(expResult);
+        System.out.println(result);
+        assertEquals(expResult, result);
+    }
+    @Test
+    public void testgetRest() {
+        System.out.println("testGetRest");
+        String corpus = " blah /> starts with ref";
+        String expResult = " starts with ref";
+        String result = SimpleParser.getRest(corpus, "/>", "/ref>");
+        System.out.println(expResult);
+        System.out.println(result);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testgetRestSecondTerminator() {
+        System.out.println("testGetRest");
+        String corpus = " blah /> </ref> starts with ref";
+        String expResult = " </ref> starts with ref";
+        String result = SimpleParser.getRest(corpus, "/>", "/ref>");
+        System.out.println(expResult);
+        System.out.println(result);
+        assertEquals(expResult, result);
+    }
 
 }

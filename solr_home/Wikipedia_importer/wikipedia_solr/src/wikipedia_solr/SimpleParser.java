@@ -49,10 +49,56 @@ public class SimpleParser {
         this.cacheString = new StringBuilder();
     }
 
-    public static String stripRefs(String withRefs){
+    public static String getRest(String corpus, String fastTerminator, String secondTerminator){
+        int end1 = corpus.indexOf(fastTerminator);
+        int end2 = corpus.indexOf(secondTerminator);
+
+
+        if (end1 == -1 && end2 == -1) {
+            //return corpus;
+            return "";
+        }
+        if (end1 == -1 || end2 == -1) {
+            // we wan't the indexof greater than -1
+            if(end1 < end2){
+                return  StringUtils.substringAfter(corpus, secondTerminator);
+            }
+            return StringUtils.substringAfter(corpus, fastTerminator);
+        }
+        if(end1 < end2){
+            return StringUtils.substringAfter(corpus, fastTerminator);        
+        }
+        return  StringUtils.substringAfter(corpus, secondTerminator);        
+    }
+
+    public static String stripTags(String corpus, String start, String end1, String end2) {
 
         StringBuffer sb = new StringBuffer();
+        String beginningPart = StringUtils.substringBefore(corpus, start);
+
+        
+        String rest = getRest(corpus, end1, end2);
+        // StringUtils.substringAfter(withRefs, "/ref>");
+
+        sb.append(beginningPart);
+        while (beginningPart != null && rest.indexOf(start) != -1) {
+
+            beginningPart = StringUtils.substringBefore(rest, start);
+            //rest = StringUtils.substringAfter(rest, "/ref>");
+            rest = getRest(rest, end1, end2);
+            sb.append(beginningPart);
+        }
+        sb.append(rest);
+
+        return sb.toString();
+    }
+
+    public static String stripRefs(String withRefs){
+        return stripTags(withRefs, "<ref", "/>", "/ref>");
+        /*
+        StringBuffer sb = new StringBuffer();
         String beginningPart = StringUtils.substringBefore(withRefs, "<ref");
+
         String rest = StringUtils.substringAfter(withRefs, "/ref>");
 
         sb.append(beginningPart);
@@ -65,7 +111,7 @@ public class SimpleParser {
         sb.append(rest);
 
         return sb.toString();
-
+        */
     }
 
     public String getParagraphText2() {
