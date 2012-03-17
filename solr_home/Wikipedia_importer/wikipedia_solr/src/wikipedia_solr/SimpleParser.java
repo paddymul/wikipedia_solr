@@ -53,20 +53,19 @@ public class SimpleParser {
 
         StringBuffer sb = new StringBuffer();
         String beginningPart = StringUtils.substringBefore(withRefs, "<ref");
-        String rest = StringUtils.substringAfter(withRefs, "ref>");
+        String rest = StringUtils.substringAfter(withRefs, "/ref>");
 
-        if (beginningPart == null || beginningPart == "") {
-            return withRefs;
-        } 
-          
+        sb.append(beginningPart);
         while (beginningPart != null && rest.indexOf("<ref") != -1) {
-            sb.append(beginningPart);
+
             beginningPart = StringUtils.substringBefore(rest, "<ref");
-            rest = StringUtils.substringAfter(rest, "ref>");
+            rest = StringUtils.substringAfter(rest, "/ref>");
+            sb.append(beginningPart);
         }
         sb.append(rest);
 
         return sb.toString();
+
     }
 
     public String getParagraphText2() {
