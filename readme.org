@@ -274,6 +274,16 @@ to use the NoLockFactory , so this shouldn't be an issue.  You can
 read more about lock factories here [[http://wiki.apache.org/lucene-java/AvailableLockFactories]]
 
 
+*** How do I find oddly parsed articles
+
+these two queries
+[[http://localhost:8983/solr/select?indent=on&version=2.2&q=*%3A*&fq=&start=0&rows=10&fl=articlePlainTextCount%2CwikimediaMarkupCount%2CmarkupPlainRatio%2Ctitle%2Cid%2Cscore&qt=&wt=&explainOther=&hl.fl=&sort=markupPlainRatio%20asc][markup ratio ascending]]
+[[http://localhost:8983/solr/select?indent=on&version=2.2&q=*%3A*&fq=&start=0&rows=10&fl=articlePlainTextCount%2CwikimediaMarkupCount%2CmarkupPlainRatio%2Ctitle%2Cid%2Cscore&qt=&wt=&explainOther=&hl.fl=&sort=markupPlainRatio%20desc][markup ratio descending]]
+
+[[http://localhost:8983/solr/select/?q=error%3Afalse&stats=true&stats.field=markupPlainRatio&stats.facet&fl=markupPlainRatio&version=2.2&start=0&rows=10&indent=on][average of markupPlainRatio]]
+
+
+
 ** system setup
 
 *** how do I control where various files are stored

@@ -16,6 +16,8 @@ import de.tudarmstadt.ukp.wikipedia.parser.mediawiki.MediaWikiParserFactory;
 import wikipedia_solr.SimpleParser;
 
 import com.google.gson.Gson;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -54,26 +56,34 @@ public class Wikipedia_solr {
 
         //get a ParsedPage object
             SimpleParser sp = new SimpleParser(documentText2);
+        try {
             sp.getSections();
+        } catch (WikipediaParseException ex) {
+            Logger.getLogger(Wikipedia_solr.class.getName()).log(Level.SEVERE, null, ex);
+        }
             System.out.println(sp.getParagraphText());
-           System.out.println(sp.getSections());
-        /*
-		MediaWikiParserFactory pf = new MediaWikiParserFactory();
-		MediaWikiParser parser = pf.createParser();
-		ParsedPage pp = parser.parse(documentText);
-		for(Paragraph p : pp.getParagraphs()){
-                    
-                    System.out.println(p.getText());
-                }
-                
-		//get the sections
-		for(Section section : pp.getSections()) {
-			System.out.println("section : " + section.getTitle());
-			System.out.println(" nr of paragraphs      : " + section.nrOfParagraphs());
-			System.out.println(" nr of tables          : " + section.nrOfTables());
-			System.out.println(" nr of nested lists    : " + section.nrOfNestedLists());
-			System.out.println(" nr of definition lists: " + section.nrOfDefinitionLists());
-		}
-                */
+        try {
+            System.out.println(sp.getSections());
+         /*
+                 MediaWikiParserFactory pf = new MediaWikiParserFactory();
+                 MediaWikiParser parser = pf.createParser();
+                 ParsedPage pp = parser.parse(documentText);
+                 for(Paragraph p : pp.getParagraphs()){
+                     
+                     System.out.println(p.getText());
+                 }
+                 
+                 //get the sections
+                 for(Section section : pp.getSections()) {
+                         System.out.println("section : " + section.getTitle());
+                         System.out.println(" nr of paragraphs      : " + section.nrOfParagraphs());
+                         System.out.println(" nr of tables          : " + section.nrOfTables());
+                         System.out.println(" nr of nested lists    : " + section.nrOfNestedLists());
+                         System.out.println(" nr of definition lists: " + section.nrOfDefinitionLists());
+                 }
+                 */
+        } catch (WikipediaParseException ex) {
+            Logger.getLogger(Wikipedia_solr.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

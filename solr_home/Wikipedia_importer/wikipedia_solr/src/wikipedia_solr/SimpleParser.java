@@ -32,6 +32,7 @@ public class SimpleParser {
     //private ModularParser parser;
     private ParsedPage pp;
     private StringBuilder cacheString;
+
     SimpleParser(String documentText) {
 
         this.mwpf = new MediaWikiParserFactory();
@@ -42,30 +43,20 @@ public class SimpleParser {
         //FlushTemplates ft = new FlushTemplates();
         //parser.setTemplateParser(ft);
         StringBuffer sb = new StringBuffer();
-        String beginningPart =  StringUtils.substringBefore(documentText, "<ref");
+        String beginningPart = StringUtils.substringBefore(documentText, "<ref");
         String rest = StringUtils.substringAfter(documentText, "ref>");
-        /*
-        System.out.println(beginningPart);
-        System.out.println(rest);
-        System.out.println("------------");
-        */
-        if(beginningPart == null || beginningPart == ""){            
-           sb.append(documentText);
-        }
-        else {
-            while(beginningPart != null && rest.indexOf("<ref") != -1){
+
+        if (beginningPart == null || beginningPart == "") {
+            sb.append(documentText);
+        } else {
+            while (beginningPart != null && rest.indexOf("<ref") != -1) {
                 sb.append(beginningPart);
-                //System.out.println(beginningPart);
-                beginningPart =  StringUtils.substringBefore(rest, "<ref");
-                rest = StringUtils.substringAfter(rest, "ref>");                               
+                beginningPart = StringUtils.substringBefore(rest, "<ref");
+                rest = StringUtils.substringAfter(rest, "ref>");
             }
-             sb.append(rest);
-             //System.out.println(sb.toString());
+            sb.append(rest);
         }
-//        this.pp = parser.parse(documentText);
-          this.pp = parser.parse(sb.toString());
-        
-//        this.pp = parser.parse(StringEscapeUtils.unescapeXml(documentText));
+        this.pp = parser.parse(sb.toString());
         this.cacheString = new StringBuilder();
     }
 
@@ -74,7 +65,6 @@ public class SimpleParser {
         try {
             for (Paragraph p : pp.getParagraphs()) {
                 sf.append(p.getText());
-                //System.out.println(p.getText());
             }
         } catch (java.lang.Exception e) {
             System.out.println(e.toString());
@@ -82,55 +72,47 @@ public class SimpleParser {
         }
         return sf.toString();
     }
-    
+
     public String getParagraphText() {
-        
-        return  this.cacheString.toString();
+
+        return this.cacheString.toString();
     }
-    
-    public ArrayList <HashMap<String, ArrayList<String>>>getSections() {
-        ArrayList <HashMap<String, ArrayList<String>>> sections = 
+
+    public ArrayList<HashMap<String, ArrayList<String>>> getSections() throws WikipediaParseException {
+        ArrayList<HashMap<String, ArrayList<String>>> sections =
                 new ArrayList<HashMap<String, ArrayList<String>>>();
-        
-        for (Section s : pp.getSections()) {
-            HashMap <String, ArrayList<String>> section = 
+
+        java.util.List<Section> sectionList;
+        try {
+            sectionList = pp.getSections();
+        } catch (java.lang.NullPointerException e) {
+            throw new WikipediaParseException(e);
+        }
+
+        for (Section s : sectionList) {
+            HashMap<String, ArrayList<String>> section =
                     new HashMap<String, ArrayList<String>>();
             String t = s.getTitle();
-            if(t == null){
+            if (t == null) {
                 t = " ";
-                
             }
             this.cacheString.append(t);
             this.cacheString.append(" ");
-            
-            
-            ArrayList <String> paragraphTexts =  new ArrayList<String>();
-            for (Paragraph p: s.getParagraphs()){
+            ArrayList<String> paragraphTexts = new ArrayList<String>();
+            for (Paragraph p : s.getParagraphs()) {
                 //String pt = StringEscapeUtils.unescapeXml(p.getText());
                 String pt = p.getText();
-
-                paragraphTexts.add(pt);
+                paragraphTexts.add(StringUtils.strip(pt));
                 this.cacheString.append(pt);
             }
-//            System.out.println(s.getTitle());
-            
             section.put(t, paragraphTexts);
-            
             sections.add(section);
         }
         return sections;
     }
-    
-    public String jsonSections() {
-        
-     Gson gson = new Gson();
 
-       return gson.toJson(this.getSections());
-    
-    }
-     
-    public void foo() {
-        Section s = pp.getSection(0);
-
+    public String jsonSections() throws WikipediaParseException {
+        Gson gson = new Gson();
+        return gson.toJson(this.getSections());
     }
 }
