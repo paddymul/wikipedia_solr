@@ -55,7 +55,7 @@ indexing process is running.
 
 The complete wikipedia data dump file is 8 Gb.
 
-The greatest amount of space that this system could take on your
+The greatest amount of space thaelseis system could take on your
 system is
 
 43 Gb = 8 + 34 + 1
@@ -606,6 +606,55 @@ easily configured.
 
 There are a variety of maintenance scripts that can be found in apps/* ,
 they are explained in the Running wikipedia_solr:Apps section of this document.
+
+
+
+
+
+
+** Parser debugging
+Core concepts fields have been added to make debugging parsing errors easier.  
+
+=wikimediaMarkupCount= stores the count of characters in the original version of the text.
+=articlePlainTextCount= stores the count of characters in the plaintext version of the text.
+=markupPlainRatio= stores  articlePlainTextCount / wikimediaMarkupCount .
+
+There are additional fields for java error debugging
+=error= When the parsing code detects an error this field will have a
+value of "true", normally it will be "false".  
+=exception= When there is an exception this field will store the name
+of that exception.
+=stackTrace= This field stores the stacktrace of an exception.
+
+
+*** Helpful queries
+
+
+The [[http://localhost:8983/solr/select?indent=on&version=2.2&q=error%3Afalse&fq=&start=0&rows=500&fl=articlePlainTextCount%2CwikimediaMarkupCount%2CmarkupPlainRatio%2Ctitle%2Cid%2Cscore&qt=&explainOther=&hl.fl=&sort=markupPlainRatio%20asc&wt=json][markup ratio ascending]] query is very useful for finding examples
+of documents that have a lot of wikimediaMarkup, and very little
+articlePlainText.  Note that this query excludes that have errors,
+error'd articles rarely have any articlePlainText, so they are of no
+use. 
+
+[[http://localhost:8983/solr/select?indent=on&version=2.2&q=*%3A*&fq=&start=0&rows=10&fl=articlePlainTextCount%2CwikimediaMarkupCount%2CmarkupPlainRatio%2Ctitle%2Cid%2Cscore&qt=&wt=&explainOther=&hl.fl=&sort=markupPlainRatio%20desc][markup ratio descending]]
+
+
+The  [[http://localhost:8983/solr/select/?q=error%3Afalse&stats=true&stats.field=markupPlainRatio&stats.facet&fl=markupPlainRatio&version=2.2&start=0&rows=10&indent=on][average of markupPlainRatio]] (you can read more about solr stats
+queries here [[http://wiki.apache.org/solr/StatsComponent][solr stats component]]) is very useful for determining the
+affect of a change in the parsing code over a large quantity of
+documents.  My assumption is that as parsing improves, the standard
+deviation of the markupPlainRatio will get smaller.  
+
+*** testing tools
+There are works in progress for python a python testing tool that
+pulls the wikimediaMarkup for an anomalous document from the index and
+stores it on the filesystem.  This tool can be found in
+=py/make_test_case.py=.  
+
+The main class of the wikipediaTransformer jar now can accept a
+command line argument for a file of wikimediaMarkup, it reads this
+file and writes the parsed articlePlainText to stdout.  These two tools allow
+quick iteration over problematic documents.
 
 
 
