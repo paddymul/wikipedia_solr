@@ -20,6 +20,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.gson.Gson;
+import de.tudarmstadt.ukp.wikipedia.api.WikiConstants.Language;
 
 /**
  *
@@ -35,9 +36,9 @@ public class SimpleParser {
 
     SimpleParser(String documentText) {
 
-        this.mwpf = new MediaWikiParserFactory();
+        this.mwpf = new MediaWikiParserFactory(Language.english);
         this.mwpf.setTemplateParserClass(FlushTemplates.class);
-
+        this.mwpf.setShowImageText(false);
         this.parser = mwpf.createParser();
         //parser = new ModularParser();
         //FlushTemplates ft = new FlushTemplates();
@@ -50,68 +51,55 @@ public class SimpleParser {
     }
 
     public static String getRest(String corpus, String fastTerminator, String secondTerminator){
-        int end1 = corpus.indexOf(fastTerminator);
+
         int end2 = corpus.indexOf(secondTerminator);
+        int end1;
 
 
-        if (end1 == -1 && end2 == -1) {
-            //return corpus;
-            return "";
-        }
-        if (end1 == -1 || end2 == -1) {
-            // we wan't the indexof greater than -1
-            if(end1 < end2){
-                return  StringUtils.substringAfter(corpus, secondTerminator);
+        if (end2 == -1){
+            end1 = corpus.indexOf(fastTerminator);
+            if (end1 == -1) {
+                return "";
             }
-            return StringUtils.substringAfter(corpus, fastTerminator);
+            else {
+                return corpus.substring(end1 + fastTerminator.length());
+            }
         }
-        if(end1 < end2){
-            return StringUtils.substringAfter(corpus, fastTerminator);        
+        String fastTerminatorSearchSpace = corpus.substring(0, end2);
+        end1 = fastTerminatorSearchSpace.indexOf(fastTerminator);
+        if(end1 != -1 && end1 < end2){
+            return  corpus.substring(end1+ fastTerminator.length());
         }
-        return  StringUtils.substringAfter(corpus, secondTerminator);        
+        return corpus.substring(end2 + secondTerminator.length());
     }
 
     public static String stripTags(String corpus, String start, String end1, String end2) {
 
-        StringBuffer sb = new StringBuffer();
-        String beginningPart = StringUtils.substringBefore(corpus, start);
 
-        
+        String beginningPart = StringUtils.substringBefore(corpus, start);
+        if (beginningPart.length() == corpus.length()){
+            return corpus;
+        }
+        StringBuffer sb = new StringBuffer();        
         String rest = getRest(corpus, end1, end2);
-        // StringUtils.substringAfter(withRefs, "/ref>");
 
         sb.append(beginningPart);
-        while (beginningPart != null && rest.indexOf(start) != -1) {
+        int lastBeginningIndex = rest.indexOf(start);
+        while (beginningPart != null && lastBeginningIndex != -1) {
 
-            beginningPart = StringUtils.substringBefore(rest, start);
-            //rest = StringUtils.substringAfter(rest, "/ref>");
+            beginningPart = rest.substring(lastBeginningIndex) ;
             rest = getRest(rest, end1, end2);
             sb.append(beginningPart);
+            lastBeginningIndex = rest.indexOf(start);
         }
         sb.append(rest);
 
         return sb.toString();
     }
 
+
     public static String stripRefs(String withRefs){
         return stripTags(withRefs, "<ref", "/>", "/ref>");
-        /*
-        StringBuffer sb = new StringBuffer();
-        String beginningPart = StringUtils.substringBefore(withRefs, "<ref");
-
-        String rest = StringUtils.substringAfter(withRefs, "/ref>");
-
-        sb.append(beginningPart);
-        while (beginningPart != null && rest.indexOf("<ref") != -1) {
-
-            beginningPart = StringUtils.substringBefore(rest, "<ref");
-            rest = StringUtils.substringAfter(rest, "/ref>");
-            sb.append(beginningPart);
-        }
-        sb.append(rest);
-
-        return sb.toString();
-        */
     }
 
     public String getParagraphText2() {

@@ -3,6 +3,7 @@ import urllib
 import json
 import pdb
 solr_url = "http://localhost:8983/solr/"
+solr_url = "http://thsh.servehttp.com:8983/solr/"
 
 
 def make_query2(q_string,  **kwargs):
@@ -75,6 +76,8 @@ def syntax_play():
     query_play(q_string)
 
 
+query_play(And(Phrase("cybernetics"), Phrase("Gordon Pask")).to_query())
+query_play(And(Phrase("Gordon Pask"), Phrase("cybernetics")).to_query())
 
 def query_demo():
 
@@ -108,4 +111,6 @@ def query_demo():
         '''articlePlainText:"american samoa" AND _query_:"articlePlainText:'manifest destiny'"''')
 
 if __name__ == "__main__":
-    query_demo()
+    #query_demo()
+    pass
+

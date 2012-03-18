@@ -89,7 +89,7 @@ public class SimpleParserTest {
 
     @Test
     public void testgetRestSecondTerminator() {
-        System.out.println("testGetRest");
+        System.out.println("testGetRest2");
         String corpus = " blah /> </ref> starts with ref";
         String expResult = " </ref> starts with ref";
         String result = SimpleParser.getRest(corpus, "/>", "/ref>");
