@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 . ~/.profile
 
 # this file is meant to abstract away the commonality between most of
@@ -11,6 +10,7 @@ set -e
 NAMED_PIPE_DIR=$GC_WIKIPEDIA_REPO_ROOT/named_pipes
 IMPORT_FILE=$NAMED_PIPE_DIR/import.xml
 
+mkdir $NAMED_PIPE_DIR
 #make sure the import file exists before we delete it
 touch $IMPORT_FILE
 rm $IMPORT_FILE 
