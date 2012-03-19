@@ -46,15 +46,25 @@ public class Wikipedia_solr {
         CommandLineParser parser = new PosixParser();
         CommandLine cmd = parser.parse( o, args);
 
-        String documentText2 = readFile(cmd.getOptionValue("inputFile"));
-        //get a ParsedPage object
+        //String documentText2 = readFile(cmd.getOptionValue("inputFile"));
+        String documentText2 = readFile("../../../test_docs/12");
+        
+        
+        
+        
+        
+        
+        
+                       //get a ParsedPage object
         SimpleParser sp = new SimpleParser(documentText2);
+        System.out.println("------------------------------------------");
+        
         try {
             sp.getSections();
+            //System.out.println(sp.jsonSections());
         } catch (WikipediaParseException ex) {
             Logger.getLogger(Wikipedia_solr.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("------------------------------------------");
         System.out.println(sp.getParagraphText());
        }
 }

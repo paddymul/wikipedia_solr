@@ -37,16 +37,19 @@ public class SimpleParser {
     SimpleParser(String documentText) {
 
         this.mwpf = new MediaWikiParserFactory(Language.english);
+        //this.mwpf = new MediaWikiParserFactory();
         this.mwpf.setTemplateParserClass(FlushTemplates.class);
         this.mwpf.setShowImageText(false);
+        this.mwpf.setDeleteTags(false);
         this.parser = mwpf.createParser();
         //parser = new ModularParser();
         //FlushTemplates ft = new FlushTemplates();
         //parser.setTemplateParser(ft);
 
-
-        this.pp = parser.parse(stripRefs(documentText));
-        //this.pp = parser.parse(documentText);
+        //String a = stripRefs(documentText);
+        //System.out.println(a.length());
+        //this.pp = parser.parse(a);
+        this.pp = parser.parse(documentText);
         this.cacheString = new StringBuilder();
     }
 
@@ -72,36 +75,6 @@ public class SimpleParser {
         }
         return corpus.substring(end2 + secondTerminator.length());
     }
-
-    public static String stripTags(String corpus, String start, String end1, String end2) {
-
-
-        String beginningPart = StringUtils.substringBefore(corpus, start);
-        if (beginningPart.length() == corpus.length()){
-            return corpus;
-        }
-        StringBuffer sb = new StringBuffer();        
-        String rest = getRest(corpus, end1, end2);
-
-        sb.append(beginningPart);
-        int lastBeginningIndex = rest.indexOf(start);
-        while (beginningPart != null && lastBeginningIndex != -1) {
-
-            beginningPart = rest.substring(lastBeginningIndex) ;
-            rest = getRest(rest, end1, end2);
-            sb.append(beginningPart);
-            lastBeginningIndex = rest.indexOf(start);
-        }
-        sb.append(rest);
-
-        return sb.toString();
-    }
-
-
-    public static String stripRefs(String withRefs){
-        return stripTags(withRefs, "<ref", "/>", "/ref>");
-    }
-
     public String getParagraphText2() {
         StringBuilder sf = new StringBuilder();
         try {
@@ -118,6 +91,57 @@ public class SimpleParser {
     public String getParagraphText() {
 
         return this.cacheString.toString();
+    }
+
+    public static String stripTags(String corpus, String start, String end1, String end2) {
+
+
+        String beginningPart = StringUtils.substringBefore(corpus, start);
+        if (beginningPart.length() == corpus.length()){
+            return corpus;
+        }
+        StringBuffer sb = new StringBuffer();        
+        String rest = getRest(corpus, end1, end2);
+
+        sb.append(beginningPart);
+        int lastBeginningIndex = rest.indexOf(start);
+        /*
+        System.out.println("lastBeginningIndex");
+        System.out.println(lastBeginningIndex);
+        System.out.println("beginningPart");
+        System.out.println(beginningPart);
+        System.out.println("rest");
+        System.out.println(rest);
+        */
+
+        //while (beginningPart != null && lastBeginningIndex != -1) {
+        while (lastBeginningIndex != -1) {
+
+
+            //System.out.println(beginningPart);
+            beginningPart = rest.substring(0, lastBeginningIndex) ;
+            //System.out.println("beginningPart");
+            //System.out.println(beginningPart);
+            rest = getRest(rest, end1, end2);
+            //System.out.println("rest");
+            //System.out.println(rest);
+
+            sb.append(beginningPart);
+            lastBeginningIndex = rest.indexOf(start);
+            //System.out.println("lastBeginningIndex");
+            //System.out.println(lastBeginningIndex);
+            //System.out.println("end loop");
+        }
+        sb.append(rest);
+
+        return sb.toString();
+    }
+
+
+
+    public static String stripRefs(String withRefs){
+        return stripTags(withRefs, "<ref", "/>", "/ref>");
+        //return stripTags(withRefs, "\u003Cref", "/\u003E", "/ref\u003E");
     }
 
     public ArrayList<HashMap<String, ArrayList<String>>> getSections() throws WikipediaParseException {
@@ -143,8 +167,10 @@ public class SimpleParser {
             ArrayList<String> paragraphTexts = new ArrayList<String>();
             for (Paragraph p : s.getParagraphs()) {
                 //String pt = StringEscapeUtils.unescapeXml(p.getText());
-                String pt = p.getText();
-                paragraphTexts.add(StringUtils.strip(pt));
+                //String pt = p.getText();
+                String pt = stripRefs(StringUtils.strip(p.getText()));
+                //String pt = StringEscapeUtils.unescapeXml(StringUtils.strip(p.getText()));
+                paragraphTexts.add(pt);
                 this.cacheString.append(pt);
             }
             section.put(t, paragraphTexts);

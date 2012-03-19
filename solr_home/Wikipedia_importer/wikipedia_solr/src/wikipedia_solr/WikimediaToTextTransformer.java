@@ -22,7 +22,7 @@ public class WikimediaToTextTransformer extends Transformer {
         String wikiMediaText = (String) row.get("wikimediaMarkup");
         int wmCount = wikiMediaText.length();
         row.put("wikimediaMarkupCount", wmCount);
-
+        System.out.println(row.get("id"));
         try {
             if (row.get("$skipDoc") == "true") {
                 System.out.println("fast skipping" + row.get("id"));

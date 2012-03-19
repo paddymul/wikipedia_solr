@@ -36,6 +36,8 @@ public class SimpleParserTest {
     /**
      * Test of stripRefs method, of class SimpleParser.
      */
+
+
     @Test
     public void testStripRefs() {
         System.out.println("stripRefs");
@@ -66,6 +68,19 @@ public class SimpleParserTest {
         System.out.println(result);
         assertEquals(expResult, result);
     }
+
+    @Test
+    public void testStripRefs_noRef() {
+        System.out.println("stripRefs_noRef");
+        String withRefs = " blah starts with ref";
+        String expResult = " blah starts with ref";
+        String result = SimpleParser.stripRefs(withRefs);
+        System.out.println(expResult);
+        System.out.println(result);
+        assertEquals(expResult, result);
+    }
+
+ 
     @Test
     public void testStripRefsSelfClosing() {
         System.out.println("stripRefsSelfClosing");
@@ -93,6 +108,20 @@ public class SimpleParserTest {
         String corpus = " blah /> </ref> starts with ref";
         String expResult = " </ref> starts with ref";
         String result = SimpleParser.getRest(corpus, "/>", "/ref>");
+        System.out.println(expResult);
+        System.out.println(result);
+        assertEquals(expResult, result);
+    }
+
+   @Test
+    public void testStripRefs_doubleRef() {
+        System.out.println("testStripRefs_doubleRef");
+
+        String withRefs = "before first <ref> blah </ref> in between <ref> blah " +
+                           " </ref> after";
+
+        String expResult = "before first  in between  after";
+        String result = SimpleParser.stripRefs(withRefs);
         System.out.println(expResult);
         System.out.println(result);
         assertEquals(expResult, result);
