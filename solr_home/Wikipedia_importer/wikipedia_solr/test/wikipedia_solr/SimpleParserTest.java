@@ -4,9 +4,11 @@
  */
 package wikipedia_solr;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import org.junit.*;
 import static org.junit.Assert.*;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -39,7 +41,19 @@ public class SimpleParserTest {
 
 
     @Test
-    public void testStripRefs() {
+    public void testDivsUnmolested() throws IOException, SAXException {
+        System.out.println("testDivsUnmolested");
+        String withRefs = "asdf<div> we should still see this </div> after ref";
+        String expResult = "asdf we should still see this  after ref";
+        String result = SimpleParser.stripRefs(withRefs);
+        System.out.println(expResult);
+        System.out.println(result);
+        assertEquals(expResult, result);
+    }
+
+
+    @Test
+    public void testStripRefs() throws IOException, SAXException {
         System.out.println("stripRefs");
         String withRefs = "asdf<ref> inside ref</ref> after ref";
         String expResult = "asdf after ref";
@@ -49,7 +63,7 @@ public class SimpleParserTest {
         assertEquals(expResult, result);
     }
     @Test
-    public void testStripRefs2() {
+    public void testStripRefs2() throws IOException, SAXException {
         System.out.println("stripRefs2");
         String withRefs = " no refs ";
         String expResult = " no refs ";
@@ -59,10 +73,11 @@ public class SimpleParserTest {
         assertEquals(expResult, result);
     }
     @Test
-    public void testStripRefs3() {
+    public void testStripRefs3() throws IOException, SAXException {
         System.out.println("stripRefs3");
         String withRefs = "<ref> blah </ref> starts with ref";
         String expResult = " starts with ref";
+ 
         String result = SimpleParser.stripRefs(withRefs);
         System.out.println(expResult);
         System.out.println(result);
@@ -70,7 +85,7 @@ public class SimpleParserTest {
     }
 
     @Test
-    public void testStripRefs_noRef() {
+    public void testStripRefs_noRef() throws IOException, SAXException {
         System.out.println("stripRefs_noRef");
         String withRefs = " blah starts with ref";
         String expResult = " blah starts with ref";
@@ -82,10 +97,11 @@ public class SimpleParserTest {
 
  
     @Test
-    public void testStripRefsSelfClosing() {
+    public void testStripRefsSelfClosing() throws IOException, SAXException {
         System.out.println("stripRefsSelfClosing");
         String withRefs = "words before <ref  blah /> starts with ref";
         String expResult = "words before  starts with ref";
+        
         String result = SimpleParser.stripRefs(withRefs);
         System.out.println(expResult);
         System.out.println(result);
@@ -114,7 +130,7 @@ public class SimpleParserTest {
     }
 
    @Test
-    public void testStripRefs_doubleRef() {
+    public void testStripRefs_doubleRef() throws IOException, SAXException {
         System.out.println("testStripRefs_doubleRef");
 
         String withRefs = "before first <ref> blah </ref> in between <ref> blah " +

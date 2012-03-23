@@ -21,6 +21,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.google.gson.Gson;
 import de.tudarmstadt.ukp.wikipedia.api.WikiConstants.Language;
+import java.io.IOException;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -139,12 +141,18 @@ public class SimpleParser {
 
 
 
-    public static String stripRefs(String withRefs){
+    public static String stripRefsOrig(String withRefs){
         return stripTags(withRefs, "<ref", "/>", "/ref>");
-        //return stripTags(withRefs, "\u003Cref", "/\u003E", "/ref\u003E");
+    }
+    public static String stripRefs(String withRefs) throws IOException, SAXException{
+            HTMLTextParser htp = new HTMLTextParser();
+            return htp.htmltoText(withRefs);
+
+            //          return stripTags(withRefs, "<ref", "/>", "/ref>");
+
     }
 
-    public ArrayList<HashMap<String, ArrayList<String>>> getSections() throws WikipediaParseException {
+    public ArrayList<HashMap<String, ArrayList<String>>> getSections() throws WikipediaParseException, IOException, SAXException {
         ArrayList<HashMap<String, ArrayList<String>>> sections =
                 new ArrayList<HashMap<String, ArrayList<String>>>();
 
@@ -179,7 +187,7 @@ public class SimpleParser {
         return sections;
     }
 
-    public String jsonSections() throws WikipediaParseException {
+    public String jsonSections() throws WikipediaParseException, IOException, SAXException {
         Gson gson = new Gson();
         return gson.toJson(this.getSections());
     }

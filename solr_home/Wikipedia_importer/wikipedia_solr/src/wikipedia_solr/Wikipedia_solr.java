@@ -9,6 +9,7 @@ import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.cli.*;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -35,7 +36,7 @@ public class Wikipedia_solr {
         
     }
 
-    public static void main(String[] args) throws ParseException, FileNotFoundException, IOException {
+    public static void main(String[] args) throws ParseException, FileNotFoundException, IOException, SAXException {
         // TODO code application logic here
 
 
@@ -46,8 +47,8 @@ public class Wikipedia_solr {
         CommandLineParser parser = new PosixParser();
         CommandLine cmd = parser.parse( o, args);
 
-        //String documentText2 = readFile(cmd.getOptionValue("inputFile"));
-        String documentText2 = readFile("../../../test_docs/12");
+        String documentText2 = readFile(cmd.getOptionValue("inputFile"));
+        //String documentText2 = readFile("../../../test_docs/12");
         
         
         
