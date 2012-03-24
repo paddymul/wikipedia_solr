@@ -502,12 +502,12 @@
 
 <field name="markupPlainRatio"  type="float" indexed="true" stored="true" required="false"/>
 
- <field name="wikimediaMarkup"  type="text_general" indexed="false" stored="true"  /> 
+ <field name="wikimediaMarkup"  type="text_general" indexed="false" stored="false"  /> 
  <field name="exception"  type="text_general" indexed="true" stored="true"  /> 
  <field name="stackTrace"  type="text_general" indexed="false" stored="true"  /> 
  <field name="error"  type="text_general" indexed="true" stored="true"  /> 
 
-<field name="articlePlainText"  type="text_general" indexed="true" stored="true"  /> 
+<field name="articlePlainText"  type="text_general" indexed="true" stored="false"  /> 
 <field name="sectionParsed"  type="string" compressed="true" indexed="false" stored="true"  /> 
 <!-- 
 
