@@ -7,21 +7,19 @@ package wikipedia_solr;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import de.tudarmstadt.ukp.wikipedia.api.exception.WikiApiException;
 import de.tudarmstadt.ukp.wikipedia.parser.ParsedPage;
 import de.tudarmstadt.ukp.wikipedia.parser.Paragraph;
 
 import de.tudarmstadt.ukp.wikipedia.parser.Section;
 import de.tudarmstadt.ukp.wikipedia.parser.mediawiki.MediaWikiParser;
 import de.tudarmstadt.ukp.wikipedia.parser.mediawiki.MediaWikiParserFactory;
-import de.tudarmstadt.ukp.wikipedia.parser.mediawiki.ModularParser;
 import de.tudarmstadt.ukp.wikipedia.parser.mediawiki.FlushTemplates;
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.gson.Gson;
 import de.tudarmstadt.ukp.wikipedia.api.WikiConstants.Language;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import org.xml.sax.SAXException;
 
 /**
@@ -36,7 +34,7 @@ public class SimpleParser {
     private ParsedPage pp;
     private StringBuilder cacheString;
 
-    SimpleParser(String documentText) {
+    SimpleParser(String documentText) throws UnsupportedEncodingException {
 
         this.mwpf = new MediaWikiParserFactory(Language.english);
         //this.mwpf = new MediaWikiParserFactory();
@@ -51,32 +49,97 @@ public class SimpleParser {
         //String a = stripRefs(documentText);
         //System.out.println(a.length());
         //this.pp = parser.parse(a);
-        this.pp = parser.parse(documentText);
+        this.pp = parser.parse(toUTF8(documentText));
         this.cacheString = new StringBuilder();
     }
 
-    public static String getRest(String corpus, String fastTerminator, String secondTerminator){
+    public String getParagraphText() throws UnsupportedEncodingException {
+
+        //return this.toUTF8( this.cacheString.toString());
+        return this.cacheString.toString();
+    }
+
+    public String toUTF8(String original) throws UnsupportedEncodingException {
+
+        //String s = "A função, Ãugent";
+        String r = original.replaceAll("\\P{InBasic_Latin}", "");
+        return r;
+    }
+
+    public String jsonSections() throws WikipediaParseException, IOException, SAXException {
+        Gson gson = new Gson();
+        
+        
+        return stripSingleQuotes(gson.toJson(this.getSections()));
+    }
+    public static String stripSingleQuotes(String original){
+
+        String r = original.
+                replaceAll(".u003d","=").
+                replaceAll(".u003a",":").
+                replaceAll(".u003b",";").
+                replaceAll(".u003c","<").
+                replaceAll(".u003e",">").
+                replaceAll(".u003f","?").
+                replaceAll(".u007b","{").
+                replaceAll(".u007c","|").
+                replaceAll(".u007d","}").
+                replaceAll(".u007e","~").
+                replaceAll(".u0021","!").
+                replaceAll(".u0023","#").
+                replaceAll(".u0024","$").
+                replaceAll(".u0025","%").
+                replaceAll(".u0026","&").
+                replaceAll(".u0027","'").
+                replaceAll(".u0028","(").
+                replaceAll(".u0029",")").
+                replaceAll(".u002a","*").
+                replaceAll(".u002b","+").
+                replaceAll(".u002c",",").
+                replaceAll(".u002d","-").
+                replaceAll(".u002e",".").
+                replaceAll(".u002f","/");
+                
+                
+                
+        return r;
+    }
+
+    /*
+     * public String toUTF8(String original ) throws
+     * UnsupportedEncodingException{
+     *
+     * byte[] defaultBytes = original.getBytes();
+     *
+     * String roundTrip = new String(defaultBytes,"UTF8"); return roundTrip;
+     *
+     *
+     * }
+     *
+     */
+   
+    public static String getRest(String corpus, String fastTerminator, String secondTerminator) {
 
         int end2 = corpus.indexOf(secondTerminator);
         int end1;
 
 
-        if (end2 == -1){
+        if (end2 == -1) {
             end1 = corpus.indexOf(fastTerminator);
             if (end1 == -1) {
                 return "";
-            }
-            else {
+            } else {
                 return corpus.substring(end1 + fastTerminator.length());
             }
         }
         String fastTerminatorSearchSpace = corpus.substring(0, end2);
         end1 = fastTerminatorSearchSpace.indexOf(fastTerminator);
-        if(end1 != -1 && end1 < end2){
-            return  corpus.substring(end1+ fastTerminator.length());
+        if (end1 != -1 && end1 < end2) {
+            return corpus.substring(end1 + fastTerminator.length());
         }
         return corpus.substring(end2 + secondTerminator.length());
     }
+
     public String getParagraphText2() {
         StringBuilder sf = new StringBuilder();
         try {
@@ -90,38 +153,32 @@ public class SimpleParser {
         return sf.toString();
     }
 
-    public String getParagraphText() {
-
-        return this.cacheString.toString();
-    }
-
     public static String stripTags(String corpus, String start, String end1, String end2) {
 
 
         String beginningPart = StringUtils.substringBefore(corpus, start);
-        if (beginningPart.length() == corpus.length()){
+        if (beginningPart.length() == corpus.length()) {
             return corpus;
         }
-        StringBuffer sb = new StringBuffer();        
+        StringBuffer sb = new StringBuffer();
         String rest = getRest(corpus, end1, end2);
 
         sb.append(beginningPart);
         int lastBeginningIndex = rest.indexOf(start);
         /*
-        System.out.println("lastBeginningIndex");
-        System.out.println(lastBeginningIndex);
-        System.out.println("beginningPart");
-        System.out.println(beginningPart);
-        System.out.println("rest");
-        System.out.println(rest);
-        */
+         * System.out.println("lastBeginningIndex");
+         * System.out.println(lastBeginningIndex);
+         * System.out.println("beginningPart");
+         * System.out.println(beginningPart); System.out.println("rest");
+         * System.out.println(rest);
+         */
 
         //while (beginningPart != null && lastBeginningIndex != -1) {
         while (lastBeginningIndex != -1) {
 
 
             //System.out.println(beginningPart);
-            beginningPart = rest.substring(0, lastBeginningIndex) ;
+            beginningPart = rest.substring(0, lastBeginningIndex);
             //System.out.println("beginningPart");
             //System.out.println(beginningPart);
             rest = getRest(rest, end1, end2);
@@ -139,16 +196,15 @@ public class SimpleParser {
         return sb.toString();
     }
 
-
-
-    public static String stripRefsOrig(String withRefs){
+    public static String stripRefsOrig(String withRefs) {
         return stripTags(withRefs, "<ref", "/>", "/ref>");
     }
-    public static String stripRefs(String withRefs) throws IOException, SAXException{
-            HTMLTextParser htp = new HTMLTextParser();
-            return htp.htmltoText(withRefs);
 
-            //          return stripTags(withRefs, "<ref", "/>", "/ref>");
+    public static String stripRefs(String withRefs) throws IOException, SAXException {
+        HTMLTextParser htp = new HTMLTextParser();
+        return htp.htmltoText(withRefs);
+
+        //          return stripTags(withRefs, "<ref", "/>", "/ref>");
 
     }
 
@@ -187,8 +243,4 @@ public class SimpleParser {
         return sections;
     }
 
-    public String jsonSections() throws WikipediaParseException, IOException, SAXException {
-        Gson gson = new Gson();
-        return gson.toJson(this.getSections());
-    }
 }

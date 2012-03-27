@@ -143,4 +143,16 @@ public class SimpleParserTest {
         assertEquals(expResult, result);
     }
 
+    @Test
+    public void testStripSingleQuotes() throws IOException, SAXException {
+        System.out.println(" testStripSingleQuotes");
+
+        String withRefs =  " asdf 9u0027|";
+        String expResult = " asdf '|";
+        String result = SimpleParser.stripSingleQuotes(withRefs);
+        System.out.println(expResult);
+        System.out.println(result);
+        assertEquals(expResult, result);
+    }
+
 }

@@ -25,7 +25,10 @@ public class Wikipedia_solr {
         FileInputStream fstream = new FileInputStream(filename);
         // Get the object of DataInputStream
         DataInputStream in = new DataInputStream(fstream);
+//        BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        
+        
         String strLine;
         StringBuilder sb = new StringBuilder();
         while((strLine=br.readLine())!= null){
@@ -55,9 +58,16 @@ public class Wikipedia_solr {
         
         
         
+        String documentText3=   new String(documentText2.getBytes("UTF8"), "UTF8");
         
                        //get a ParsedPage object
         SimpleParser sp = new SimpleParser(documentText2);
+        //System.out.println(sp.toUTF8(documentText2));
+        //System.out.println(documentText3);
+        
+        System.out.println("------------------------------------------");
+        //System.out.println(     new String(documentText2.getBytes("UTF8"), "UTF8"));
+        
         System.out.println("------------------------------------------");
         
         try {
