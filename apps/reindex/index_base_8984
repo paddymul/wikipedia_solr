@@ -1,0 +1,27 @@
+#!/bin/bash
+. ~/.profile
+
+# this file is meant to abstract away the commonality between most of
+# the import scripts, it takes as its only argument the path of the
+# file to be imported
+
+
+
+NAMED_PIPE_DIR=$GC_WIKIPEDIA_REPO_ROOT_8984/named_pipes
+IMPORT_FILE=$NAMED_PIPE_DIR/import.xml
+
+mkdir $NAMED_PIPE_DIR
+#make sure the import file exists before we delete it
+touch $IMPORT_FILE
+rm $IMPORT_FILE 
+
+echo " linking $1 to $IMPORT_FILE"
+echo $1
+ln -s $1  $IMPORT_FILE
+
+curl "http://localhost:8984/solr/dataimport?command=full-import" 
+sleep 50
+
+
+
+

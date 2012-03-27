@@ -1,0 +1,20 @@
+#!/bin/bash
+set -e
+. ~/.profile
+NAMED_PIPE_DIR=$GC_WIKIPEDIA_REPO_ROOT_8984/named_pipes
+IMPORT_FILE=$NAMED_PIPE_DIR/import.xml
+
+
+cd $GC_WIKIPEDIA_REPO_ROOT_8984
+SOLR_HOME=$GC_WIKIPEDIA_REPO_ROOT_8984/solr_home/solr
+
+
+
+
+cd lib/solr/solr/example
+echo "here" >> $SOLR_HOME/log.txt
+java  -Djetty.port=8984   -Xms512M -Xmx1024M  -Dsolr.solr.home=$SOLR_HOME -Dsolr.data.dir=$GC_WIKIPEDIA_SOLR_DATA_DIR_8984 -Dsolr.xmlInputFile=$IMPORT_FILE   -Dsolr.absolutePath=$SOLR_HOME  -jar start.jar >> $SOLR_HOME/log.txt
+
+#java     -Dsolr.solr.home=$SOLR_HOME -Dsolr.data.dir=$GC_WIKIPEDIA_SOLR_DATA_DIR -Dsolr.xmlInputFile=$IMPORT_FILE   -Dsolr.absolutePath=$SOLR_HOME  -jar start.jar >> $SOLR_HOME/log.txt
+
+#cd lib/solr/solr/example/; java   -Xms512M -Xmx1024M  -Dsolr.solr.home=../../../../solr_home/solr -Dsolr.absolutePath=`pwd`/../../../../solr_home/solr  -jar start.jar")

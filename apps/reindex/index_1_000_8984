@@ -1,0 +1,6 @@
+#!/bin/bash
+set -e
+. ~/.profile
+$GC_WIKIPEDIA_REPO_ROOT_8984/apps/reindex/index_base_8984 $GC_WIKIPEDIA_DL_DIR_8984/first_1_000.xml
+#$GC_WIKIPEDIA_REPO_ROOT/apps/reindex/index_base $GC_WIKIPEDIA_DL_DIR/first_10_000.xml
+
