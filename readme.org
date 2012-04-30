@@ -93,7 +93,7 @@ machine.
 2. start_solr.app
 3. index_1_000.app
 4. look at a sample result
-[[http://localhost:8983/solr/select/?q=articlePlainText%3A%22american%22&version=2.2&start=0&rows=1000&indent=on&wt=json]]][american]]
+[[http://localhost:8983/solr/select/?q=articlePlainText%3A%22american%22&version=2.2&start=0&rows=1000&indent=on&wt=json][american]]
 
 
 
