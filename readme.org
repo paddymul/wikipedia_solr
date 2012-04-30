@@ -95,7 +95,12 @@ otherwise read the section "How do I control where various files are stored?"
 There are a set of apps which allow you to perform most regular
 maintenance tasks.  These are the primitives upon which the common workflows
 section is based on.  All of them are found in
-$GC_WIKIPEDIA_REPO_ROOT/apps , after the initial install steps
+$GC_WIKIPEDIA_REPO_ROOT/apps , after the initial install steps.
+
+Every app opens a terminal window and at the start outputs
+"$app_name:STARTING" when the app has finished running
+"$app_name:FINISHED" will be written to the terminal window.
+
 
 *** start_solr.app
 This app starts the solr server and leaves a terminal window showing
@@ -131,18 +136,23 @@ it is useful to run on its own if you downloaded the article dump
 separately.  
 
 This app takes about an hour to run.  
-*** index_1_000.app
-This app pulls in the first 1,000 articles, it is useful as a sanity
-check when modifying the indexing scheme, and a way of quickly trying
-new indexing/text processing techniques. Running this app blows away
-the current index, so you might want to change your
+
+*** Indexing apps
+there are 4 indexing apps,
+index_1_000.app, index_10_000.app, index_100_000.app and index_all.app.
+they index the first 1,000 10,000 100,000 articles from the data_dump.
+the index_all.app pulls in everything in the data_dump file.
+
+
+Running any one of the Indexing apps blows away the current index.  If
+you want to preserve the current index you might want to change your
 GC_WIKIPEDIA_SOLR_DATA_DIR location to keep an existing large
 index as a backup.
 
-Sample output from a sucessful run
+
+**** Sample output from a sucessful run
 #+BEGIN_SRC shell        
-This should run in about a minute.
-Last login: Sun Apr 29 21:19:56 on ttys003
+Last login: Sun Apr 29 21:23:09 on ttys003
 /Users/patrickmullen/code/general_cybernetics/wikipedia_solr/apps/reindex/index_1_000 ; exit;
 You have mail.
 bash_profile
@@ -153,47 +163,50 @@ mkdir: /Users/patrickmullen/code/general_cybernetics/wikipedia_solr/named_pipes:
 /Volumes/LaCie_1/data/data_wikipedia//first_1_000.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <response>
-<lst name="responseHeader"><int name="status">0</int><int name="QTime">2</int></lst><lst name="initArgs"><lst name="defaults"><str name="config">./data-config.xml</str></lst><lst name="invariants"><str name="solrHome">/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/solr_home/solr</str><str name="dataFile">/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/named_pipes/import.xml</str></lst></lst><str name="command">full-import</str><str name="status">idle</str><str name="importResponse"/><lst name="statusMessages"><str name="Total Requests made to DataSource">0</str><str name="Total Rows Fetched">1000</str><str name="Total Documents Skipped">198</str><str name="Full Dump Started">2012-04-29 21:19:56</str><str name="">Indexing completed. Added/Updated: 802 documents. Deleted 0 documents.</str><str name="Committed">2012-04-29 21:20:28</str><str name="Optimized">2012-04-29 21:20:28</str><str name="Total Documents Processed">802</str><str name="Time taken ">0:0:31.483</str></lst><str name="WARNING">This response format is experimental.  It is likely to change in the future.</str>
+<lst name="responseHeader"><int name="status">0</int><int name="QTime">2</int></lst><lst name="initArgs"><lst name="defaults"><str name="config">./data-config.xml</str></lst><lst name="invariants"><str name="solrHome">/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/solr_home/solr</str><str name="dataFile">/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/named_pipes/import.xml</str></lst></lst><str name="command">full-import</str><str name="status">idle</str><str name="importResponse"/><lst name="statusMessages"><str name="Total Requests made to DataSource">0</str><str name="Total Rows Fetched">1000</str><str name="Total Documents Skipped">198</str><str name="Full Dump Started">2012-04-29 21:23:09</str><str name="">Indexing completed. Added/Updated: 802 documents. Deleted 0 documents.</str><str name="Committed">2012-04-29 21:23:41</str><str name="Optimized">2012-04-29 21:23:41</str><str name="Total Documents Processed">802</str><str name="Time taken ">0:0:31.154</str></lst><str name="WARNING">This response format is experimental.  It is likely to change in the future.</str>
 </response>
 the index has been triggered, but not necessarily completed
-read the readme : How do I track the progress of a indexing task?  for more information
+read the indexing_apps section of the readme for more information about progress tracking
+the solr_server should take aproximately 40 seconds to complete this index
 index_1_000:FINISHED
 logout
 
 [Process completed]
 #+END_SRC
 
+**** estimated run times
+the indexing apps only trigger a reindexing by the solr server.  The
+indexing apps themselves finish very quickly.  You can read more about 
 
+Here are the time estimates for the whole indexing:
+index_1_000:     40 seconds
+index_10_000:     4 minutes
+index_100_000:   40 minutes
+index_all:       12 hours
 
+**** progress tracking
+When a large import is running, your machine should be running at
+about 100% cpu for a java process, and 10-20% for a bunzip2 process.
 
-*** index_10_000.app
-This app pulls in the first 10,000 articles, it is useful as a sanity
-check when modifying the indexing scheme, and a way of quickly trying
-new indexing/text processing techniques. Running this app blows away
-the current index, so you might want to change your
-GC_WIKIPEDIA_SOLR_DATA_DIR location to keep an existing large
-index as a backup.
-This app should take approximately 4 minutes to run.
+You can track the import progress at this url
+[[http://localhost:8983/solr/admin/stats.jsp]]
 
+Search in that page for "Rows Fetched" .  Reload as necessary to watch
+this number increase, it counts the total number of documents that the
+import process has seen.  It also counts "Documents Skipped",
+documents are skipped as part of the import process because they would
+pollute the index with poor results, this is perfectly normal.  The
+"Documents Processed" field lists the total number actually put into
+the index. 
 
+The full wikipedia dump has about 12 Million rows in it, at last run
+on 3/6/2012 5,785,453  documents were in the index after a full
+import. 
 
-*** index_100_000.app
-This app pulls in the first 100,000 articles, it is useful as a sanity
-check when modifying the indexing scheme, and a way of quickly trying
-new indexing/text processing techniques. Running this app blows away
-the current index, so you might want to change your
-GC_WIKIPEDIA_SOLR_DATA_DIR location to keep an existing large
-index as a backup.
-This app should take approximately 40 minutes to run.
-
-
-
-*** index_all.app
-This app indexes the entire wikipedia into solr.  It takes a long
-time, about 12 hours on a macbook pro. Running this app blows away
-the current index, so you might want to change your
-GC_WIKIPEDIA_SOLR_DATA_DIR location to keep an existing large
-index as a backup.
+Note: When running a full import the "Rows Fetched" will get to 12 million, and then the system
+will take approximately 1 more hour compacting and optimizing indexes
+before you can search against new data, this is normal.  The index is
+not finished until status reads "IDLE" again.
 
 ** Common Workflows
 
@@ -246,31 +259,6 @@ apps/start_solr.app
 that url returns the first 10 documents of everything in your index,
 there should be some results.
 
-*** How do I track the progress of a indexing task?
-When a large import is running, your machine should be running at
-about 100% cpu for a java process, and 10-20% for a bunzip2 process.
-
-You can track the import progress at this url
-[[http://localhost:8983/solr/admin/stats.jsp]]
-
-Search in that page for "Rows Fetched" .  Reload as necessary to watch
-this number increase, it counts the total number of documents that the
-import process has seen.  It also counts "Documents Skipped",
-documents are skipped as part of the import process because they would
-pollute the index with poor results, this is perfectly normal.  The
-"Documents Processed" field lists the total number actually put into
-the index. 
-
-The full wikipedia dump has about 12 Million rows in it, at last run
-on 3/6/2012 5,785,453  documents were in the index after a full
-import. 
-
-Note: When running a full import the "Rows Fetched" will get to 12 million, and then the system
-will take approximately 1 more hour compacting and optimizing indexes
-before you can search against new data, this is normal.  
-
-
-
 *** I'm getting mkfifo errors when running the download_dump_wrap.app
 OS X doesn't support creating named pipes on network mapped
 drives. [[http://caml.inria.fr/pub/docs/manual-ocaml/libref/Unix.html]]
@@ -302,7 +290,7 @@ read more about lock factories here [[http://wiki.apache.org/lucene-java/Availab
 
 *** How do I find oddly parsed articles
 
-these two queries
+these two queries are quite helpful
 [[http://localhost:8983/solr/select?indent=on&version=2.2&q=*%3A*&fq=&start=0&rows=10&fl=articlePlainTextCount%2CwikimediaMarkupCount%2CmarkupPlainRatio%2Ctitle%2Cid%2Cscore&qt=&wt=&explainOther=&hl.fl=&sort=markupPlainRatio%20asc][markup ratio ascending]]
 [[http://localhost:8983/solr/select?indent=on&version=2.2&q=*%3A*&fq=&start=0&rows=10&fl=articlePlainTextCount%2CwikimediaMarkupCount%2CmarkupPlainRatio%2Ctitle%2Cid%2Cscore&qt=&wt=&explainOther=&hl.fl=&sort=markupPlainRatio%20desc][markup ratio descending]]
 

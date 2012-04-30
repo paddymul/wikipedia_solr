@@ -16,5 +16,5 @@ cd $GC_WIKIPEDIA_REPO_ROOT/apps/reindex
 ./trigger_reimport
 
 
-
+echo "the solr_server should take aproximately 12 hours to complete this index" 
 echo "index_all:FINISHED"

@@ -4,5 +4,6 @@ set -e
 echo "index_10_000:STARTING"
 $GC_WIKIPEDIA_REPO_ROOT/apps/reindex/index_base $GC_WIKIPEDIA_DL_DIR/first_10_000.xml
 
+echo "the solr_server should take aproximately 4 minutes to complete this index"
 echo "index_10_000:FINISHED"
 
