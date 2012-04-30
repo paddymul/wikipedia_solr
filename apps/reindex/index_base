@@ -22,5 +22,7 @@ ln -s $1  $IMPORT_FILE
 cd $GC_WIKIPEDIA_REPO_ROOT/apps/reindex
 ./trigger_reimport
 
+echo "the index has been triggered, but not necessarily completed"
+echo "read the readme : How do I track the progress of a indexing task?  for more information"
 
 

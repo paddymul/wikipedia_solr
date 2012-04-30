@@ -139,7 +139,32 @@ the current index, so you might want to change your
 GC_WIKIPEDIA_SOLR_DATA_DIR location to keep an existing large
 index as a backup.
 
+Sample output from a sucessful run
+#+BEGIN_SRC shell        
 This should run in about a minute.
+Last login: Sun Apr 29 21:19:56 on ttys003
+/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/apps/reindex/index_1_000 ; exit;
+You have mail.
+bash_profile
+Macintosh-5:~ patrickmullen$ /Users/patrickmullen/code/general_cybernetics/wikipedia_solr/apps/reindex/index_1_000 ; exit;
+index_1_000:STARTING
+mkdir: /Users/patrickmullen/code/general_cybernetics/wikipedia_solr/named_pipes: File exists
+ linking /Volumes/LaCie_1/data/data_wikipedia//first_1_000.xml to /Users/patrickmullen/code/general_cybernetics/wikipedia_solr/named_pipes/import.xml
+/Volumes/LaCie_1/data/data_wikipedia//first_1_000.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<response>
+<lst name="responseHeader"><int name="status">0</int><int name="QTime">2</int></lst><lst name="initArgs"><lst name="defaults"><str name="config">./data-config.xml</str></lst><lst name="invariants"><str name="solrHome">/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/solr_home/solr</str><str name="dataFile">/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/named_pipes/import.xml</str></lst></lst><str name="command">full-import</str><str name="status">idle</str><str name="importResponse"/><lst name="statusMessages"><str name="Total Requests made to DataSource">0</str><str name="Total Rows Fetched">1000</str><str name="Total Documents Skipped">198</str><str name="Full Dump Started">2012-04-29 21:19:56</str><str name="">Indexing completed. Added/Updated: 802 documents. Deleted 0 documents.</str><str name="Committed">2012-04-29 21:20:28</str><str name="Optimized">2012-04-29 21:20:28</str><str name="Total Documents Processed">802</str><str name="Time taken ">0:0:31.483</str></lst><str name="WARNING">This response format is experimental.  It is likely to change in the future.</str>
+</response>
+the index has been triggered, but not necessarily completed
+read the readme : How do I track the progress of a indexing task?  for more information
+index_1_000:FINISHED
+logout
+
+[Process completed]
+#+END_SRC
+
+
+
 
 *** index_10_000.app
 This app pulls in the first 10,000 articles, it is useful as a sanity

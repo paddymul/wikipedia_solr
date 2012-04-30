@@ -18,7 +18,3 @@ cd $GC_WIKIPEDIA_REPO_ROOT/apps/reindex
 
 
 echo "index_all:FINISHED"
-echo "read the readme : How do I track the progress of a indexing task? "
-
-
-
