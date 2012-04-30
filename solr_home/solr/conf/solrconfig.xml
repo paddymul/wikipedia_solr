@@ -86,10 +86,7 @@
   <lib dir="../../lib/nekohtml-1.9.15/lib/xerces-minimal/" />
 
   <lib dir="../Wikipedia_importer/google-gson-2.1/" />
-<!--
-  <lib dir="/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/solr_home/Wikipedia_importer/wikipedia_solr/dist"  />
-  <lib dir="/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/solr_home/Wikipedia_importer/wikipedia_solr/dist/lib" />
--->
+
 
 
   <!-- When a regex is specified in addition to a directory, only the

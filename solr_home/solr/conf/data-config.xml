@@ -16,7 +16,7 @@
 <!--  
 		url="${dataimporter.request.solrHome}/first_172.xml" 
           transformer="RegexTransformer,DateFormatTransformer, wikipedia_solr.WikimediaToTextTransformer"
-                url="/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/solr_home/solr/short_one.xml"
+
 
 -->
             <field column="id"        xpath="/mediawiki/page/id" />
