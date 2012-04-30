@@ -4,4 +4,7 @@
 curl "http://localhost:8983/solr/dataimport?command=full-import" 
 
 echo "the index has been triggered, but not necessarily completed"
-echo "read the indexing_apps section of the readme for more information about progress tracking"
+echo "read the indexing_apps section of the readme"
+echo "---------"
+echo "https://github.com/General-Cybernetics/wikipedia_solr/blob/master/readme.org#progress-tracking"
+echo "---------"

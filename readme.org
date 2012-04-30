@@ -152,7 +152,7 @@ index as a backup.
 
 **** Sample output from a sucessful run
 #+BEGIN_SRC shell        
-Last login: Sun Apr 29 21:23:09 on ttys003
+Last login: Sun Apr 29 22:01:11 on ttys003
 /Users/patrickmullen/code/general_cybernetics/wikipedia_solr/apps/reindex/index_1_000 ; exit;
 You have mail.
 bash_profile
@@ -163,15 +163,19 @@ mkdir: /Users/patrickmullen/code/general_cybernetics/wikipedia_solr/named_pipes:
 /Volumes/LaCie_1/data/data_wikipedia//first_1_000.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <response>
-<lst name="responseHeader"><int name="status">0</int><int name="QTime">2</int></lst><lst name="initArgs"><lst name="defaults"><str name="config">./data-config.xml</str></lst><lst name="invariants"><str name="solrHome">/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/solr_home/solr</str><str name="dataFile">/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/named_pipes/import.xml</str></lst></lst><str name="command">full-import</str><str name="status">idle</str><str name="importResponse"/><lst name="statusMessages"><str name="Total Requests made to DataSource">0</str><str name="Total Rows Fetched">1000</str><str name="Total Documents Skipped">198</str><str name="Full Dump Started">2012-04-29 21:23:09</str><str name="">Indexing completed. Added/Updated: 802 documents. Deleted 0 documents.</str><str name="Committed">2012-04-29 21:23:41</str><str name="Optimized">2012-04-29 21:23:41</str><str name="Total Documents Processed">802</str><str name="Time taken ">0:0:31.154</str></lst><str name="WARNING">This response format is experimental.  It is likely to change in the future.</str>
+<lst name="responseHeader"><int name="status">0</int><int name="QTime">1</int></lst><lst name="initArgs"><lst name="defaults"><str name="config">./data-config.xml</str></lst><lst name="invariants"><str name="solrHome">/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/solr_home/solr</str><str name="dataFile">/Users/patrickmullen/code/general_cybernetics/wikipedia_solr/named_pipes/import.xml</str></lst></lst><str name="command">full-import</str><str name="status">idle</str><str name="importResponse"/><lst name="statusMessages"><str name="Total Requests made to DataSource">0</str><str name="Total Rows Fetched">1000</str><str name="Total Documents Skipped">198</str><str name="Full Dump Started">2012-04-29 22:01:11</str><str name="">Indexing completed. Added/Updated: 802 documents. Deleted 0 documents.</str><str name="Committed">2012-04-29 22:01:42</str><str name="Optimized">2012-04-29 22:01:42</str><str name="Total Documents Processed">802</str><str name="Time taken ">0:0:31.835</str></lst><str name="WARNING">This response format is experimental.  It is likely to change in the future.</str>
 </response>
 the index has been triggered, but not necessarily completed
-read the indexing_apps section of the readme for more information about progress tracking
+read the indexing_apps section of the readme
+---------
+https://github.com/General-Cybernetics/wikipedia_solr/blob/master/readme.org#progress-tracking
+---------
 the solr_server should take aproximately 40 seconds to complete this index
 index_1_000:FINISHED
 logout
 
 [Process completed]
+
 #+END_SRC
 
 **** estimated run times
