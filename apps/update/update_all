@@ -1,10 +1,13 @@
 #!/bin/bash
 set -e
 . ~/.profile
-
+echo "update_all:STARTING"
 
 cd $GC_WIKIPEDIA_REPO_ROOT/apps/update
 ./git_update
+
+
 ./recompile_all
 
 
+echo "update_all:FINISHED"

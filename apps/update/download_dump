@@ -1,10 +1,13 @@
 #!/bin/bash
 set -e
 . ~/.profile
-#mkdir $GC_WIKIPEDIA_DL_DIR
 
+echo "download_dump:STARTING"
+
+mkdir $GC_WIKIPEDIA_DL_DIR
 FULL_BZ2=$GC_WIKIPEDIA_DL_DIR/enwiki-latest-pages-articles.xml.bz2
 
 curl      http://dumps.wikimedia.org/enwiki/latest/enwiki-latest-pages-articles.xml.bz2 > $FULL_BZ2
 
 $GC_WIKIPEDIA_REPO_ROOT/apps/update/make_helper_files
+echo "download_dump:FINISHED"

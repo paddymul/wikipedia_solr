@@ -26,6 +26,7 @@ the indexing and it needs to be running to query the index.
 Java 6 is installed by default on OS X 10.6 and above.
 *** Apache Ant installed
 [[http://ant.apache.org/manual/install.html][The Apache Ant official installation guide]] 
+Note: installing netbeans is a quick shortcut that assures that java and ant are installed properly
 
 *** git command line tools installed
 The git command line tools must be installed on your machine, along

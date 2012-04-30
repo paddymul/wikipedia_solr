@@ -2,7 +2,7 @@
 set -e
 . ~/.profile
 
-
+echo "recompile_apps:STARTING"
 compile_app ()
 {
 touch  $1.app
@@ -47,3 +47,4 @@ compile_app index_10_000
 compile_app index_100_000
 compile_app index_all
 
+echo "recompile_apps:FINISHED"

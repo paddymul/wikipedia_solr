@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 . ~/.profile
-echo "Make helper files starting"
+echo "make_helper_files:STARTING"
 FULL_BZ2=$GC_WIKIPEDIA_DL_DIR/enwiki-latest-pages-articles.xml.bz2
 NAMED_PIPE_DIR=$GC_WIKIPEDIA_REPO_ROOT/named_pipes
 
@@ -56,3 +56,4 @@ bunzip2 -c $FULL_BZ2 | head -n  $page_100_000 >  $GC_WIKIPEDIA_DL_DIR/first_100_
 
 # lets clean up after ourselves
 rm $UNCOMP1 $UNCOMP2 $UNCOMP3
+echo "make_helper_files:FINISHED"

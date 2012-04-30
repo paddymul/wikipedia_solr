@@ -1,5 +1,6 @@
 #!/bin/bash
 . ~/.profile
+echo "index_all:STARTING"
 NAMED_PIPE_DIR=$GC_WIKIPEDIA_REPO_ROOT/named_pipes
 IMPORT_FILE=$NAMED_PIPE_DIR/import.xml
 
@@ -7,18 +8,17 @@ mkdir $NAMED_PIPE_DIR
 touch $IMPORT_FILE
 rm $IMPORT_FILE
 mkfifo $IMPORT_FILE
-# 500
-#nohup bunzip2 -c  $GC_WIKIPEDIA_DL_DIR/enwiki-latest-pages-articles.xml.bz2 | head -n  107296 >  $GC_WIKIPEDIA_DL_DIR/import.xml &
-#100k
-#nohup bunzip2 -c  $GC_WIKIPEDIA_DL_DIR/enwiki-latest-pages-articles.xml.bz2 | head -n  5577937 >  $GC_WIKIPEDIA_DL_DIR/import.xml &
-
-#nohup bunzip2 -c  $GC_WIKIPEDIA_DL_DIR/enwiki-latest-pages-articles.xml.bz2 | head -n  1577937 >  $GC_WIKIPEDIA_DL_DIR/import.xml &
 nohup bunzip2 -c  $GC_WIKIPEDIA_DL_DIR/enwiki-latest-pages-articles.xml.bz2  >  $IMPORT_FILE &
 
 
 
 cd $GC_WIKIPEDIA_REPO_ROOT/apps/reindex
 ./trigger_reimport
+
+
+
+echo "index_all:FINISHED"
+echo "read the readme : How do I track the progress of a indexing task? "
 
 
 

@@ -2,7 +2,7 @@
 set -e
 . ~/.profile
 
-
+echo "recompile_all:STARTING"
 cd $GC_WIKIPEDIA_REPO_ROOT
 cd lib/solr/solr/
 ant clean compile example
@@ -14,3 +14,4 @@ ant clean compile jar
 cd $GC_WIKIPEDIA_REPO_ROOT
 cd apps/update
 ./recompile_apps
+echo "recompile_all:FINISHED"

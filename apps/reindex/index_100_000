@@ -1,4 +1,10 @@
 #!/bin/bash
 set -e
 . ~/.profile
+echo "index_100_000:STARTING"
+
 $GC_WIKIPEDIA_REPO_ROOT/apps/reindex/index_base $GC_WIKIPEDIA_DL_DIR/first_100_000.xml
+
+echo "index_100_000:FINISHED"
+echo "read the readme : How do I track the progress of a indexing task? "
+
