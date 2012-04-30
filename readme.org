@@ -82,6 +82,20 @@ echo "export GC_WIKIPEDIA_SOLR_DATA_DIR=\"`pwd`/solr_data_dir\" " >> ~/.profile
 ./apps/update/update_all
 open ./apps
 #+END_SRC
+If you want to customize install locations read [[https://github.com/General-Cybernetics/wikipedia_solr/blob/master/readme.org#how-do-i-control-where-various-files-are-stored][how do I control where
+various files are stored]].  
+
+The next steps are to run the following apps.
+
+1. download_dump.app this takes a couple hours depending on your
+connection speed, it downloads a recent dump of wikipedia onto your
+machine. 
+2. start_solr.app
+3. index_1_000.app
+4. look at a sample result
+[[http://localhost:8983/solr/select/?q=articlePlainText%3A%22american%22&version=2.2&start=0&rows=1000&indent=on&wt=json]]][american]]
+
+
 
 When these steps have finished a finder window pointing to the apps
 directory will open up.  In here you will find maintence
@@ -304,7 +318,7 @@ these two queries are quite helpful
 
 ** system setup
 
-*** how do I control where various files are stored
+*** how do I control where various files are storedp
 The wikipedia_solr system reads your  ~/.profile for three locations.
 
 **** GC_WIKIPEDIA_DL_DIR
