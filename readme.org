@@ -82,7 +82,7 @@ echo "export GC_WIKIPEDIA_SOLR_DATA_DIR=\"`pwd`/solr_data_dir\" " >> ~/.profile
 ./apps/update/update_all
 open ./apps
 #+END_SRC
-If you want to customize install locations read [[https://github.com/General-Cybernetics/wikipedia_solr/blob/master/readme.org#how-do-i-control-where-various-files-are-stored][how do I control where
+If you want to customize install locations read [[https://github.com/paddymul/wikipedia_solr/blob/master/readme.org#how-do-i-control-where-various-files-are-stored][how do I control where
 various files are stored]].  
 
 The next steps are to run the following apps.
@@ -390,7 +390,7 @@ The wt=json causes solr to return the result in json format.
 ** Interactive tour of query formation with solr
 *** complex queries - phrases ANDs ORs NOTs
 
-Take a look at [[https://github.com/General-Cybernetics/wikipedia_solr/blob/master/py/query_demo.py][py/query_demo.py]] to see this as a running program.
+Take a look at [[https://github.com/paddymul/wikipedia_solr/blob/master/py/query_demo.py][py/query_demo.py]] to see this as a running program.
 
 
 Note qp takes the un-urlencoded q parameter as input, it executes the
@@ -575,7 +575,7 @@ integrity.
 the custom code I wrote for this project can be found in 
 
 **** transformer
-[[https://github.com/General-Cybernetics/wikipedia_solr/blob/master/solr_home/Wikipedia_importer/wikipedia_solr/src/wikipedia_solr/WikimediaToTextTransformer.java][solr_home/Wikipedia_importer/wikipedia_solr/src/wikipedia_solr/WikimediaToTextTransformer.java]]
+[[https://github.com/paddymul/wikipedia_solr/blob/master/solr_home/Wikipedia_importer/wikipedia_solr/src/wikipedia_solr/WikimediaToTextTransformer.java][solr_home/Wikipedia_importer/wikipedia_solr/src/wikipedia_solr/WikimediaToTextTransformer.java]]
 
 **** named pipe file reader
 [[https://github.com/paddymul/lucene-solr/blob/06a176316bba15bf6967c87d3799ef743067e972/solr/contrib/dataimporthandler/src/java/org/apache/solr/handler/dataimport/FileDataSource.java][
@@ -592,7 +592,7 @@ lib/solr/solr/contrib/dataimporthandler/src/java/org/apache/solr/handler/dataimp
 
 the solr [[ http://wiki.apache.org/solr/SchemaXml ][ schema.xml]]
 for this project can be found  
-[[https://github.com/General-Cybernetics/wikipedia_solr/blob/master/solr_home/solr/conf/schema.xml][
+[[https://github.com/paddymul/wikipedia_solr/blob/master/solr_home/solr/conf/schema.xml][
 solr_home/solr/conf/schema.xml]]
 
 **** field explanation
@@ -628,7 +628,7 @@ title": ["paragph1", "p2"]}]
 
 
 the [[http://wiki.apache.org/solr/SolrConfigXml][solr-config]] for this project can be found here
-[[https://github.com/General-Cybernetics/wikipedia_solr/blob/master/solr_home/solr/conf/solrconfig.xml][solr_home/solr/conf/solrconfig.xml]]
+[[https://github.com/paddymul/wikipedia_solr/blob/master/solr_home/solr/conf/solrconfig.xml][solr_home/solr/conf/solrconfig.xml]]
 
 It stays pretty close to the example config, except for additional
 java properties that it reads, which allow the system to be more
