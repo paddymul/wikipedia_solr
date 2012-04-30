@@ -76,8 +76,8 @@ def syntax_play():
     query_play(q_string)
 
 
-query_play(And(Phrase("cybernetics"), Phrase("Gordon Pask")).to_query())
-query_play(And(Phrase("Gordon Pask"), Phrase("cybernetics")).to_query())
+#query_play(And(Phrase("cybernetics"), Phrase("Gordon Pask")).to_query())
+#query_play(And(Phrase("Gordon Pask"), Phrase("cybernetics")).to_query())
 
 def query_demo():
 
