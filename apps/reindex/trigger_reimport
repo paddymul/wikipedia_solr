@@ -1,7 +1,12 @@
 #!/bin/bash
 
+set -e
 
-curl "http://localhost:8983/solr/dataimport?command=full-import" 
+req_url="http://localhost:8983/solr/dataimport?command=full-import" 
+echo "---------"
+echo "making a request to $req_url"
+echo "---------"
+curl -v $req_url
 
 echo "the index has been triggered, but not necessarily completed"
 echo "read the indexing_apps section of the readme"
