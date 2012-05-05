@@ -1,6 +1,3 @@
 [submodule "lib/solr"]
 	path = lib/solr
-	url = git@github.com:paddymul/lucene-solr.git
-[submodule "lib/jwpl"]
-	path = lib/jwpl
-	url = git@github.com:General-Cybernetics/Jwpl-mirror.git
+	url = git://github.com/paddymul/lucene-solr.git
