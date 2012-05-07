@@ -84,6 +84,7 @@ Here is aproximately the expected [[https://raw.github.com/paddymul/wikipedia_so
 
 
 After the installer has run take a look at [[https://github.com/paddymul/wikipedia_solr#i-have-successfully-downloaded-the-data-dump-what-next][ I have successfully downloaded the data dump. What next?]]
+
 If you want to customize install locations read [[https://github.com/paddymul/wikipedia_solr/blob/master/readme.org#how-do-i-control-where-various-files-are-stored][how do I control where
 various files are stored]].  
 
