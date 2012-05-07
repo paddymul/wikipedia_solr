@@ -80,6 +80,11 @@ Run the one-step installer at a terminal by copying and pasting
 nohup curl https://raw.github.com/paddymul/wikipedia_solr/master/apps/update/onestep_install.sh | sh > onestep.out &
 #+END_SRC
 You can read the one step installer commands [[https://raw.github.com/paddymul/wikipedia_solr/master/apps/update/onestep_install.sh][here]]
+Here is aproximately the expected [[https://raw.github.com/paddymul/wikipedia_solr/master/onestep.out][onestep installer output]]
+
+The one step installer output looks like this
+
+After the installer has
 
 If you want to customize install locations read [[https://github.com/paddymul/wikipedia_solr/blob/master/readme.org#how-do-i-control-where-various-files-are-stored][how do I control where
 various files are stored]].  
