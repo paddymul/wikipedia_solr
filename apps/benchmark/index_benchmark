@@ -1,0 +1,64 @@
+#!/bin/bash
+set -e
+. ~/.profile
+
+kill_solr () 
+{
+ps ax | grep solr | grep java | cut -f1 -d" " | xargs kill -9
+sleep 5
+}
+
+restart_solr ()
+{
+echo "restarting solr"
+kill_solr 
+$GC_WIKIPEDIA_REPO_ROOT/apps/start_solr/start_solr & sleep 10
+}
+
+
+benchmark_iteration () 
+{
+restart_solr
+python $GC_WIKIPEDIA_REPO_ROOT/py/benchmark.py --output_file $1 --target_count=$2
+}
+benchmark_loop ()
+{
+# running this first makes sure we wait until the new index has finished before running curl, if we restart imediately, we will miss the dataimport-handler indexing  stats
+python $GC_WIKIPEDIA_REPO_ROOT/py/benchmark.py --output_file $2 --target_count=$3
+curl "http://localhost:8983/solr/admin/stats.jsp" > $1 
+benchmark_iteration $2 $3
+benchmark_iteration $2 $3
+benchmark_iteration $2 $3
+benchmark_iteration $2 $3
+benchmark_iteration $2 $3
+
+benchmark_iteration $2 $3
+benchmark_iteration $2 $3
+benchmark_iteration $2 $3
+benchmark_iteration $2 $3
+benchmark_iteration $2 $3
+
+}
+
+restart_solr
+
+$GC_WIKIPEDIA_REPO_ROOT/apps/reindex/index_1_000
+benchmark_loop output_1_000_index.html 1_000.results 500
+
+
+restart_solr
+$GC_WIKIPEDIA_REPO_ROOT/apps/reindex/index_10_000
+benchmark_loop output_10_000_index.html 10_000.results 1100
+
+
+
+restart_solr
+$GC_WIKIPEDIA_REPO_ROOT/apps/reindex/index_100_000
+benchmark_loop output_100_000_index.html 100_000.results 12012
+
+
+restart_solr
+$GC_WIKIPEDIA_REPO_ROOT/apps/reindex/index_all
+benchmark_loop output_all_index.html all.results 123012
+
+
