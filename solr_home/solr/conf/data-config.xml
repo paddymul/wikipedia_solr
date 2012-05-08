@@ -11,7 +11,7 @@
                 forEach="/mediawiki/page/"
 		url="${dataimporter.request.dataFile}"
 
-                transformer="RegexTransformer, wikipedia_solr.WikimediaToTextTransformer"
+                transformer="RegexTransformer"
                 >
 <!--  
 		url="${dataimporter.request.solrHome}/first_172.xml" 
@@ -21,7 +21,7 @@
 -->
             <field column="id"        xpath="/mediawiki/page/id" />
             <field column="title"     xpath="/mediawiki/page/title" />
-            <field column="wikimediaMarkup"      xpath="/mediawiki/page/revision/text" />
+            <field column="articlePlainText"      xpath="/mediawiki/page/revision/text" />
 
 <!--
             <field column="revision"  xpath="/mediawiki/page/revision/id" />
