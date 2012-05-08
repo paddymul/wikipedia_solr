@@ -2,11 +2,22 @@
 set -e
 . ~/.profile
 
+
+function pkill() {
+    local pid
+    pid=$(ps ax | grep $1 | grep -v grep | awk '{ print $1 }')
+    kill -9 $pid
+    #echo -n "Killed $1 (process $pid)"
+}
+
+
 kill_solr () 
 {
-ps ax | grep solr | grep java | cut -f1 -d" " | xargs kill -9
+pkill solr
 sleep 5
 }
+
+
 
 restart_solr ()
 {
@@ -16,49 +27,24 @@ $GC_WIKIPEDIA_REPO_ROOT/apps/start_solr/start_solr & sleep 10
 }
 
 
-benchmark_iteration () 
+benchmark_group () 
 {
 restart_solr
-python $GC_WIKIPEDIA_REPO_ROOT/py/benchmark.py --output_file $1 --target_count=$2
-}
-benchmark_loop ()
-{
-# running this first makes sure we wait until the new index has finished before running curl, if we restart imediately, we will miss the dataimport-handler indexing  stats
-python $GC_WIKIPEDIA_REPO_ROOT/py/benchmark.py --output_file $2 --target_count=$3
-curl "http://localhost:8983/solr/admin/stats.jsp" > $1 
-benchmark_iteration $2 $3
-benchmark_iteration $2 $3
-benchmark_iteration $2 $3
-benchmark_iteration $2 $3
-benchmark_iteration $2 $3
+result_file="$1.results"
+html_output="output_$1_index.html"
+target_count=$2
+$GC_WIKIPEDIA_REPO_ROOT/apps/reindex/index_$1
+python $GC_WIKIPEDIA_REPO_ROOT/py/benchmark.py --output_file $result_file --target_count=$target_count
+curl "http://localhost:8983/solr/admin/stats.jsp" > $html_output
 
-benchmark_iteration $2 $3
-benchmark_iteration $2 $3
-benchmark_iteration $2 $3
-benchmark_iteration $2 $3
-benchmark_iteration $2 $3
+$GC_WIKIPEDIA_REPO_ROOT/apps/benchmark/benchmark_base $result_file  $2
 
 }
 
-restart_solr
+benchmark_group 1_000 500
+benchmark_group 10_000 1100
+benchmark_group 100_000 12012
+benchmark_group all 130123
 
-$GC_WIKIPEDIA_REPO_ROOT/apps/reindex/index_1_000
-benchmark_loop output_1_000_index.html 1_000.results 500
-
-
-restart_solr
-$GC_WIKIPEDIA_REPO_ROOT/apps/reindex/index_10_000
-benchmark_loop output_10_000_index.html 10_000.results 1100
-
-
-
-restart_solr
-$GC_WIKIPEDIA_REPO_ROOT/apps/reindex/index_100_000
-benchmark_loop output_100_000_index.html 100_000.results 12012
-
-
-restart_solr
-$GC_WIKIPEDIA_REPO_ROOT/apps/reindex/index_all
-benchmark_loop output_all_index.html all.results 123012
 
 

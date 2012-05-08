@@ -1,0 +1,56 @@
+#!/bin/bash
+set -e
+. ~/.profile
+
+# $1 is the output file name, $2 is the target count, the minimum
+# number of rows that need to be indexed for this iteration
+
+
+function pkill() {
+    local pid
+    pid=$(ps ax | grep $1 | grep -v grep | awk '{ print $1 }')
+    kill -9 $pid || true
+    #echo -n "Killed $1 (process $pid)"
+}
+
+
+kill_solr () 
+{
+pkill solr
+sleep 5
+}
+
+
+
+restart_solr ()
+{
+echo "restarting solr"
+kill_solr 
+$GC_WIKIPEDIA_REPO_ROOT/apps/start_solr/start_solr & sleep 10
+}
+
+
+benchmark_iteration () 
+{
+restart_solr
+python $GC_WIKIPEDIA_REPO_ROOT/py/benchmark.py --output_file $1 --target_count=$2
+}
+benchmark_loop ()
+{
+# running this first makes sure we wait until the new index has finished before running curl, if we restart imediately, we will miss the dataimport-handler indexing  stats
+
+benchmark_iteration $1 $2
+benchmark_iteration $1 $2
+benchmark_iteration $1 $2
+benchmark_iteration $1 $2
+benchmark_iteration $1 $2
+
+benchmark_iteration $1 $2
+benchmark_iteration $1 $2
+benchmark_iteration $1 $2
+benchmark_iteration $1 $2
+benchmark_iteration $1 $2
+}
+
+restart_solr
+benchmark_loop $1 $2
