@@ -70,8 +70,7 @@ public class HTMLTextParser {
         CoreDocumentImpl codeDoc = new CoreDocumentImpl();
         DocumentFragment doc = codeDoc.createDocumentFragment();
 
-        InputStream ist = new ByteArrayInputStream(wrappedInput.getBytes("UTF-8"));
-        InputSource iSource = new InputSource(ist);
+        InputSource iSource = new InputSource(new StringReader(wrappedInput));
 
         parser.parse(iSource, doc);
         //Node is a super interface of DocumentFragment, so no typecast needed
